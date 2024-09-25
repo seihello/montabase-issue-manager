@@ -1,11 +1,15 @@
-("");
+"use client";
 import getAllIssues from "@/lib/supabase/get-all-issues";
 import Image from "next/image";
 import { useEffect } from "react";
 
 export default function Home() {
   useEffect(() => {
-    getAllIssues();
+    const fetchIssues = async () => {
+      const issues = await getAllIssues();
+      console.log(issues);
+    };
+    fetchIssues();
   }, []);
 
   return (

@@ -1,6 +1,7 @@
 import createClient from "@/lib/supabase/client";
+import { Issue } from '../types/issue.type';
 
-export default async function getAllIssues(): Promise<unknown[]> {
+export default async function getAllIssues(): Promise<Issue[]> {
   const supabase = createClient();
 
   try {
@@ -9,8 +10,6 @@ export default async function getAllIssues(): Promise<unknown[]> {
     if (error) {
       throw new Error(error.message);
     }
-
-    console.log("data", data);
 
     return data;
   } catch (error) {
