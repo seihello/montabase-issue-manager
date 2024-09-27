@@ -15,9 +15,9 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex w-96 flex-col p-2">
+    <div className="flex w-96 flex-col gap-y-2 p-2">
       {issues.map((issue, index) => (
-        <IssueOverview key={index} issue={issue}></IssueOverview>
+        <IssueOverview key={index} issue={issue} />
       ))}
     </div>
   );

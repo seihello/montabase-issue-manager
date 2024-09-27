@@ -6,8 +6,9 @@ type Props = {
 
 export default function IssueOverview({ issue }: Props) {
   return (
-    <div className="flex flex-col border bg-white p-2 shadow-sm">
-      {issue.title}
+    <div className="flex flex-col rounded-md border bg-white p-2 shadow-sm">
+      <div>{issue.title}</div>
+      <div>{issue.status}</div>
     </div>
   );
 }
