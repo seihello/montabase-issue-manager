@@ -23,7 +23,7 @@ export default function TopView({ children }: Props) {
   return (
     <RecoilRoot>
       <Sidebar />
-      <main className="flex-1 bg-white p-4">{children}</main>
+      <main className="flex-1 overflow-x-scroll bg-white p-4">{children}</main>
     </RecoilRoot>
   );
 }
