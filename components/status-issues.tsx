@@ -11,7 +11,7 @@ export default function StatusIssues({ status }: Props) {
   const issues = useRecoilValue(issuesState);
   const filteredIssues = issues.filter((issue) => issue.status === status);
   return (
-    <div className="flex w-96 shrink-0 flex-col gap-y-2 p-2">
+    <div className="flex w-96 shrink-0 flex-col gap-y-2 rounded-lg bg-gray-50 p-2">
       <div>{status}</div>
       {filteredIssues.map((issue, index) => (
         <IssueOverview key={index} issue={issue} />

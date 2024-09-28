@@ -18,7 +18,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex">
+    <div className="flex gap-x-2">
       <StatusIssues status={IssueStatus.Backlog} />
       <StatusIssues status={IssueStatus.Todo} />
       <StatusIssues status={IssueStatus.InProgress} />
