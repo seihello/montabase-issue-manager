@@ -50,6 +50,8 @@ export default function AddIssueDialog() {
         null,
       );
       setIsOpen(false);
+      form.reset();
+
       setIsSubmitting(false);
     } catch (error) {
       console.error(error);
