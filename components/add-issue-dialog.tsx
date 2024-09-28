@@ -13,6 +13,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import addIssue from "@/lib/supabase/add-issue";
+import { IssueStatus } from "@/lib/types/issue-status.enum";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -33,7 +35,19 @@ export default function AddIssueDialog() {
 
   const { toast } = useToast();
 
-  async function onSubmit(values: z.infer<typeof schema>) {}
+  async function onSubmit(values: z.infer<typeof schema>) {
+    try {
+      const newIssue = await addIssue(
+        values.title,
+        values.description,
+        IssueStatus.Backlog,
+        null,
+      );
+      console.log("New issue", newIssue);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <Dialog>
