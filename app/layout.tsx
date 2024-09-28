@@ -1,4 +1,4 @@
-import Sidebar from "@/components/sidebar";
+import TopView from "@/components/top-view";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -29,8 +29,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} flex bg-white text-gray-900 antialiased`}
       >
-        <Sidebar />
-        <main className="flex-1 bg-white p-4">{children}</main>
+        <TopView children={children} />
       </body>
     </html>
   );
