@@ -16,6 +16,7 @@ import { Textarea } from "@/components/ui/textarea";
 import addIssue from "@/lib/supabase/add-issue";
 import { IssueStatus } from "@/lib/types/issue-status.enum";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
@@ -35,6 +36,8 @@ export default function AddIssueDialog() {
 
   const { toast } = useToast();
 
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
   async function onSubmit(values: z.infer<typeof schema>) {
     try {
       const newIssue = await addIssue(
@@ -44,13 +47,15 @@ export default function AddIssueDialog() {
         null,
       );
       console.log("New issue", newIssue);
+
+      setIsOpen(false);
     } catch (error) {
       console.error(error);
     }
   }
 
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button variant="ghost" className="size-8 rounded-lg p-0 shadow-md">
           <IconPencilPlus />
