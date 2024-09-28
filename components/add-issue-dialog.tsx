@@ -108,7 +108,7 @@ export default function AddIssueDialog() {
             <Button
               className="h-8 w-16 self-end"
               type="submit"
-              disabled={!form.formState.isValid}
+              disabled={!form.formState.isValid || isSubmitting}
             >
               {isSubmitting ? (
                 <RingLoader size={16} color="white" />
