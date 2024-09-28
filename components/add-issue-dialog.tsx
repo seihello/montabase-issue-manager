@@ -48,7 +48,7 @@ export default function AddIssueDialog() {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="w-full space-y-4"
+            className="flex flex-col items-stretch gap-y-2"
           >
             <FormField
               control={form.control}
@@ -60,7 +60,7 @@ export default function AddIssueDialog() {
                     <Input
                       autoFocus
                       placeholder="Issue title"
-                      className={`border-none focus-visible:ring-0 focus-visible:ring-transparent ${fieldState.invalid ? "border-destructive" : ""}`}
+                      className={`border-none text-xl font-medium focus-visible:ring-0 focus-visible:ring-transparent ${fieldState.invalid ? "border-destructive" : ""}`}
                       {...field}
                     />
                   </FormControl>
@@ -85,7 +85,7 @@ export default function AddIssueDialog() {
               )}
             />
             <Button
-              className="w-full"
+              className="h-8 self-end"
               type="submit"
               disabled={!form.formState.isValid}
             >
