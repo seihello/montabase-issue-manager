@@ -20,10 +20,12 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import addIssue from "@/lib/supabase/add-issue";
 import { IssueStatus } from "@/lib/types/issue-status.enum";
+import { issuesState } from "@/states/issues-state";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import RingLoader from "react-spinners/RingLoader";
+import { useSetRecoilState } from "recoil";
 import * as z from "zod";
 
 const schema = z.object({
@@ -32,6 +34,8 @@ const schema = z.object({
 });
 
 export default function AddIssueDialog() {
+  const setIssues = useSetRecoilState(issuesState);
+
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -54,6 +58,7 @@ export default function AddIssueDialog() {
         IssueStatus.Backlog,
         null,
       );
+      setIssues((oldIssues) => [...oldIssues, newIssue]);
       setIsOpen(false);
       form.reset();
 

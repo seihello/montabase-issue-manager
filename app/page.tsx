@@ -17,7 +17,6 @@ export default function Home() {
     fetchIssues();
   }, []);
 
-  console.log("issues", issues);
   return (
     <div>
       <div className="flex w-96 flex-col gap-y-2 p-2">
