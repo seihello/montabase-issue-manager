@@ -1,11 +1,13 @@
 "use client";
 import IssueOverview from "@/components/issue-overview";
 import getAllIssues from "@/lib/supabase/get-all-issues";
-import { Issue } from "@/lib/types/issue.type";
-import { useEffect, useState } from "react";
+import { issuesState } from "@/states/issues-state";
+import { useEffect } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 export default function Home() {
-  const [issues, setIssues] = useState<Issue[]>([]);
+  const issues = useRecoilValue(issuesState);
+  const setIssues = useSetRecoilState(issuesState);
 
   useEffect(() => {
     const fetchIssues = async () => {
@@ -15,6 +17,7 @@ export default function Home() {
     fetchIssues();
   }, []);
 
+  console.log("issues", issues);
   return (
     <div>
       <div className="flex w-96 flex-col gap-y-2 p-2">
