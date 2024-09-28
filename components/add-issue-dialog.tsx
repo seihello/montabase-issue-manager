@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/dialog";
 import { IconPencilPlus } from "@tabler/icons-react";
 
-import { useToast } from "@/components/hooks/use-toast";
 import {
   Form,
   FormControl,
@@ -26,6 +25,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import RingLoader from "react-spinners/RingLoader";
 import { useSetRecoilState } from "recoil";
+import { toast } from "sonner";
 import * as z from "zod";
 
 const schema = z.object({
@@ -44,8 +44,6 @@ export default function AddIssueDialog() {
     },
   });
 
-  const { toast } = useToast();
-
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
@@ -61,10 +59,13 @@ export default function AddIssueDialog() {
       setIssues((oldIssues) => [...oldIssues, newIssue]);
       setIsOpen(false);
       form.reset();
-
-      setIsSubmitting(false);
     } catch (error) {
       console.error(error);
+      toast.error("Error", {
+        description: "Failed to add the issue. Please try again.",
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   }
 

@@ -1,4 +1,5 @@
 import TopView from "@/components/top-view";
+import { Toaster } from "@/components/ui/toaster";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -30,6 +31,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} flex bg-white text-gray-900 antialiased`}
       >
         <TopView children={children} />
+        <Toaster richColors closeButton />
       </body>
     </html>
   );
