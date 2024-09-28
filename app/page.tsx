@@ -1,12 +1,12 @@
 "use client";
-import IssueOverview from "@/components/issue-overview";
+import StatusIssues from "@/components/status-issues";
 import getAllIssues from "@/lib/supabase/get-all-issues";
+import { IssueStatus } from "@/lib/types/issue-status.enum";
 import { issuesState } from "@/states/issues-state";
 import { useEffect } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 
 export default function Home() {
-  const issues = useRecoilValue(issuesState);
   const setIssues = useSetRecoilState(issuesState);
 
   useEffect(() => {
@@ -18,12 +18,12 @@ export default function Home() {
   }, []);
 
   return (
-    <div>
-      <div className="flex w-96 flex-col gap-y-2 p-2">
-        {issues.map((issue, index) => (
-          <IssueOverview key={index} issue={issue} />
-        ))}
-      </div>
+    <div className="flex">
+      <StatusIssues status={IssueStatus.Backlog} />
+      <StatusIssues status={IssueStatus.Todo} />
+      <StatusIssues status={IssueStatus.InProgress} />
+      <StatusIssues status={IssueStatus.Done} />
+      <StatusIssues status={IssueStatus.Canceled} />
     </div>
   );
 }
