@@ -18,6 +18,7 @@ import { IssueStatus } from "@/lib/types/issue-status.enum";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import RingLoader from "react-spinners/RingLoader";
 import * as z from "zod";
 
 const schema = z.object({
@@ -37,18 +38,19 @@ export default function AddIssueDialog() {
   const { toast } = useToast();
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   async function onSubmit(values: z.infer<typeof schema>) {
     try {
+      setIsSubmitting(true);
       const newIssue = await addIssue(
         values.title,
         values.description,
         IssueStatus.Backlog,
         null,
       );
-      console.log("New issue", newIssue);
-
       setIsOpen(false);
+      setIsSubmitting(false);
     } catch (error) {
       console.error(error);
     }
@@ -104,11 +106,15 @@ export default function AddIssueDialog() {
               )}
             />
             <Button
-              className="h-8 self-end"
+              className="h-8 w-16 self-end"
               type="submit"
               disabled={!form.formState.isValid}
             >
-              Add
+              {isSubmitting ? (
+                <RingLoader size={16} color="white" />
+              ) : (
+                <span>Add</span>
+              )}
             </Button>
           </form>
         </Form>
