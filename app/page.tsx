@@ -28,8 +28,6 @@ export default function Home() {
           if (event.over === null) return;
           const targetIssueStatus = event.over.id;
           const droppedIssueId = event.active.id;
-          console.log("targetIssueStatus", targetIssueStatus);
-          console.log("droppedIssueId", droppedIssueId);
 
           setIssues((oldIssues) =>
             oldIssues.map((issue) =>

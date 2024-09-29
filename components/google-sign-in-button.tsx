@@ -15,7 +15,7 @@ export default function GoogleSignInButton() {
     });
 
     if (error) {
-      console.log(error);
+      console.error(error);
       return;
     }
 
