@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/select";
 import { IconPencilPlus } from "@tabler/icons-react";
 
+import IssueStatusBadge from "@/components/issue-status-badge";
 import {
   Form,
   FormControl,
@@ -62,7 +63,7 @@ export default function AddIssueDialog() {
       const newIssue = await addIssue(
         values.title,
         values.description,
-        IssueStatus.Backlog,
+        values.status,
         null,
       );
       setIssues((oldIssues) => [...oldIssues, newIssue]);
@@ -128,23 +129,28 @@ export default function AddIssueDialog() {
               )}
             />
 
-            <Select
-              value={form.watch("status")}
-              onValueChange={(value) =>
-                form.setValue("status", value as IssueStatus)
-              }
-            >
-              <SelectTrigger className="w-[180px]">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {Object.values(IssueStatus).map((status) => (
-                  <SelectItem key={status} value={status}>
-                    {status}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <div className="flex gap-x-2">
+              <Select
+                value={form.watch("status")}
+                onValueChange={(value) =>
+                  form.setValue("status", value as IssueStatus)
+                }
+              >
+                <SelectTrigger className="h-auto w-[120px] p-1 focus:ring-1 focus:ring-offset-0">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="w-[180px]">
+                  {Object.values(IssueStatus).map((status) => (
+                    <SelectItem key={status} value={status}>
+                      <div className="flex items-center justify-start gap-x-1">
+                        <IssueStatusBadge status={status} scale={0.8} />
+                        <span>{status}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
 
             <Button
               className="h-8 w-16 self-end"
