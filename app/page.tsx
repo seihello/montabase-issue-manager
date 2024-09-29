@@ -45,31 +45,11 @@ export default function Home() {
           );
         }}
       >
-        <StatusIssues
-          status={IssueStatus.Backlog}
-          activeIssueId={activeIssueId}
-          setActiveIssueId={setActiveIssueId}
-        />
-        <StatusIssues
-          status={IssueStatus.Todo}
-          activeIssueId={activeIssueId}
-          setActiveIssueId={setActiveIssueId}
-        />
-        <StatusIssues
-          status={IssueStatus.InProgress}
-          activeIssueId={activeIssueId}
-          setActiveIssueId={setActiveIssueId}
-        />
-        <StatusIssues
-          status={IssueStatus.Done}
-          activeIssueId={activeIssueId}
-          setActiveIssueId={setActiveIssueId}
-        />
-        <StatusIssues
-          status={IssueStatus.Canceled}
-          activeIssueId={activeIssueId}
-          setActiveIssueId={setActiveIssueId}
-        />
+        <StatusIssues status={IssueStatus.Backlog} />
+        <StatusIssues status={IssueStatus.Todo} />
+        <StatusIssues status={IssueStatus.InProgress} />
+        <StatusIssues status={IssueStatus.Done} />
+        <StatusIssues status={IssueStatus.Canceled} />
       </DndContext>
     </div>
   );

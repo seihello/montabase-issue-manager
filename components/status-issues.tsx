@@ -7,15 +7,9 @@ import { useRecoilValue } from "recoil";
 
 type Props = {
   status: IssueStatus;
-  activeIssueId: string | null;
-  setActiveIssueId: (value: string | null) => void;
 };
 
-export default function StatusIssues({
-  status,
-  activeIssueId,
-  setActiveIssueId,
-}: Props) {
+export default function StatusIssues({ status }: Props) {
   const issues = useRecoilValue(issuesState);
   const filteredIssues = issues.filter((issue) => issue.status === status);
 
