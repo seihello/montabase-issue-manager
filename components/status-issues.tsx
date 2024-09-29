@@ -20,7 +20,7 @@ export default function StatusIssues({
   const filteredIssues = issues.filter((issue) => issue.status === status);
 
   const { setNodeRef, isOver } = useDroppable({
-    id: status.toString(),
+    id: status,
   });
 
   return (

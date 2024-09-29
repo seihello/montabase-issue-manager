@@ -24,9 +24,22 @@ export default function Home() {
       <DndContext
         collisionDetection={pointerWithin}
         onDragEnd={(event) => {
-          console.log("Dropped Issue", event.active.id);
           if (event.over === null) return;
-          console.log("Dropped Status", event.over.id);
+          const targetIssueStatus = event.over.id;
+          const droppedIssueId = event.active.id;
+          console.log("targetIssueStatus", targetIssueStatus);
+          console.log("droppedIssueId", droppedIssueId);
+
+          setIssues((oldIssues) =>
+            oldIssues.map((issue) =>
+              issue.id === droppedIssueId
+                ? {
+                    ...issue,
+                    status: targetIssueStatus as IssueStatus,
+                  }
+                : issue,
+            ),
+          );
         }}
       >
         <StatusIssues
