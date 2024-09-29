@@ -4,13 +4,15 @@ import getAllIssues from "@/lib/supabase/get-all-issues";
 import updateIssueStatus from "@/lib/supabase/update-issue-status";
 import { IssueStatus } from "@/lib/types/issue-status.enum";
 import { issuesState } from "@/states/issues-state";
+import { userState } from "@/states/user.state";
 import { DndContext, pointerWithin } from "@dnd-kit/core";
-import { useEffect, useState } from "react";
-import { useSetRecoilState } from "recoil";
+import { useEffect } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 export default function Home() {
   const setIssues = useSetRecoilState(issuesState);
-  const [activeIssueId, setActiveIssueId] = useState<string | null>(null);
+  const user = useRecoilValue(userState);
+  console.log("user", user);
 
   useEffect(() => {
     const fetchIssues = async () => {

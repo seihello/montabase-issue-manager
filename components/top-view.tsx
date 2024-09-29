@@ -1,6 +1,5 @@
 "use client";
-import createClient from "@/lib/supabase/client";
-import { useEffect, useState } from "react";
+import Auth from "@/components/auth";
 import { RecoilRoot } from "recoil";
 import Sidebar from "./sidebar";
 
@@ -9,19 +8,9 @@ type Props = {
 };
 
 export default function TopView({ children }: Props) {
-  const [user, setUser] = useState<any>();
-  useEffect(() => {
-    const fetchUser = async () => {
-      const supabase = createClient();
-      const { data, error } = await supabase.auth.getSession();
-      console.log("user", data.session?.user);
-      setUser(user);
-    };
-    fetchUser();
-  }, []);
-
   return (
     <RecoilRoot>
+      <Auth />
       <Sidebar />
       <main className="flex-1 overflow-x-scroll bg-white p-4">{children}</main>
     </RecoilRoot>
