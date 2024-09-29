@@ -6,6 +6,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { IconPencilPlus } from "@tabler/icons-react";
 
 import {
@@ -31,6 +38,7 @@ import * as z from "zod";
 const schema = z.object({
   title: z.string().min(1, { message: "Title is missing" }),
   description: z.string(),
+  status: z.nativeEnum(IssueStatus),
 });
 
 export default function AddIssueDialog() {
@@ -41,6 +49,7 @@ export default function AddIssueDialog() {
     defaultValues: {
       title: "",
       description: "",
+      status: IssueStatus.Backlog,
     },
   });
 
@@ -118,6 +127,25 @@ export default function AddIssueDialog() {
                 </FormItem>
               )}
             />
+
+            <Select
+              value={form.watch("status")}
+              onValueChange={(value) =>
+                form.setValue("status", value as IssueStatus)
+              }
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {Object.values(IssueStatus).map((status) => (
+                  <SelectItem key={status} value={status}>
+                    {status}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
             <Button
               className="h-8 w-16 self-end"
               type="submit"
