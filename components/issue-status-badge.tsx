@@ -29,7 +29,11 @@ export default function IssueStatusBadge({ status }: Props) {
       );
 
     case IssueStatus.Canceled:
-      return <div className="size-4 rounded-full border-2 border-red-500" />;
+      return (
+        <div className="relative size-4 rounded-full border-2 border-red-500">
+          <div className="absolute left-1/2 top-1/2 h-[2px] w-4 -translate-x-1/2 -translate-y-1/2 -rotate-45 bg-red-500" />
+        </div>
+      );
 
     default:
       return <div className="size-4 rounded-full bg-gray-500" />;
