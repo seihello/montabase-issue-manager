@@ -6,16 +6,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
 import { IconPencilPlus } from "@tabler/icons-react";
 
-import IssueStatusBadge from "@/components/issue-status-badge";
+import IssueStatusSelect from "@/components/issue-status-select";
 import {
   Form,
   FormControl,
@@ -130,26 +124,12 @@ export default function AddIssueDialog() {
             />
 
             <div className="flex gap-x-2">
-              <Select
+              <IssueStatusSelect
                 value={form.watch("status")}
                 onValueChange={(value) =>
                   form.setValue("status", value as IssueStatus)
                 }
-              >
-                <SelectTrigger className="h-auto w-[120px] p-1 focus:ring-1 focus:ring-offset-0">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="w-[180px]">
-                  {Object.values(IssueStatus).map((status) => (
-                    <SelectItem key={status} value={status}>
-                      <div className="flex items-center justify-start gap-x-1">
-                        <IssueStatusBadge status={status} scale={0.8} />
-                        <span>{status}</span>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              />
             </div>
 
             <Button
