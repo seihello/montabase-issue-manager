@@ -45,11 +45,9 @@ export default function Home() {
           );
         }}
       >
-        <StatusIssues status={IssueStatus.Backlog} />
-        <StatusIssues status={IssueStatus.Todo} />
-        <StatusIssues status={IssueStatus.InProgress} />
-        <StatusIssues status={IssueStatus.Done} />
-        <StatusIssues status={IssueStatus.Canceled} />
+        {Object.values(IssueStatus).map((status) => (
+          <StatusIssues key={status} status={status} />
+        ))}
       </DndContext>
     </div>
   );
