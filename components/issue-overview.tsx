@@ -1,3 +1,4 @@
+import IssueStatusBadge from "@/components/issue-status-badge";
 import { Issue } from "@/lib/types/issue.type";
 import { useDraggable } from "@dnd-kit/core";
 
@@ -21,12 +22,13 @@ export default function IssueOverview({ issue }: Props) {
       {...listeners}
       style={{
         transform: transformStyle,
-        height: "fit-content",
       }}
-      className="flex flex-col rounded-md border bg-white p-2 shadow-sm"
+      className="flex h-16 flex-col justify-center rounded-md border bg-white p-2 shadow-sm"
     >
-      <div>{issue.title}</div>
-      <div>{issue.status}</div>
+      <div className="flex items-center gap-x-1">
+        <IssueStatusBadge status={issue.status} />
+        <span>{issue.title}</span>
+      </div>
     </div>
   );
 }
