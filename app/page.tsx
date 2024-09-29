@@ -3,7 +3,7 @@ import StatusIssues from "@/components/status-issues";
 import getAllIssues from "@/lib/supabase/get-all-issues";
 import { IssueStatus } from "@/lib/types/issue-status.enum";
 import { issuesState } from "@/states/issues-state";
-import { DndContext } from "@dnd-kit/core";
+import { DndContext, pointerWithin } from "@dnd-kit/core";
 import { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
 
@@ -22,6 +22,7 @@ export default function Home() {
   return (
     <div className="flex gap-x-2">
       <DndContext
+        collisionDetection={pointerWithin}
         onDragEnd={(event) => {
           console.log("Dropped Issue", event.active.id);
           if (event.over === null) return;

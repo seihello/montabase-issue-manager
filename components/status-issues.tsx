@@ -25,13 +25,14 @@ export default function StatusIssues({
 
   return (
     <div
+      ref={setNodeRef}
       className={`flex w-96 shrink-0 flex-col gap-y-2 rounded-lg p-2 ${isOver ? "bg-gray-200" : "bg-gray-50"}`}
     >
       <div className="flex items-center gap-x-1.5">
         <IssueStatusBadge status={status} />
         <span>{status}</span>
       </div>
-      <div className="flex flex-col gap-y-2" ref={setNodeRef}>
+      <div className="flex flex-col gap-y-2">
         {filteredIssues.map((issue, index) => (
           <IssueOverview key={index} issue={issue} />
         ))}
