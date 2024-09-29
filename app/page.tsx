@@ -1,6 +1,7 @@
 "use client";
 import StatusIssues from "@/components/status-issues";
 import getAllIssues from "@/lib/supabase/get-all-issues";
+import updateIssueStatus from "@/lib/supabase/update-issue-status";
 import { IssueStatus } from "@/lib/types/issue-status.enum";
 import { issuesState } from "@/states/issues-state";
 import { DndContext, pointerWithin } from "@dnd-kit/core";
@@ -23,7 +24,7 @@ export default function Home() {
     <div className="flex gap-x-2">
       <DndContext
         collisionDetection={pointerWithin}
-        onDragEnd={(event) => {
+        onDragEnd={async (event) => {
           if (event.over === null) return;
           const targetIssueStatus = event.over.id;
           const droppedIssueId = event.active.id;
@@ -39,6 +40,10 @@ export default function Home() {
                   }
                 : issue,
             ),
+          );
+          await updateIssueStatus(
+            droppedIssueId.toString(),
+            targetIssueStatus as IssueStatus,
           );
         }}
       >
