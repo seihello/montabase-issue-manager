@@ -10,6 +10,7 @@ import {
 import { IconPencilPlus } from "@tabler/icons-react";
 
 import DatePicker from "@/components/date-picker";
+import IssuePrioritySelect from "@/components/issue-priority-select";
 import IssueStatusSelect from "@/components/issue-status-select";
 import {
   Form,
@@ -21,6 +22,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import addIssue from "@/lib/supabase/add-issue";
+import { IssuePriority } from "@/lib/types/issue-priority.enum";
 import { IssueStatus } from "@/lib/types/issue-status.enum";
 import { Issue } from "@/lib/types/issue.type";
 import { issuesState } from "@/states/issues-state";
@@ -37,6 +39,7 @@ const schema = z.object({
   title: z.string().min(1, { message: "Title is missing" }),
   description: z.string(),
   status: z.nativeEnum(IssueStatus),
+  priority: z.nativeEnum(IssuePriority).optional(),
   planned_end_date: z.date().optional(),
 });
 
@@ -51,6 +54,7 @@ export default function AddIssueDialog() {
       title: "",
       description: "",
       status: IssueStatus.Backlog,
+      priority: undefined,
       planned_end_date: undefined,
     },
   });
@@ -69,7 +73,7 @@ export default function AddIssueDialog() {
           values.title,
           values.description,
           values.status,
-          null,
+          values.priority || null,
           values.planned_end_date || null,
         );
       } else {
@@ -78,7 +82,7 @@ export default function AddIssueDialog() {
           title: values.title,
           description: values.description,
           status: values.status,
-          priority: null,
+          priority: values.priority || null,
           planned_start_date: null,
           planned_end_date: values.planned_end_date || null,
           actual_start_date: null,
@@ -156,6 +160,12 @@ export default function AddIssueDialog() {
                 value={form.watch("status")}
                 onValueChange={(value) =>
                   form.setValue("status", value as IssueStatus)
+                }
+              />
+              <IssuePrioritySelect
+                value={form.watch("priority")}
+                onValueChange={(value) =>
+                  form.setValue("priority", value as IssuePriority)
                 }
               />
               <DatePicker
