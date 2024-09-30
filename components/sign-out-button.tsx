@@ -1,10 +1,12 @@
 import { Button } from "@/components/ui/button";
 import createClient from "@/lib/supabase/client";
+import { issuesState } from "@/states/issues-state";
 import { userState } from "@/states/user.state";
 import { useSetRecoilState } from "recoil";
 
 export default function SignOutButton() {
   const setUser = useSetRecoilState(userState);
+  const setIssues = useSetRecoilState(issuesState);
 
   return (
     <Button
@@ -15,6 +17,7 @@ export default function SignOutButton() {
           console.error(error.message);
         }
         setUser(null);
+        setIssues([]);
       }}
     >
       Sign out
