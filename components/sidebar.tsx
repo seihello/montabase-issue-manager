@@ -4,7 +4,11 @@ import SignOutButton from "@/components/sign-out-button";
 import { userState } from "@/states/user.state";
 import { useRecoilValue } from "recoil";
 
-export default function Sidebar() {
+type Props = {
+  isLoadingUser: boolean;
+};
+
+export default function Sidebar({ isLoadingUser }: Props) {
   const user = useRecoilValue(userState);
 
   console.log("user", user);
@@ -16,7 +20,11 @@ export default function Sidebar() {
         <div className="flex flex-1 flex-col items-end">
           <AddIssueDialog />
         </div>
-        {user ? <SignOutButton /> : <GoogleSignInButton />}
+        {isLoadingUser ? null : user ? (
+          <SignOutButton />
+        ) : (
+          <GoogleSignInButton />
+        )}
       </nav>
     </aside>
   );

@@ -3,11 +3,17 @@ import getUser from "@/lib/supabase/get-user";
 import { userState } from "@/states/user.state";
 import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
-export default function Auth() {
+
+type Props = {
+  setIsLoadingUser: (value: boolean) => void;
+};
+export default function Auth({ setIsLoadingUser }: Props) {
   const setUser = useSetRecoilState(userState);
   useEffect(() => {
     const fetchUser = async () => {
       try {
+        setIsLoadingUser(true);
+
         const supabase = createClient();
         const { data, error } = await supabase.auth.getSession();
         if (error) {
@@ -24,6 +30,8 @@ export default function Auth() {
         setUser(user);
       } catch (error) {
         console.error(error);
+      } finally {
+        setIsLoadingUser(false);
       }
     };
     fetchUser();
