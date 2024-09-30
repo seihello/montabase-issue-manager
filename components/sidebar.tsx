@@ -1,7 +1,14 @@
 import AddIssueDialog from "@/components/add-issue-dialog";
 import GoogleSignInButton from "@/components/google-sign-in-button";
+import SignOutButton from "@/components/sign-out-button";
+import { userState } from "@/states/user.state";
+import { useRecoilValue } from "recoil";
 
 export default function Sidebar() {
+  const user = useRecoilValue(userState);
+
+  console.log("user", user);
+
   return (
     <aside>
       <div className="h-screen w-56"></div>
@@ -9,7 +16,7 @@ export default function Sidebar() {
         <div className="flex flex-1 flex-col items-end">
           <AddIssueDialog />
         </div>
-        <GoogleSignInButton />
+        {user ? <SignOutButton /> : <GoogleSignInButton />}
       </nav>
     </aside>
   );
