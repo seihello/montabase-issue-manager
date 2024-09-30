@@ -26,7 +26,7 @@ export default function IssueOverview({ issue }: Props) {
       className="flex h-16 flex-col justify-center rounded-md border bg-white p-2 shadow-sm"
     >
       <div className="flex items-center gap-x-1">
-        <IssueStatusBadge status={issue.status} />
+        <IssueStatusBadge status={issue.status} scale={0.8} />
         <span>{issue.title}</span>
       </div>
     </div>
