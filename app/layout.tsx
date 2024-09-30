@@ -30,7 +30,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} flex w-screen bg-white text-sm text-gray-900 antialiased`}
       >
-        <TopView children={children} />
+        <TopView>{children}</TopView>
         <Toaster richColors closeButton />
       </body>
     </html>
