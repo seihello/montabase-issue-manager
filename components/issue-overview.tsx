@@ -1,12 +1,14 @@
 import IssueStatusBadge from "@/components/issue-status-badge";
 import { Issue } from "@/lib/types/issue.type";
 import { useDraggable } from "@dnd-kit/core";
+import { useRouter } from "next/navigation";
 
 type Props = {
   issue: Issue;
 };
 
 export default function IssueOverview({ issue }: Props) {
+  const router = useRouter();
   const { setNodeRef, listeners, attributes, transform, isDragging } =
     useDraggable({
       id: issue.id,
@@ -24,10 +26,13 @@ export default function IssueOverview({ issue }: Props) {
         transform: transformStyle,
       }}
       className="flex h-16 flex-col justify-center rounded-md border bg-white p-2 shadow-sm"
+      onClick={() => {
+        router.push(`/${issue.id}`);
+      }}
     >
       <div className="flex items-center gap-x-1">
         <IssueStatusBadge status={issue.status} scale={0.8} />
-        <span>{issue.title}</span>
+        <span className="hover:underline">{issue.title}</span>
       </div>
     </div>
   );

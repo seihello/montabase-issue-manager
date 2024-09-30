@@ -5,13 +5,27 @@ import updateIssueStatus from "@/lib/supabase/update-issue-status";
 import { IssueStatus } from "@/lib/types/issue-status.enum";
 import { issuesState } from "@/states/issues-state";
 import { userState } from "@/states/user.state";
-import { DndContext, pointerWithin } from "@dnd-kit/core";
+import {
+  DndContext,
+  PointerSensor,
+  pointerWithin,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
 import { useEffect } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 
 export default function Home() {
   const setIssues = useSetRecoilState(issuesState);
   const user = useRecoilValue(userState);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    }),
+  );
 
   useEffect(() => {
     const fetchIssues = async () => {
@@ -25,6 +39,7 @@ export default function Home() {
   return (
     <div className="flex gap-x-2">
       <DndContext
+        sensors={sensors}
         collisionDetection={pointerWithin}
         onDragEnd={async (event) => {
           if (event.over === null) return;
