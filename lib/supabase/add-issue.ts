@@ -4,6 +4,7 @@ import { IssueStatus } from "@/lib/types/issue-status.enum";
 import { Issue } from "@/lib/types/issue.type";
 
 export default async function addIssue(
+  userId: string,
   title: string,
   description: string,
   status: IssueStatus,
@@ -14,7 +15,7 @@ export default async function addIssue(
   try {
     const { data, error } = await supabase
       .from("issues")
-      .insert({ title, description, status, priority })
+      .insert({ title, description, status, priority, author: userId })
       .select("*")
       .single();
 

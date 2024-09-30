@@ -62,6 +62,7 @@ export default function AddIssueDialog() {
       let newIssue: Issue;
       if (user) {
         newIssue = await addIssue(
+          user.id,
           values.title,
           values.description,
           values.status,

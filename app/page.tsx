@@ -15,10 +15,11 @@ export default function Home() {
 
   useEffect(() => {
     const fetchIssues = async () => {
-      const issues = await getAllIssues();
+      if (!user) return;
+      const issues = await getAllIssues(user.id);
       setIssues(issues);
     };
-    if (user) fetchIssues();
+    fetchIssues();
   }, [user]);
 
   return (
