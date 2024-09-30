@@ -9,6 +9,7 @@ import {
 
 import { IconPencilPlus } from "@tabler/icons-react";
 
+import DatePicker from "@/components/date-picker";
 import IssueStatusSelect from "@/components/issue-status-select";
 import {
   Form,
@@ -36,6 +37,7 @@ const schema = z.object({
   title: z.string().min(1, { message: "Title is missing" }),
   description: z.string(),
   status: z.nativeEnum(IssueStatus),
+  planned_end_date: z.date().optional(),
 });
 
 export default function AddIssueDialog() {
@@ -49,6 +51,7 @@ export default function AddIssueDialog() {
       title: "",
       description: "",
       status: IssueStatus.Backlog,
+      planned_end_date: undefined,
     },
   });
 
@@ -67,6 +70,7 @@ export default function AddIssueDialog() {
           values.description,
           values.status,
           null,
+          values.planned_end_date || null,
         );
       } else {
         newIssue = {
@@ -76,7 +80,7 @@ export default function AddIssueDialog() {
           status: values.status,
           priority: null,
           planned_start_date: null,
-          planned_end_date: null,
+          planned_end_date: values.planned_end_date || null,
           actual_start_date: null,
           actual_end_date: null,
           parent_issue_id: null,
@@ -152,6 +156,12 @@ export default function AddIssueDialog() {
                 value={form.watch("status")}
                 onValueChange={(value) =>
                   form.setValue("status", value as IssueStatus)
+                }
+              />
+              <DatePicker
+                value={form.watch("planned_end_date")}
+                onValueChange={(value) =>
+                  form.setValue("planned_end_date", value)
                 }
               />
             </div>

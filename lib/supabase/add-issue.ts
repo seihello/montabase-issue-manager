@@ -9,13 +9,21 @@ export default async function addIssue(
   description: string,
   status: IssueStatus,
   priority: IssuePriority | null,
+  planned_start_date: Date | null,
 ): Promise<Issue> {
   const supabase = createClient();
 
   try {
     const { data, error } = await supabase
       .from("issues")
-      .insert({ title, description, status, priority, author: userId })
+      .insert({
+        title,
+        description,
+        status,
+        priority,
+        planned_start_date,
+        author: userId,
+      })
       .select("*")
       .single();
 
