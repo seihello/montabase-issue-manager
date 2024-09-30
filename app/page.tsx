@@ -12,15 +12,14 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 export default function Home() {
   const setIssues = useSetRecoilState(issuesState);
   const user = useRecoilValue(userState);
-  console.log("user", user);
 
   useEffect(() => {
     const fetchIssues = async () => {
       const issues = await getAllIssues();
       setIssues(issues);
     };
-    fetchIssues();
-  }, []);
+    if (user) fetchIssues();
+  }, [user]);
 
   return (
     <div className="flex gap-x-2">
@@ -41,10 +40,14 @@ export default function Home() {
                 : issue,
             ),
           );
-          await updateIssueStatus(
-            droppedIssueId.toString(),
-            targetIssueStatus as IssueStatus,
-          );
+
+          // Save the status to the database if the user is signed in
+          if (user) {
+            await updateIssueStatus(
+              droppedIssueId.toString(),
+              targetIssueStatus as IssueStatus,
+            );
+          }
         }}
       >
         {Object.values(IssueStatus).map((status) => (

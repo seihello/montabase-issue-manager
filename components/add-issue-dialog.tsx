@@ -21,12 +21,14 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import addIssue from "@/lib/supabase/add-issue";
 import { IssueStatus } from "@/lib/types/issue-status.enum";
+import { Issue } from "@/lib/types/issue.type";
 import { issuesState } from "@/states/issues-state";
+import { userState } from "@/states/user.state";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import RingLoader from "react-spinners/RingLoader";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { toast } from "sonner";
 import * as z from "zod";
 
@@ -37,6 +39,8 @@ const schema = z.object({
 });
 
 export default function AddIssueDialog() {
+  const user = useRecoilValue(userState);
+
   const setIssues = useSetRecoilState(issuesState);
 
   const form = useForm<z.infer<typeof schema>>({
@@ -54,12 +58,31 @@ export default function AddIssueDialog() {
   async function onSubmit(values: z.infer<typeof schema>) {
     try {
       setIsSubmitting(true);
-      const newIssue = await addIssue(
-        values.title,
-        values.description,
-        values.status,
-        null,
-      );
+
+      let newIssue: Issue;
+      if (user) {
+        newIssue = await addIssue(
+          values.title,
+          values.description,
+          values.status,
+          null,
+        );
+      } else {
+        newIssue = {
+          id: new Date().getMilliseconds().toString(),
+          title: values.title,
+          description: values.description,
+          status: values.status,
+          priority: null,
+          planned_start_date: null,
+          planned_end_date: null,
+          actual_start_date: null,
+          actual_end_date: null,
+          parent_issue_id: null,
+          created_at: new Date(),
+        };
+      }
+
       setIssues((oldIssues) => [...oldIssues, newIssue]);
       setIsOpen(false);
       form.reset();
