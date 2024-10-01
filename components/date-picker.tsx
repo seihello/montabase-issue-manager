@@ -1,7 +1,6 @@
 "use client";
 
 import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -12,6 +11,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
+import { IconCalendarFilled } from "@tabler/icons-react";
 
 type Props = {
   value: Date | undefined;
@@ -31,7 +31,7 @@ export default function DatePicker({ value, onValueChange }: Props) {
             )}
           >
             {value ? format(value, "MMM dd, yyyy") : <span>Due date</span>}
-            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+            <IconCalendarFilled className="ml-auto h-4 w-4 text-red-500" />
           </Button>
         </FormControl>
       </PopoverTrigger>
