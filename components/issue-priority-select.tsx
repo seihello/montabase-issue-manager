@@ -1,3 +1,4 @@
+import IssuePriorityBadge from "@/components/issue-priority-badge";
 import {
   Select,
   SelectContent,
@@ -25,14 +26,14 @@ export default function IssuePrioritySelect({ value, onValueChange }: Props) {
       <SelectContent className="w-[180px]">
         <SelectItem value={"No Priority"}>
           <div className="flex items-center justify-start gap-x-1">
-            {/* <IssueStatusBadge status={status} scale={0.8} /> */}
+            <IssuePriorityBadge priority={null} scale={0.8} />
             <span>No Priority</span>
           </div>
         </SelectItem>
         {Object.values(IssuePriority).map((priority) => (
           <SelectItem key={priority} value={priority}>
             <div className="flex items-center justify-start gap-x-1">
-              {/* <IssueStatusBadge status={status} scale={0.8} /> */}
+              <IssuePriorityBadge priority={priority} scale={0.8} />
               <span>{priority}</span>
             </div>
           </SelectItem>
