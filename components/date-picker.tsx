@@ -30,7 +30,7 @@ export default function DatePicker({ value, onValueChange }: Props) {
               !value && "text-muted-foreground",
             )}
           >
-            {value ? format(value, "MMM dd, yyyy") : <span>Pick due date</span>}
+            {value ? format(value, "MMM dd, yyyy") : <span>Due date</span>}
             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
           </Button>
         </FormControl>
