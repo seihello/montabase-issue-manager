@@ -1,7 +1,7 @@
 import createClient from "@/lib/supabase/client";
 import { Issue } from "@/lib/types/issue.type";
 
-export default async function updateIssueStatus(issue: Issue): Promise<void> {
+export default async function updateIssue(issue: Issue): Promise<void> {
   const supabase = createClient();
 
   try {
