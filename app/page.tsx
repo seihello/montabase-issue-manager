@@ -37,7 +37,7 @@ export default function Home() {
   }, [user]);
 
   return (
-    <div className="flex gap-x-2">
+    <div className="flex h-full gap-x-2">
       <DndContext
         sensors={sensors}
         collisionDetection={pointerWithin}
