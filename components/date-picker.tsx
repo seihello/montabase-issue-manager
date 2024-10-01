@@ -26,7 +26,7 @@ export default function DatePicker({ value, onValueChange }: Props) {
           <Button
             variant={"outline"}
             className={cn(
-              "w-[140px] pl-3 text-left font-normal",
+              "w-[140px] pl-3 text-left font-normal hover:bg-transparent",
               !value && "text-muted-foreground",
             )}
           >
