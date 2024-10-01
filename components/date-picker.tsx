@@ -4,7 +4,6 @@ import { format } from "date-fns";
 
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import { FormControl } from "@/components/ui/form";
 import {
   Popover,
   PopoverContent,
@@ -19,21 +18,21 @@ type Props = {
 };
 
 export default function DatePicker({ value, onValueChange }: Props) {
+  console.log("value", value);
+  
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <FormControl>
-          <Button
-            variant={"outline"}
-            className={cn(
-              "w-[140px] pl-3 text-left font-normal hover:bg-transparent",
-              !value && "text-muted-foreground",
-            )}
-          >
-            {value ? format(value, "MMM dd, yyyy") : <span>Due date</span>}
-            <IconCalendarFilled className="ml-auto h-4 w-4 text-red-500" />
-          </Button>
-        </FormControl>
+        <Button
+          variant={"outline"}
+          className={cn(
+            "w-[140px] pl-3 text-left font-normal hover:bg-transparent",
+            !value && "text-muted-foreground",
+          )}
+        >
+          {value ? format(value, "MMM dd, yyyy") : <span>Due date</span>}
+          <IconCalendarFilled className="ml-auto h-4 w-4 text-red-500" />
+        </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
         <Calendar

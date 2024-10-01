@@ -1,8 +1,13 @@
 "use client";
+import DatePicker from "@/components/date-picker";
+import IssuePrioritySelect from "@/components/issue-priority-select";
+import IssueStatusSelect from "@/components/issue-status-select";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import getIssueById from "@/lib/supabase/get-issue-by-id";
 import updateIssue from "@/lib/supabase/update-issue";
+import { IssuePriority } from "@/lib/types/issue-priority.enum";
+import { IssueStatus } from "@/lib/types/issue-status.enum";
 import { Issue } from "@/lib/types/issue.type";
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -39,6 +44,7 @@ export default function CourseSlugPage({
     }
 
     timerRef.current = setTimeout(() => {
+      // TODO: update the issues state?
       saveIssue(issue);
     }, 1000);
 
@@ -73,6 +79,32 @@ export default function CourseSlugPage({
         placeholder="Add description here"
         className={`border-none focus-visible:ring-0 focus-visible:ring-transparent`}
       />
+      <div className="flex gap-x-2">
+        <IssueStatusSelect
+          value={issue.status}
+          onValueChange={(value) => {
+            setIssue((prev) =>
+              prev ? { ...prev, status: value as IssueStatus } : undefined,
+            );
+          }}
+        />
+        <IssuePrioritySelect
+          value={issue.priority || undefined}
+          onValueChange={(value) => {
+            setIssue((prev) =>
+              prev ? { ...prev, priority: value as IssuePriority } : undefined,
+            );
+          }}
+        />
+        <DatePicker
+          value={issue.planned_start_date || undefined}
+          onValueChange={(value) => {
+            setIssue((prev) =>
+              prev ? { ...prev, planned_start_date: value || null } : undefined,
+            );
+          }}
+        />
+      </div>
     </div>
   );
 }
