@@ -39,7 +39,7 @@ const schema = z.object({
   title: z.string().min(1, { message: "Title is missing" }),
   description: z.string(),
   status: z.nativeEnum(IssueStatus),
-  priority: z.nativeEnum(IssuePriority).optional(),
+  priority: z.union([z.nativeEnum(IssuePriority), z.literal("")]).optional(),
   planned_end_date: z.date().optional(),
 });
 
@@ -164,9 +164,12 @@ export default function AddIssueDialog() {
               />
               <IssuePrioritySelect
                 value={form.watch("priority")}
-                onValueChange={(value) =>
-                  form.setValue("priority", value as IssuePriority)
-                }
+                onValueChange={(value) => {
+                  form.setValue(
+                    "priority",
+                    value === "No Priority" ? "" : (value as IssuePriority),
+                  );
+                }}
               />
               <DatePicker
                 value={form.watch("planned_end_date")}
