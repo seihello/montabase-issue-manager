@@ -139,3 +139,10 @@ body {
   background-color: #303030;
   opacity: 8%;
 }
+
+.issue-overview-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

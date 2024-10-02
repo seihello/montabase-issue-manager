@@ -34,9 +34,9 @@ export default function IssueOverview({ issue }: Props) {
         <div className="shrink-0">
           <IssueStatusBadge status={issue.status} scale={0.8} />
         </div>
-        <span className="flex-1 overflow-hidden overflow-ellipsis whitespace-nowrap hover:underline">
+        <p className="issue-overview-title flex-1 hover:underline">
           {issue.title}
-        </span>
+        </p>
       </div>
     </div>
   );
