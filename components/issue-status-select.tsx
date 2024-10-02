@@ -21,7 +21,7 @@ export default function IssueStatusSelect({
   return (
     <Select value={value} onValueChange={onValueChange}>
       <SelectTrigger
-        className={`${textHidden ? "chevron-hidden h-6 w-[36px] justify-center" : "w-[120px]"} px-2 py-1 focus:ring-1 focus:ring-offset-0 ${value ? "" : "text-muted-foreground"}`}
+        className={`${textHidden ? "chevron-hidden h-6 w-[32px] justify-center" : "w-[120px]"} py-1 focus:ring-1 focus:ring-offset-0 ${value ? "" : "text-muted-foreground"}`}
       >
         <div className="flex items-center justify-start gap-x-1">
           <IssueStatusBadge status={value as IssueStatus} scale={0.8} />

@@ -30,8 +30,8 @@ export default function DatePicker({
             "px-2 text-left font-normal hover:bg-transparent",
             yearHidden
               ? value
-                ? "h-6 w-[86px] text-xs"
-                : "date-hidden h-6 w-[36px]"
+                ? "h-6 w-[80px] text-xs"
+                : "date-hidden h-6 w-[32px]"
               : "w-[140px]",
             !value && "text-muted-foreground",
           )}
