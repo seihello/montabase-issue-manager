@@ -10,6 +10,7 @@ import { IssuePriority } from "@/lib/types/issue-priority.enum";
 import { IssueStatus } from "@/lib/types/issue-status.enum";
 import { Issue } from "@/lib/types/issue.type";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
 
 export default function CourseSlugPage({
   params,
@@ -31,6 +32,11 @@ export default function CourseSlugPage({
   const saveIssue = useCallback(async (issue: Issue) => {
     try {
       await updateIssue(issue);
+
+      toast.success("Issue updated", {
+        description: issue.title,
+        duration: 3000,
+      });
     } catch (error) {
       console.error(error);
     }
