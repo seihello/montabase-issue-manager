@@ -67,7 +67,7 @@ export default function CourseSlugPage({
           )
         }
         placeholder="Issue title"
-        className={`border-none text-xl font-medium focus-visible:ring-0 focus-visible:ring-transparent`}
+        className={`border-none text-2xl font-bold focus-visible:ring-0 focus-visible:ring-transparent`}
       />
       <Textarea
         value={issue.description || ""}
@@ -77,7 +77,7 @@ export default function CourseSlugPage({
           )
         }
         placeholder="Add description here"
-        className={`border-none focus-visible:ring-0 focus-visible:ring-transparent`}
+        className={`border-none text-base focus-visible:ring-0 focus-visible:ring-transparent`}
       />
       <div className="flex gap-x-2">
         <IssueStatusSelect
