@@ -15,7 +15,7 @@ type Props = {
 export default function IssuePriorityBadge({ priority, scale }: Props) {
   return (
     <div
-      className="flex size-4 items-center justify-center border-0 border-red-500"
+      className="flex size-4 origin-center items-center justify-center border-0 border-red-500"
       style={{ scale: scale }}
     >
       {(() => {

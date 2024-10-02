@@ -147,6 +147,10 @@ body {
   overflow: hidden;
 }
 
-button.chevron-hidden .lucide-chevron-down {
+button.chevron-hidden .lucide {
   display: none;
+}
+
+button.date-hidden .tabler-icon {
+  margin-left: 0px;
 }

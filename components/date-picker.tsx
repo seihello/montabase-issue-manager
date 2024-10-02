@@ -28,7 +28,11 @@ export default function DatePicker({
           variant={"outline"}
           className={cn(
             "px-2 text-left font-normal hover:bg-transparent",
-            yearHidden ? (value ? "w-[86px]" : "w-[36px]") : "w-[140px]",
+            yearHidden
+              ? value
+                ? "w-[86px]"
+                : "date-hidden w-[36px]"
+              : "w-[140px]",
             !value && "text-muted-foreground",
           )}
           onClick={(e) => e.stopPropagation()}
