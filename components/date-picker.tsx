@@ -25,6 +25,7 @@ export default function DatePicker({ value, onValueChange }: Props) {
             "w-[140px] pl-3 text-left font-normal hover:bg-transparent",
             !value && "text-muted-foreground",
           )}
+          onClick={(e) => e.stopPropagation()}
         >
           {value ? (
             value.toLocaleDateString("en-US", {
@@ -38,7 +39,11 @@ export default function DatePicker({ value, onValueChange }: Props) {
           <IconCalendarFilled className="ml-auto h-4 w-4 text-red-500" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0" align="start">
+      <PopoverContent
+        className="w-auto p-0"
+        align="start"
+        onClick={(e) => e.stopPropagation()}
+      >
         <Calendar
           mode="single"
           selected={value}

@@ -1,5 +1,7 @@
+import DatePicker from "@/components/date-picker";
 import IssuePrioritySelect from "@/components/issue-priority-select";
 import IssueStatusSelect from "@/components/issue-status-select";
+import updateIssuePlannedStartDate from "@/lib/supabase/update-issue-planned-start-date";
 import updateIssuePriority from "@/lib/supabase/update-issue-priority";
 import updateIssueStatus from "@/lib/supabase/update-issue-status";
 import { IssuePriority } from "@/lib/types/issue-priority.enum";
@@ -105,6 +107,31 @@ export default function IssueOverview({ issue }: Props) {
             }
           }}
           textHidden
+        />
+        <DatePicker
+          value={issue.planned_start_date || undefined}
+          onValueChange={async (value) => {
+            try {
+              if (user)
+                await updateIssuePlannedStartDate(issue.id, value || null);
+              setIssues((oldIssues) =>
+                oldIssues.map((oldIssue) =>
+                  oldIssue.id === issue.id
+                    ? {
+                        ...oldIssue,
+                        planned_start_date: value || null,
+                      }
+                    : oldIssue,
+                ),
+              );
+              toast.success("Planned start date updated", {
+                description: `${issue.title} - ${value}`,
+                duration: 3000,
+              });
+            } catch (error) {
+              console.error(error);
+            }
+          }}
         />
       </div>
     </div>
