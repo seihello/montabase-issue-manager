@@ -1,7 +1,9 @@
 import IssuePrioritySelect from "@/components/issue-priority-select";
-import IssueStatusBadge from "@/components/issue-status-badge";
+import IssueStatusSelect from "@/components/issue-status-select";
 import updateIssuePriority from "@/lib/supabase/update-issue-priority";
+import updateIssueStatus from "@/lib/supabase/update-issue-status";
 import { IssuePriority } from "@/lib/types/issue-priority.enum";
+import { IssueStatus } from "@/lib/types/issue-status.enum";
 import { Issue } from "@/lib/types/issue.type";
 import { issuesState } from "@/states/issues-state";
 import { userState } from "@/states/user.state";
@@ -45,39 +47,66 @@ export default function IssueOverview({ issue }: Props) {
         {/* TODO: Add a project name? */}
       </p>
       <div className="flex w-full items-center gap-x-1">
-        <div className="shrink-0">
+        {/* <div className="shrink-0">
           <IssueStatusBadge status={issue.status} scale={0.8} />
-        </div>
+        </div> */}
         <p className="issue-overview-title flex-1 hover:underline">
           {issue.title}
         </p>
       </div>
-      <IssuePrioritySelect
-        value={issue.priority || undefined}
-        onValueChange={async (value) => {
-          try {
-            if (user)
-              await updateIssuePriority(issue.id, value as IssuePriority);
-            setIssues((oldIssues) =>
-              oldIssues.map((oldIssue) =>
-                oldIssue.id === issue.id
-                  ? {
-                      ...oldIssue,
-                      priority: value as IssuePriority,
-                    }
-                  : oldIssue,
-              ),
-            );
-            toast.success("Priority updated", {
-              description: `${issue.title} - ${value}`,
-              duration: 3000,
-            });
-          } catch (error) {
-            console.error(error);
-          }
-        }}
-        textHidden
-      />
+      <div className="flex gap-x-1">
+        <IssueStatusSelect
+          value={issue.status || undefined}
+          onValueChange={async (value) => {
+            try {
+              if (user) await updateIssueStatus(issue.id, value as IssueStatus);
+              setIssues((oldIssues) =>
+                oldIssues.map((oldIssue) =>
+                  oldIssue.id === issue.id
+                    ? {
+                        ...oldIssue,
+                        status: value as IssueStatus,
+                      }
+                    : oldIssue,
+                ),
+              );
+              toast.success("Status updated", {
+                description: `${issue.title} - ${value}`,
+                duration: 3000,
+              });
+            } catch (error) {
+              console.error(error);
+            }
+          }}
+          textHidden
+        />
+        <IssuePrioritySelect
+          value={issue.priority || undefined}
+          onValueChange={async (value) => {
+            try {
+              if (user)
+                await updateIssuePriority(issue.id, value as IssuePriority);
+              setIssues((oldIssues) =>
+                oldIssues.map((oldIssue) =>
+                  oldIssue.id === issue.id
+                    ? {
+                        ...oldIssue,
+                        priority: value as IssuePriority,
+                      }
+                    : oldIssue,
+                ),
+              );
+              toast.success("Priority updated", {
+                description: `${issue.title} - ${value}`,
+                duration: 3000,
+              });
+            } catch (error) {
+              console.error(error);
+            }
+          }}
+          textHidden
+        />
+      </div>
     </div>
   );
 }
