@@ -95,6 +95,11 @@ export default function AddIssueDialog() {
       setIssues((oldIssues) => [...oldIssues, newIssue]);
       setIsOpen(false);
       form.reset();
+
+      toast.success("Issue created", {
+        description: newIssue.title,
+        duration: 3000,
+      });
     } catch (error) {
       console.error(error);
       toast.error("Error", {
