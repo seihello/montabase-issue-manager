@@ -132,6 +132,7 @@ export default function IssueOverview({ issue }: Props) {
               console.error(error);
             }
           }}
+          yearHidden
         />
       </div>
     </div>

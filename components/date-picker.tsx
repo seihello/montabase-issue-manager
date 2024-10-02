@@ -13,28 +13,34 @@ import { IconCalendarFilled } from "@tabler/icons-react";
 type Props = {
   value: Date | undefined;
   onValueChange: (value: Date | undefined) => void;
+  yearHidden?: boolean;
 };
 
-export default function DatePicker({ value, onValueChange }: Props) {
+export default function DatePicker({
+  value,
+  onValueChange,
+  yearHidden = false,
+}: Props) {
   return (
     <Popover>
       <PopoverTrigger asChild>
         <Button
           variant={"outline"}
           className={cn(
-            "w-[140px] pl-3 text-left font-normal hover:bg-transparent",
+            "px-2 text-left font-normal hover:bg-transparent",
+            yearHidden ? (value ? "w-[86px]" : "w-[36px]") : "w-[140px]",
             !value && "text-muted-foreground",
           )}
           onClick={(e) => e.stopPropagation()}
         >
           {value ? (
             value.toLocaleDateString("en-US", {
-              year: "numeric",
+              year: yearHidden ? undefined : "numeric",
               month: "short",
               day: "numeric",
             })
           ) : (
-            <span>Due date</span>
+            <span>{yearHidden ? "" : "Due date"}</span>
           )}
           <IconCalendarFilled className="ml-auto h-4 w-4 text-red-500" />
         </Button>
