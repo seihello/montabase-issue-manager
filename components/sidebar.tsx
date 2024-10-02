@@ -12,8 +12,6 @@ type Props = {
 export default function Sidebar({ isLoadingUser }: Props) {
   const user = useRecoilValue(userState);
 
-  console.log("user", user);
-
   return (
     <aside>
       <div className="h-screen w-56"></div>

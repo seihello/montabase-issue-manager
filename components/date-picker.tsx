@@ -16,8 +16,6 @@ type Props = {
 };
 
 export default function DatePicker({ value, onValueChange }: Props) {
-  console.log("value", value);
-
   return (
     <Popover>
       <PopoverTrigger asChild>

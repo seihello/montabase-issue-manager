@@ -14,8 +14,6 @@ type Props = {
 };
 
 export default function IssuePrioritySelect({ value, onValueChange }: Props) {
-  console.log("b value", value);
-
   return (
     <Select value={value} onValueChange={onValueChange}>
       <SelectTrigger

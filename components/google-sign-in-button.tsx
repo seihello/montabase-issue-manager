@@ -18,8 +18,6 @@ export default function GoogleSignInButton() {
       console.error(error);
       return;
     }
-
-    console.log("data", data);
   };
 
   return (
