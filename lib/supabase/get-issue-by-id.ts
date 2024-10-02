@@ -15,7 +15,12 @@ export default async function getIssueById(issueId: string): Promise<Issue> {
       throw new Error(error.message);
     }
 
-    return data;
+    return {
+      ...data,
+      planned_start_date: data.planned_start_date
+        ? new Date(data.planned_start_date)
+        : null,
+    };
   } catch (error) {
     throw error;
   }

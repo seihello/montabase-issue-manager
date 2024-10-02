@@ -1,7 +1,5 @@
 "use client";
 
-import { format } from "date-fns";
-
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -19,7 +17,7 @@ type Props = {
 
 export default function DatePicker({ value, onValueChange }: Props) {
   console.log("value", value);
-  
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -30,7 +28,15 @@ export default function DatePicker({ value, onValueChange }: Props) {
             !value && "text-muted-foreground",
           )}
         >
-          {value ? format(value, "MMM dd, yyyy") : <span>Due date</span>}
+          {value ? (
+            value.toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            })
+          ) : (
+            <span>Due date</span>
+          )}
           <IconCalendarFilled className="ml-auto h-4 w-4 text-red-500" />
         </Button>
       </PopoverTrigger>

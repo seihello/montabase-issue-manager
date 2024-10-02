@@ -14,7 +14,12 @@ export default async function getAllIssues(userId: string): Promise<Issue[]> {
       throw new Error(error.message);
     }
 
-    return data;
+    return data.map((row) => ({
+      ...row,
+      planned_start_date: row.planned_start_date
+        ? new Date(row.planned_start_date)
+        : null,
+    }));
   } catch (error) {
     throw error;
   }
