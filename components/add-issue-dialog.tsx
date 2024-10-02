@@ -39,7 +39,7 @@ const schema = z.object({
   title: z.string().min(1, { message: "Title is missing" }),
   description: z.string(),
   status: z.nativeEnum(IssueStatus),
-  priority: z.union([z.nativeEnum(IssuePriority), z.literal("")]).optional(),
+  priority: z.nativeEnum(IssuePriority),
   planned_end_date: z.date().optional(),
 });
 
@@ -54,7 +54,7 @@ export default function AddIssueDialog() {
       title: "",
       description: "",
       status: IssueStatus.Backlog,
-      priority: undefined,
+      priority: IssuePriority.NoPriority,
       planned_end_date: undefined,
     },
   });
@@ -82,7 +82,7 @@ export default function AddIssueDialog() {
           title: values.title,
           description: values.description,
           status: values.status,
-          priority: values.priority || null,
+          priority: values.priority,
           planned_start_date: null,
           planned_end_date: values.planned_end_date || null,
           actual_start_date: null,
@@ -170,10 +170,7 @@ export default function AddIssueDialog() {
               <IssuePrioritySelect
                 value={form.watch("priority")}
                 onValueChange={(value) => {
-                  form.setValue(
-                    "priority",
-                    value === "No Priority" ? "" : (value as IssuePriority),
-                  );
+                  form.setValue("priority", value as IssuePriority);
                 }}
               />
               <DatePicker

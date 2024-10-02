@@ -36,12 +36,12 @@ export default function IssueOverview({ issue }: Props) {
       style={{
         transform: transformStyle,
       }}
-      className="flex h-16 flex-col justify-center rounded-md border bg-white p-2 shadow-sm"
+      className="flex h-20 flex-col items-end justify-center gap-y-2 rounded-md border bg-white p-2 shadow-sm"
       onClick={() => {
         router.push(`/${issue.id}`);
       }}
     >
-      <div className="flex items-center gap-x-1">
+      <div className="flex w-full items-center gap-x-1">
         <div className="shrink-0">
           <IssueStatusBadge status={issue.status} scale={0.8} />
         </div>
@@ -73,6 +73,7 @@ export default function IssueOverview({ issue }: Props) {
             console.error(error);
           }
         }}
+        textHidden
       />
     </div>
   );

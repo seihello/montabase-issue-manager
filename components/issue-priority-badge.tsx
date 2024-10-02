@@ -37,7 +37,7 @@ export default function IssuePriorityBadge({ priority, scale }: Props) {
                 className="text-green-500"
               />
             );
-          default:
+          case IssuePriority.NoPriority:
             return <IconLineDashed size={20} className="text-gray-700" />;
         }
       })()}

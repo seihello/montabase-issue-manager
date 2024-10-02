@@ -6,7 +6,7 @@ export type Issue = {
   title: string;
   description: string | null;
   status: IssueStatus;
-  priority: IssuePriority | null;
+  priority: IssuePriority;
   planned_start_date: Date | null;
   planned_end_date: Date | null;
   actual_start_date: Date | null;
