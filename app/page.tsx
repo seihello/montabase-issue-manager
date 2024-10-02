@@ -14,8 +14,10 @@ import {
 } from "@dnd-kit/core";
 import { useEffect } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
+import { toast } from "sonner";
 
 export default function Home() {
+  const issues = useRecoilValue(issuesState);
   const setIssues = useSetRecoilState(issuesState);
   const user = useRecoilValue(userState);
 
@@ -46,6 +48,9 @@ export default function Home() {
           const targetIssueStatus = event.over.id;
           const droppedIssueId = event.active.id;
 
+          let targetIssueTitle =
+            issues.find((issue) => issue.id === droppedIssueId)?.title || "";
+
           setIssues((oldIssues) =>
             oldIssues.map((issue) =>
               issue.id === droppedIssueId
@@ -63,6 +68,13 @@ export default function Home() {
               droppedIssueId.toString(),
               targetIssueStatus as IssueStatus,
             );
+          }
+
+          if (targetIssueTitle) {
+            toast.success("Status updated", {
+              description: `${targetIssueTitle} - ${targetIssueStatus}`,
+              duration: 3000,
+            });
           }
         }}
       >
