@@ -31,8 +31,12 @@ export default function IssueOverview({ issue }: Props) {
       }}
     >
       <div className="flex items-center gap-x-1">
-        <IssueStatusBadge status={issue.status} scale={0.8} />
-        <span className="hover:underline">{issue.title}</span>
+        <div className="shrink-0">
+          <IssueStatusBadge status={issue.status} scale={0.8} />
+        </div>
+        <span className="flex-1 overflow-hidden overflow-ellipsis whitespace-nowrap hover:underline">
+          {issue.title}
+        </span>
       </div>
     </div>
   );
