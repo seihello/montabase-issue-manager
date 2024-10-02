@@ -38,7 +38,7 @@ export default function IssueOverview({ issue }: Props) {
       style={{
         transform: transformStyle,
       }}
-      className="flex flex-col items-end justify-center gap-y-1 rounded-md border bg-white p-2 shadow-sm"
+      className="flex flex-col items-end justify-center gap-y-1 rounded-md border bg-white py-2 pl-3 pr-2 shadow-sm"
       onClick={() => {
         router.push(`/${issue.id}`);
       }}
@@ -50,7 +50,7 @@ export default function IssueOverview({ issue }: Props) {
         {/* <div className="shrink-0">
           <IssueStatusBadge status={issue.status} scale={0.8} />
         </div> */}
-        <p className="issue-overview-title flex-1 hover:underline">
+        <p className="issue-overview-title flex-1 leading-4 hover:underline">
           {issue.title}
         </p>
       </div>
