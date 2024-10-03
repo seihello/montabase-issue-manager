@@ -7,6 +7,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { IconCalendarFilled } from "@tabler/icons-react";
 
@@ -23,32 +29,49 @@ export default function DatePicker({
 }: Props) {
   return (
     <Popover>
-      <PopoverTrigger asChild>
-        <Button
-          variant={"outline"}
-          className={cn(
-            "px-2 text-left font-normal hover:bg-transparent",
-            yearHidden
-              ? value
-                ? "h-6 w-[80px] text-xs"
-                : "date-hidden h-6 w-[32px]"
-              : "w-[140px]",
-            !value && "text-muted-foreground",
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <PopoverTrigger asChild>
+              <Button
+                variant={"outline"}
+                className={cn(
+                  "px-2 text-left font-normal hover:bg-transparent",
+                  yearHidden
+                    ? value
+                      ? "h-6 w-[80px] text-xs"
+                      : "date-hidden h-6 w-[32px]"
+                    : "w-[140px]",
+                  !value && "text-muted-foreground",
+                )}
+                onClick={(e) => e.stopPropagation()}
+              >
+                {value ? (
+                  value.toLocaleDateString("en-US", {
+                    year: yearHidden ? undefined : "numeric",
+                    month: "short",
+                    day: "numeric",
+                  })
+                ) : (
+                  <span>{yearHidden ? "" : "Due date"}</span>
+                )}
+                <IconCalendarFilled className="ml-auto h-4 w-4 text-red-500" />
+              </Button>
+            </PopoverTrigger>
+          </TooltipTrigger>
+          {yearHidden && (
+            <TooltipContent className="text-xs">{`Due date: ${
+              value
+                ? value.toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })
+                : "Not set"
+            }`}</TooltipContent>
           )}
-          onClick={(e) => e.stopPropagation()}
-        >
-          {value ? (
-            value.toLocaleDateString("en-US", {
-              year: yearHidden ? undefined : "numeric",
-              month: "short",
-              day: "numeric",
-            })
-          ) : (
-            <span>{yearHidden ? "" : "Due date"}</span>
-          )}
-          <IconCalendarFilled className="ml-auto h-4 w-4 text-red-500" />
-        </Button>
-      </PopoverTrigger>
+        </Tooltip>
+      </TooltipProvider>
       <PopoverContent
         className="w-auto p-0"
         align="start"
