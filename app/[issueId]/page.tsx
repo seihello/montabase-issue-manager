@@ -9,7 +9,7 @@ import getIssueById from "@/lib/supabase/get-issue-by-id";
 import { IssuePriority } from "@/lib/types/issue-priority.enum";
 import { IssueStatus } from "@/lib/types/issue-status.enum";
 import { issueState } from "@/states/issue-state";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 
 export default function CourseSlugPage({
@@ -20,14 +20,21 @@ export default function CourseSlugPage({
   const issue = useRecoilValue(issueState);
   const setIssue = useSetRecoilState(issueState);
 
-  const { setIssueStatus, setIssuePriority, setIssuePlannedEndDate } =
-    useUpdateIssue(true);
+  const [editingTitle, setEditingTitle] = useState("");
+
+  const {
+    setIssueTitle,
+    setIssueStatus,
+    setIssuePriority,
+    setIssuePlannedEndDate,
+  } = useUpdateIssue(true);
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const fetchIssue = async () => {
       const issue = await getIssueById(params.issueId);
+      setEditingTitle(issue.title);
       setIssue(issue);
     };
     fetchIssue();
@@ -46,34 +53,32 @@ export default function CourseSlugPage({
   //   }
   // }, []);
 
-  // useEffect(() => {
-  //   if (!issue || !issue.title) return;
+  useEffect(() => {
+    if (!issue || !editingTitle) return;
 
-  //   if (timerRef.current) {
-  //     clearTimeout(timerRef.current);
-  //   }
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
 
-  //   timerRef.current = setTimeout(() => {
-  //     // TODO: update the issues state?
-  //     saveIssue(issue);
-  //   }, 1000);
+    timerRef.current = setTimeout(() => {
+      setIssueTitle(issue.id, editingTitle);
+    }, 1000);
 
-  //   return () => {
-  //     if (timerRef.current) {
-  //       clearTimeout(timerRef.current);
-  //     }
-  //   };
-  // }, [issue, saveIssue, timerRef]);
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+    };
+    // eslint-disable-next-line
+  }, [editingTitle, timerRef]);
 
   if (!issue) return;
 
   return (
     <div className="flex flex-col gap-y-4 p-16">
       <Input
-        value={issue.title}
-        onChange={(e) =>
-          setIssue((prev) => (prev ? { ...prev, title: e.target.value } : null))
-        }
+        value={editingTitle}
+        onChange={(e) => setEditingTitle(e.target.value)}
         placeholder="Issue title"
         className={`border-none text-2xl font-bold focus-visible:ring-0 focus-visible:ring-transparent`}
       />

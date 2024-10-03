@@ -1,6 +1,7 @@
 import updateIssuePlannedEndDate from "@/lib/supabase/update-issue-planned-end-date";
 import updateIssuePriority from "@/lib/supabase/update-issue-priority";
 import updateIssueStatus from "@/lib/supabase/update-issue-status";
+import updateIssueTitle from "@/lib/supabase/update-issue-title";
 import { IssuePriority } from "@/lib/types/issue-priority.enum";
 import { IssueStatus } from "@/lib/types/issue-status.enum";
 import { issueState } from "@/states/issue-state";
@@ -13,6 +14,40 @@ export default function useUpdateIssue(isIndividual: boolean) {
   const user = useRecoilValue(userState);
   const setIssue = useSetRecoilState(issueState);
   const setIssues = useSetRecoilState(issuesState);
+
+  const setIssueTitle = async (issueId: string, newTitle: string) => {
+    try {
+      if (user) await updateIssueTitle(issueId, newTitle);
+      if (isIndividual) {
+        setIssue((oldIssue) =>
+          oldIssue
+            ? {
+                ...oldIssue,
+                title: newTitle,
+              }
+            : null,
+        );
+      } else {
+        setIssues((oldIssues) =>
+          oldIssues.map((oldIssue) =>
+            oldIssue.id === issueId
+              ? {
+                  ...oldIssue,
+                  title: newTitle,
+                }
+              : oldIssue,
+          ),
+        );
+      }
+
+      toast.success("Title updated", {
+        description: `${newTitle}`,
+        duration: 3000,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const setIssueStatus = async (
     issueId: string,
@@ -137,5 +172,10 @@ export default function useUpdateIssue(isIndividual: boolean) {
     }
   };
 
-  return { setIssueStatus, setIssuePriority, setIssuePlannedEndDate };
+  return {
+    setIssueTitle,
+    setIssueStatus,
+    setIssuePriority,
+    setIssuePlannedEndDate,
+  };
 }
