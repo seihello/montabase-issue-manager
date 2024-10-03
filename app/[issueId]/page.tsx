@@ -21,9 +21,12 @@ export default function CourseSlugPage({
   const setIssue = useSetRecoilState(issueState);
 
   const [editingTitle, setEditingTitle] = useState("");
+  const [editingDescription, setEditingDescription] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   const {
     setIssueTitle,
+    setIssueDescription,
     setIssueStatus,
     setIssuePriority,
     setIssuePlannedEndDate,
@@ -33,9 +36,17 @@ export default function CourseSlugPage({
 
   useEffect(() => {
     const fetchIssue = async () => {
-      const issue = await getIssueById(params.issueId);
-      setEditingTitle(issue.title);
-      setIssue(issue);
+      try {
+        setIsLoading(true);
+        const issue = await getIssueById(params.issueId);
+        setEditingTitle(issue.title);
+        setEditingDescription(issue.description || "");
+        setIssue(issue);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchIssue();
   }, [params.issueId, setIssue]);
@@ -54,7 +65,7 @@ export default function CourseSlugPage({
   // }, []);
 
   useEffect(() => {
-    if (!issue || !editingTitle) return;
+    if (!issue || issue.title === editingTitle) return;
 
     if (timerRef.current) {
       clearTimeout(timerRef.current);
@@ -72,6 +83,25 @@ export default function CourseSlugPage({
     // eslint-disable-next-line
   }, [editingTitle, timerRef]);
 
+  useEffect(() => {
+    if (!issue || issue.description === editingDescription) return;
+
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+
+    timerRef.current = setTimeout(() => {
+      setIssueDescription(issue.id, issue.title, editingDescription);
+    }, 1000);
+
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+    };
+    // eslint-disable-next-line
+  }, [editingDescription, timerRef]);
+
   if (!issue) return;
 
   return (
@@ -83,12 +113,8 @@ export default function CourseSlugPage({
         className={`border-none text-2xl font-bold focus-visible:ring-0 focus-visible:ring-transparent`}
       />
       <Textarea
-        value={issue.description || ""}
-        onChange={(e) =>
-          setIssue((prev) =>
-            prev ? { ...prev, description: e.target.value } : null,
-          )
-        }
+        value={editingDescription}
+        onChange={(e) => setEditingDescription(e.target.value)}
         placeholder="Add description here"
         className={`border-none text-base focus-visible:ring-0 focus-visible:ring-transparent`}
       />

@@ -1,3 +1,4 @@
+import updateIssueDescription from "@/lib/supabase/update-issue-description";
 import updateIssuePlannedEndDate from "@/lib/supabase/update-issue-planned-end-date";
 import updateIssuePriority from "@/lib/supabase/update-issue-priority";
 import updateIssueStatus from "@/lib/supabase/update-issue-status";
@@ -42,6 +43,44 @@ export default function useUpdateIssue(isIndividual: boolean) {
 
       toast.success("Title updated", {
         description: `${newTitle}`,
+        duration: 3000,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const setIssueDescription = async (
+    issueId: string,
+    issueTitle: string,
+    newDescription: string,
+  ) => {
+    try {
+      if (user) await updateIssueDescription(issueId, newDescription);
+      if (isIndividual) {
+        setIssue((oldIssue) =>
+          oldIssue
+            ? {
+                ...oldIssue,
+                description: newDescription,
+              }
+            : null,
+        );
+      } else {
+        setIssues((oldIssues) =>
+          oldIssues.map((oldIssue) =>
+            oldIssue.id === issueId
+              ? {
+                  ...oldIssue,
+                  description: newDescription,
+                }
+              : oldIssue,
+          ),
+        );
+      }
+
+      toast.success("Description updated", {
+        description: `${issueTitle} - ${newDescription}`,
         duration: 3000,
       });
     } catch (error) {
@@ -174,6 +213,7 @@ export default function useUpdateIssue(isIndividual: boolean) {
 
   return {
     setIssueTitle,
+    setIssueDescription,
     setIssueStatus,
     setIssuePriority,
     setIssuePlannedEndDate,
