@@ -1,15 +1,15 @@
 import createClient from "@/lib/supabase/client";
 
-export default async function updateIssuePlannedStartDate(
+export default async function updateIssuePlannedEndDate(
   issueId: string,
-  plannedDate: Date | null,
+  plannedEndDate: Date | null,
 ): Promise<void> {
   const supabase = createClient();
 
   try {
     const { error } = await supabase
       .from("issues")
-      .update({ planned_start_date: plannedDate })
+      .update({ planned_end_date: plannedEndDate })
       .eq("id", issueId);
 
     if (error) {

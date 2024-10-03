@@ -16,8 +16,8 @@ export default async function getAllIssues(userId: string): Promise<Issue[]> {
 
     return data.map((row) => ({
       ...row,
-      planned_start_date: row.planned_start_date
-        ? new Date(row.planned_start_date)
+      planned_end_date: row.planned_end_date
+        ? new Date(row.planned_end_date)
         : null,
     }));
   } catch (error) {

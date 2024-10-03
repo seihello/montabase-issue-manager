@@ -12,7 +12,7 @@ export default async function updateIssue(issue: Issue): Promise<void> {
         description: issue.description,
         status: issue.status,
         priority: issue.priority,
-        planned_start_date: issue.planned_start_date,
+        planned_end_date: issue.planned_end_date,
       })
       .eq("id", issue.id);
 

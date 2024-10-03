@@ -17,8 +17,8 @@ export default async function getIssueById(issueId: string): Promise<Issue> {
 
     return {
       ...data,
-      planned_start_date: data.planned_start_date
-        ? new Date(data.planned_start_date)
+      planned_end_date: data.planned_end_date
+        ? new Date(data.planned_end_date)
         : null,
     };
   } catch (error) {

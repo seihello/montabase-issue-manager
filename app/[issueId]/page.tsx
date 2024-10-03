@@ -103,10 +103,10 @@ export default function CourseSlugPage({
           }}
         />
         <DatePicker
-          value={issue.planned_start_date || undefined}
+          value={issue.planned_end_date || undefined}
           onValueChange={(value) => {
             setIssue((prev) =>
-              prev ? { ...prev, planned_start_date: value || null } : undefined,
+              prev ? { ...prev, planned_end_date: value || null } : undefined,
             );
           }}
         />

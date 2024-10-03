@@ -1,4 +1,4 @@
-import updateIssuePlannedStartDate from "@/lib/supabase/update-issue-planned-start-date";
+import updateIssuePlannedEndDate from "@/lib/supabase/update-issue-planned-end-date";
 import updateIssuePriority from "@/lib/supabase/update-issue-priority";
 import updateIssueStatus from "@/lib/supabase/update-issue-status";
 import { IssuePriority } from "@/lib/types/issue-priority.enum";
@@ -64,19 +64,19 @@ export default function useUpdateIssue() {
     }
   };
 
-  const setIssuePlannedStartDate = async (
+  const setIssuePlannedEndDate = async (
     issueId: string,
     issueTitle: string,
     newPlannedStartDate: Date | null,
   ) => {
     try {
-      if (user) await updateIssuePlannedStartDate(issueId, newPlannedStartDate);
+      if (user) await updateIssuePlannedEndDate(issueId, newPlannedStartDate);
       setIssues((oldIssues) =>
         oldIssues.map((oldIssue) =>
           oldIssue.id === issueId
             ? {
                 ...oldIssue,
-                planned_start_date: newPlannedStartDate,
+                planned_end_date: newPlannedStartDate,
               }
             : oldIssue,
         ),
@@ -98,5 +98,5 @@ export default function useUpdateIssue() {
     }
   };
 
-  return { setIssueStatus, setIssuePriority, setIssuePlannedStartDate };
+  return { setIssueStatus, setIssuePriority, setIssuePlannedEndDate };
 }

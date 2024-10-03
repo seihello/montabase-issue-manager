@@ -21,7 +21,7 @@ export default function IssueOverview({ issue }: Props) {
   const user = useRecoilValue(userState);
   const setIssues = useSetRecoilState(issuesState);
 
-  const { setIssueStatus, setIssuePriority, setIssuePlannedStartDate } =
+  const { setIssueStatus, setIssuePriority, setIssuePlannedEndDate } =
     useUpdateIssue();
 
   const { setNodeRef, listeners, attributes, transform, isDragging } =
@@ -72,9 +72,9 @@ export default function IssueOverview({ issue }: Props) {
           textHidden
         />
         <DatePicker
-          value={issue.planned_start_date || undefined}
+          value={issue.planned_end_date || undefined}
           onValueChange={async (value) => {
-            setIssuePlannedStartDate(issue.id, issue.title, value || null);
+            setIssuePlannedEndDate(issue.id, issue.title, value || null);
           }}
           yearHidden
         />
