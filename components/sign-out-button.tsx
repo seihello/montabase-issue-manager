@@ -10,6 +10,7 @@ export default function SignOutButton() {
 
   return (
     <Button
+      variant="outline"
       onClick={async () => {
         const supabase = createClient();
         const { error } = await supabase.auth.signOut();
@@ -19,6 +20,7 @@ export default function SignOutButton() {
         setUser(null);
         setIssues([]);
       }}
+      className="h-8"
     >
       Sign out
     </Button>
