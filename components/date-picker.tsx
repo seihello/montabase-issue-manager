@@ -41,7 +41,7 @@ export default function DatePicker({
                     ? value
                       ? "h-6 w-[80px] text-xs"
                       : "date-hidden h-6 w-[32px]"
-                    : "w-[140px]",
+                    : "w-[170px]",
                   !value && "text-muted-foreground",
                 )}
                 onClick={(e) => e.stopPropagation()}
@@ -49,7 +49,7 @@ export default function DatePicker({
                 {value ? (
                   value.toLocaleDateString("en-US", {
                     year: yearHidden ? undefined : "numeric",
-                    month: "short",
+                    month: yearHidden ? "short" : "long",
                     day: "numeric",
                   })
                 ) : (

@@ -199,7 +199,7 @@ export default function useUpdateIssue(isIndividual: boolean) {
           newPlannedEndDate
             ? newPlannedEndDate.toLocaleDateString("en-US", {
                 year: "numeric",
-                month: "short",
+                month: "long",
                 day: "numeric",
               })
             : "Not set"
