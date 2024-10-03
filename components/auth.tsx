@@ -1,6 +1,6 @@
 import createClient from "@/lib/supabase/client";
 import getUser from "@/lib/supabase/get-user";
-import { userState } from "@/states/user.state";
+import { userState } from "@/states/user-state";
 import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 

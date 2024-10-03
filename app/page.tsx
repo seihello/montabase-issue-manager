@@ -4,7 +4,7 @@ import getAllIssues from "@/lib/supabase/get-all-issues";
 import updateIssueStatus from "@/lib/supabase/update-issue-status";
 import { IssueStatus } from "@/lib/types/issue-status.enum";
 import { issuesState } from "@/states/issues-state";
-import { userState } from "@/states/user.state";
+import { userState } from "@/states/user-state";
 import {
   DndContext,
   PointerSensor,

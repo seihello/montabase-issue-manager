@@ -26,7 +26,7 @@ import { IssuePriority } from "@/lib/types/issue-priority.enum";
 import { IssueStatus } from "@/lib/types/issue-status.enum";
 import { Issue } from "@/lib/types/issue.type";
 import { issuesState } from "@/states/issues-state";
-import { userState } from "@/states/user.state";
+import { userState } from "@/states/user-state";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";

@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import createClient from "@/lib/supabase/client";
 import { issuesState } from "@/states/issues-state";
-import { userState } from "@/states/user.state";
+import { userState } from "@/states/user-state";
 import { useSetRecoilState } from "recoil";
 
 export default function SignOutButton() {

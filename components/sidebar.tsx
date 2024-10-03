@@ -1,7 +1,7 @@
 import AddIssueDialog from "@/components/add-issue-dialog";
 import GoogleSignInButton from "@/components/google-sign-in-button";
 import SignOutButton from "@/components/sign-out-button";
-import { userState } from "@/states/user.state";
+import { userState } from "@/states/user-state";
 import Image from "next/image";
 import { useRecoilValue } from "recoil";
 

@@ -8,7 +8,7 @@ import { IssuePriority } from "@/lib/types/issue-priority.enum";
 import { IssueStatus } from "@/lib/types/issue-status.enum";
 import { Issue } from "@/lib/types/issue.type";
 import { issuesState } from "@/states/issues-state";
-import { userState } from "@/states/user.state";
+import { userState } from "@/states/user-state";
 import { useDraggable } from "@dnd-kit/core";
 import { useRouter } from "next/navigation";
 import { useRecoilValue, useSetRecoilState } from "recoil";
