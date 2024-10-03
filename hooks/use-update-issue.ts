@@ -1,3 +1,4 @@
+import updateIssuePlannedStartDate from "@/lib/supabase/update-issue-planned-start-date";
 import updateIssuePriority from "@/lib/supabase/update-issue-priority";
 import updateIssueStatus from "@/lib/supabase/update-issue-status";
 import { IssuePriority } from "@/lib/types/issue-priority.enum";
@@ -63,5 +64,39 @@ export default function useUpdateIssue() {
     }
   };
 
-  return { setIssueStatus, setIssuePriority };
+  const setIssuePlannedStartDate = async (
+    issueId: string,
+    issueTitle: string,
+    newPlannedStartDate: Date | null,
+  ) => {
+    try {
+      if (user) await updateIssuePlannedStartDate(issueId, newPlannedStartDate);
+      setIssues((oldIssues) =>
+        oldIssues.map((oldIssue) =>
+          oldIssue.id === issueId
+            ? {
+                ...oldIssue,
+                planned_start_date: newPlannedStartDate,
+              }
+            : oldIssue,
+        ),
+      );
+      toast.success("Planned start date updated", {
+        description: `${issueTitle} - ${
+          newPlannedStartDate
+            ? newPlannedStartDate.toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              })
+            : "Not set"
+        }`,
+        duration: 3000,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return { setIssueStatus, setIssuePriority, setIssuePlannedStartDate };
 }

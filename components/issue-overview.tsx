@@ -2,7 +2,6 @@ import DatePicker from "@/components/date-picker";
 import IssuePrioritySelect from "@/components/issue-priority-select";
 import IssueStatusSelect from "@/components/issue-status-select";
 import useUpdateIssue from "@/hooks/use-update-issue";
-import updateIssuePlannedStartDate from "@/lib/supabase/update-issue-planned-start-date";
 import { IssuePriority } from "@/lib/types/issue-priority.enum";
 import { IssueStatus } from "@/lib/types/issue-status.enum";
 import { Issue } from "@/lib/types/issue.type";
@@ -11,7 +10,6 @@ import { userState } from "@/states/user-state";
 import { useDraggable } from "@dnd-kit/core";
 import { useRouter } from "next/navigation";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { toast } from "sonner";
 
 type Props = {
   issue: Issue;
@@ -23,7 +21,8 @@ export default function IssueOverview({ issue }: Props) {
   const user = useRecoilValue(userState);
   const setIssues = useSetRecoilState(issuesState);
 
-  const { setIssueStatus, setIssuePriority } = useUpdateIssue();
+  const { setIssueStatus, setIssuePriority, setIssuePlannedStartDate } =
+    useUpdateIssue();
 
   const { setNodeRef, listeners, attributes, transform, isDragging } =
     useDraggable({
@@ -75,26 +74,7 @@ export default function IssueOverview({ issue }: Props) {
         <DatePicker
           value={issue.planned_start_date || undefined}
           onValueChange={async (value) => {
-            try {
-              if (user)
-                await updateIssuePlannedStartDate(issue.id, value || null);
-              setIssues((oldIssues) =>
-                oldIssues.map((oldIssue) =>
-                  oldIssue.id === issue.id
-                    ? {
-                        ...oldIssue,
-                        planned_start_date: value || null,
-                      }
-                    : oldIssue,
-                ),
-              );
-              toast.success("Planned start date updated", {
-                description: `${issue.title} - ${value}`,
-                duration: 3000,
-              });
-            } catch (error) {
-              console.error(error);
-            }
+            setIssuePlannedStartDate(issue.id, issue.title, value || null);
           }}
           yearHidden
         />
