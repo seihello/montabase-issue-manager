@@ -3,7 +3,6 @@ import IssuePrioritySelect from "@/components/issue-priority-select";
 import IssueStatusSelect from "@/components/issue-status-select";
 import useUpdateIssue from "@/hooks/use-update-issue";
 import updateIssuePlannedStartDate from "@/lib/supabase/update-issue-planned-start-date";
-import updateIssuePriority from "@/lib/supabase/update-issue-priority";
 import { IssuePriority } from "@/lib/types/issue-priority.enum";
 import { IssueStatus } from "@/lib/types/issue-status.enum";
 import { Issue } from "@/lib/types/issue.type";
@@ -24,7 +23,7 @@ export default function IssueOverview({ issue }: Props) {
   const user = useRecoilValue(userState);
   const setIssues = useSetRecoilState(issuesState);
 
-  const { setIssueStatus } = useUpdateIssue();
+  const { setIssueStatus, setIssuePriority } = useUpdateIssue();
 
   const { setNodeRef, listeners, attributes, transform, isDragging } =
     useDraggable({
@@ -62,33 +61,14 @@ export default function IssueOverview({ issue }: Props) {
         <IssueStatusSelect
           value={issue.status || undefined}
           onValueChange={async (value) => {
-            setIssueStatus(issue.id, value as IssueStatus, issue.title);
+            setIssueStatus(issue.id, issue.title, value as IssueStatus);
           }}
           textHidden
         />
         <IssuePrioritySelect
           value={issue.priority || undefined}
           onValueChange={async (value) => {
-            try {
-              if (user)
-                await updateIssuePriority(issue.id, value as IssuePriority);
-              setIssues((oldIssues) =>
-                oldIssues.map((oldIssue) =>
-                  oldIssue.id === issue.id
-                    ? {
-                        ...oldIssue,
-                        priority: value as IssuePriority,
-                      }
-                    : oldIssue,
-                ),
-              );
-              toast.success("Priority updated", {
-                description: `${issue.title} - ${value}`,
-                duration: 3000,
-              });
-            } catch (error) {
-              console.error(error);
-            }
+            setIssuePriority(issue.id, issue.title, value as IssuePriority);
           }}
           textHidden
         />
