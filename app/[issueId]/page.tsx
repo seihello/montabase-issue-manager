@@ -4,20 +4,24 @@ import IssuePrioritySelect from "@/components/issue-priority-select";
 import IssueStatusSelect from "@/components/issue-status-select";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import useUpdateIssue from "@/hooks/use-update-issue";
 import getIssueById from "@/lib/supabase/get-issue-by-id";
-import updateIssue from "@/lib/supabase/update-issue";
 import { IssuePriority } from "@/lib/types/issue-priority.enum";
 import { IssueStatus } from "@/lib/types/issue-status.enum";
-import { Issue } from "@/lib/types/issue.type";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { toast } from "sonner";
+import { issueState } from "@/states/issue-state";
+import { useEffect, useRef } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 export default function CourseSlugPage({
   params,
 }: {
   params: { issueId: string };
 }) {
-  const [issue, setIssue] = useState<Issue>();
+  const issue = useRecoilValue(issueState);
+  const setIssue = useSetRecoilState(issueState);
+
+  const { setIssueStatus, setIssuePriority, setIssuePlannedEndDate } =
+    useUpdateIssue(true);
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -27,39 +31,39 @@ export default function CourseSlugPage({
       setIssue(issue);
     };
     fetchIssue();
-  }, [params.issueId]);
+  }, [params.issueId, setIssue]);
 
-  const saveIssue = useCallback(async (issue: Issue) => {
-    try {
-      await updateIssue(issue);
+  // const saveIssue = useCallback(async (issue: Issue) => {
+  //   try {
+  //     await updateIssue(issue);
 
-      toast.success("Issue updated", {
-        description: issue.title,
-        duration: 3000,
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  }, []);
+  //     toast.success("Issue updated", {
+  //       description: issue.title,
+  //       duration: 3000,
+  //     });
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    if (!issue || !issue.title) return;
+  // useEffect(() => {
+  //   if (!issue || !issue.title) return;
 
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-    }
+  //   if (timerRef.current) {
+  //     clearTimeout(timerRef.current);
+  //   }
 
-    timerRef.current = setTimeout(() => {
-      // TODO: update the issues state?
-      saveIssue(issue);
-    }, 1000);
+  //   timerRef.current = setTimeout(() => {
+  //     // TODO: update the issues state?
+  //     saveIssue(issue);
+  //   }, 1000);
 
-    return () => {
-      if (timerRef.current) {
-        clearTimeout(timerRef.current);
-      }
-    };
-  }, [issue, saveIssue, timerRef]);
+  //   return () => {
+  //     if (timerRef.current) {
+  //       clearTimeout(timerRef.current);
+  //     }
+  //   };
+  // }, [issue, saveIssue, timerRef]);
 
   if (!issue) return;
 
@@ -68,9 +72,7 @@ export default function CourseSlugPage({
       <Input
         value={issue.title}
         onChange={(e) =>
-          setIssue((prev) =>
-            prev ? { ...prev, title: e.target.value } : undefined,
-          )
+          setIssue((prev) => (prev ? { ...prev, title: e.target.value } : null))
         }
         placeholder="Issue title"
         className={`border-none text-2xl font-bold focus-visible:ring-0 focus-visible:ring-transparent`}
@@ -79,7 +81,7 @@ export default function CourseSlugPage({
         value={issue.description || ""}
         onChange={(e) =>
           setIssue((prev) =>
-            prev ? { ...prev, description: e.target.value } : undefined,
+            prev ? { ...prev, description: e.target.value } : null,
           )
         }
         placeholder="Add description here"
@@ -89,25 +91,19 @@ export default function CourseSlugPage({
         <IssueStatusSelect
           value={issue.status}
           onValueChange={(value) => {
-            setIssue((prev) =>
-              prev ? { ...prev, status: value as IssueStatus } : undefined,
-            );
+            setIssueStatus(issue.id, issue.title, value as IssueStatus);
           }}
         />
         <IssuePrioritySelect
           value={issue.priority || undefined}
           onValueChange={(value) => {
-            setIssue((prev) =>
-              prev ? { ...prev, priority: value as IssuePriority } : undefined,
-            );
+            setIssuePriority(issue.id, issue.title, value as IssuePriority);
           }}
         />
         <DatePicker
           value={issue.planned_end_date || undefined}
           onValueChange={(value) => {
-            setIssue((prev) =>
-              prev ? { ...prev, planned_end_date: value || null } : undefined,
-            );
+            setIssuePlannedEndDate(issue.id, issue.title, value || null);
           }}
         />
       </div>

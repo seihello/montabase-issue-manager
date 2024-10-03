@@ -3,13 +3,15 @@ import updateIssuePriority from "@/lib/supabase/update-issue-priority";
 import updateIssueStatus from "@/lib/supabase/update-issue-status";
 import { IssuePriority } from "@/lib/types/issue-priority.enum";
 import { IssueStatus } from "@/lib/types/issue-status.enum";
+import { issueState } from "@/states/issue-state";
 import { issuesState } from "@/states/issues-state";
 import { userState } from "@/states/user-state";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { toast } from "sonner";
 
-export default function useUpdateIssue() {
+export default function useUpdateIssue(isIndividual: boolean) {
   const user = useRecoilValue(userState);
+  const setIssue = useSetRecoilState(issueState);
   const setIssues = useSetRecoilState(issuesState);
 
   const setIssueStatus = async (
@@ -19,18 +21,30 @@ export default function useUpdateIssue() {
   ) => {
     try {
       if (user) await updateIssueStatus(issueId, newStatus);
-      setIssues((oldIssues) =>
-        oldIssues.map((oldIssue) =>
-          oldIssue.id === issueId
+      if (isIndividual) {
+        setIssue((oldIssue) =>
+          oldIssue
             ? {
                 ...oldIssue,
                 status: newStatus,
               }
-            : oldIssue,
-        ),
-      );
+            : null,
+        );
+      } else {
+        setIssues((oldIssues) =>
+          oldIssues.map((oldIssue) =>
+            oldIssue.id === issueId
+              ? {
+                  ...oldIssue,
+                  status: newStatus,
+                }
+              : oldIssue,
+          ),
+        );
+      }
+
       toast.success("Status updated", {
-        description: `${issueTitle} - ${status}`,
+        description: `${issueTitle} - ${newStatus}`,
         duration: 3000,
       });
     } catch (error) {
@@ -45,16 +59,29 @@ export default function useUpdateIssue() {
   ) => {
     try {
       if (user) await updateIssuePriority(issueId, newPriority);
-      setIssues((oldIssues) =>
-        oldIssues.map((oldIssue) =>
-          oldIssue.id === issueId
+
+      if (isIndividual) {
+        setIssue((oldIssue) =>
+          oldIssue
             ? {
                 ...oldIssue,
                 priority: newPriority,
               }
-            : oldIssue,
-        ),
-      );
+            : null,
+        );
+      } else {
+        setIssues((oldIssues) =>
+          oldIssues.map((oldIssue) =>
+            oldIssue.id === issueId
+              ? {
+                  ...oldIssue,
+                  priority: newPriority,
+                }
+              : oldIssue,
+          ),
+        );
+      }
+
       toast.success("Priority updated", {
         description: `${issueTitle} - ${newPriority}`,
         duration: 3000,
@@ -71,16 +98,28 @@ export default function useUpdateIssue() {
   ) => {
     try {
       if (user) await updateIssuePlannedEndDate(issueId, newPlannedStartDate);
-      setIssues((oldIssues) =>
-        oldIssues.map((oldIssue) =>
-          oldIssue.id === issueId
+
+      if (isIndividual) {
+        setIssue((oldIssue) =>
+          oldIssue
             ? {
                 ...oldIssue,
                 planned_end_date: newPlannedStartDate,
               }
-            : oldIssue,
-        ),
-      );
+            : null,
+        );
+      } else {
+        setIssues((oldIssues) =>
+          oldIssues.map((oldIssue) =>
+            oldIssue.id === issueId
+              ? {
+                  ...oldIssue,
+                  planned_end_date: newPlannedStartDate,
+                }
+              : oldIssue,
+          ),
+        );
+      }
       toast.success("Planned start date updated", {
         description: `${issueTitle} - ${
           newPlannedStartDate
