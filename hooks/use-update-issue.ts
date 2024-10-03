@@ -168,17 +168,17 @@ export default function useUpdateIssue(isIndividual: boolean) {
   const setIssuePlannedEndDate = async (
     issueId: string,
     issueTitle: string,
-    newPlannedStartDate: Date | null,
+    newPlannedEndDate: Date | null,
   ) => {
     try {
-      if (user) await updateIssuePlannedEndDate(issueId, newPlannedStartDate);
+      if (user) await updateIssuePlannedEndDate(issueId, newPlannedEndDate);
 
       if (isIndividual) {
         setIssue((oldIssue) =>
           oldIssue
             ? {
                 ...oldIssue,
-                planned_end_date: newPlannedStartDate,
+                planned_end_date: newPlannedEndDate,
               }
             : null,
         );
@@ -188,16 +188,16 @@ export default function useUpdateIssue(isIndividual: boolean) {
             oldIssue.id === issueId
               ? {
                   ...oldIssue,
-                  planned_end_date: newPlannedStartDate,
+                  planned_end_date: newPlannedEndDate,
                 }
               : oldIssue,
           ),
         );
       }
-      toast.success("Planned start date updated", {
+      toast.success("Due date updated", {
         description: `${issueTitle} - ${
-          newPlannedStartDate
-            ? newPlannedStartDate.toLocaleDateString("en-US", {
+          newPlannedEndDate
+            ? newPlannedEndDate.toLocaleDateString("en-US", {
                 year: "numeric",
                 month: "short",
                 day: "numeric",
