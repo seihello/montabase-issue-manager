@@ -1,9 +1,9 @@
 import DatePicker from "@/components/date-picker";
 import IssuePrioritySelect from "@/components/issue-priority-select";
 import IssueStatusSelect from "@/components/issue-status-select";
+import useUpdateIssue from "@/hooks/use-update-issue";
 import updateIssuePlannedStartDate from "@/lib/supabase/update-issue-planned-start-date";
 import updateIssuePriority from "@/lib/supabase/update-issue-priority";
-import updateIssueStatus from "@/lib/supabase/update-issue-status";
 import { IssuePriority } from "@/lib/types/issue-priority.enum";
 import { IssueStatus } from "@/lib/types/issue-status.enum";
 import { Issue } from "@/lib/types/issue.type";
@@ -23,6 +23,8 @@ export default function IssueOverview({ issue }: Props) {
 
   const user = useRecoilValue(userState);
   const setIssues = useSetRecoilState(issuesState);
+
+  const { setIssueStatus } = useUpdateIssue();
 
   const { setNodeRef, listeners, attributes, transform, isDragging } =
     useDraggable({
@@ -60,25 +62,7 @@ export default function IssueOverview({ issue }: Props) {
         <IssueStatusSelect
           value={issue.status || undefined}
           onValueChange={async (value) => {
-            try {
-              if (user) await updateIssueStatus(issue.id, value as IssueStatus);
-              setIssues((oldIssues) =>
-                oldIssues.map((oldIssue) =>
-                  oldIssue.id === issue.id
-                    ? {
-                        ...oldIssue,
-                        status: value as IssueStatus,
-                      }
-                    : oldIssue,
-                ),
-              );
-              toast.success("Status updated", {
-                description: `${issue.title} - ${value}`,
-                duration: 3000,
-              });
-            } catch (error) {
-              console.error(error);
-            }
+            setIssueStatus(issue.id, value as IssueStatus, issue.title);
           }}
           textHidden
         />
