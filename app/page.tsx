@@ -48,8 +48,10 @@ export default function Home() {
           const targetIssueStatus = event.over.id;
           const droppedIssueId = event.active.id;
 
-          let targetIssueTitle =
-            issues.find((issue) => issue.id === droppedIssueId)?.title || "";
+          let targetIssue = issues.find((issue) => issue.id === droppedIssueId);
+          if (!targetIssue) return;
+
+          if (targetIssueStatus === targetIssue.status) return;
 
           setIssues((oldIssues) =>
             oldIssues.map((issue) =>
@@ -70,12 +72,10 @@ export default function Home() {
             );
           }
 
-          if (targetIssueTitle) {
-            toast.success("Status updated", {
-              description: `${targetIssueTitle} - ${targetIssueStatus}`,
-              duration: 3000,
-            });
-          }
+          toast.success("Status updated", {
+            description: `${targetIssue.title} - ${targetIssueStatus}`,
+            duration: 3000,
+          });
         }}
       >
         {Object.values(IssueStatus).map((status) => (
