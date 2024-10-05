@@ -36,7 +36,7 @@ export default function Home() {
       setIssues(issues);
     };
     fetchIssues();
-  }, [user]);
+  }, [user, setIssues]);
 
   return (
     <div className="flex h-full gap-x-2">
