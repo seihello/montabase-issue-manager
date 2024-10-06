@@ -35,7 +35,7 @@ export default function SidebarProjects() {
       defaultValue="projects"
     >
       <AccordionItem value="projects" className="border-none">
-        <AccordionTrigger className="text-xs font-bold text-gray-700 hover:no-underline">
+        <AccordionTrigger className="text-xs font-semibold text-gray-700 hover:no-underline">
           Your projects
         </AccordionTrigger>
         {projects.map((project, index) => (

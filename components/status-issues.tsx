@@ -24,7 +24,7 @@ export default function StatusIssues({ status }: Props) {
     >
       <div className="flex items-center gap-x-1.5">
         <IssueStatusBadge status={status} />
-        <span>{status}</span>
+        <span className="font-semibold">{status}</span>
       </div>
       <div className="flex flex-col gap-y-2">
         {filteredIssues.map((issue, index) => (
