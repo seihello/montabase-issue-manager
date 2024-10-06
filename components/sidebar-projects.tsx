@@ -30,11 +30,13 @@ export default function SidebarProjects() {
   return (
     <Accordion type="multiple" className="w-full">
       <AccordionItem value="projects" className="border-none">
-        <AccordionTrigger className="hover:no-underline">
+        <AccordionTrigger className="text-xs font-bold text-gray-700 hover:no-underline">
           Your projects
         </AccordionTrigger>
         {projects.map((project, index) => (
-          <AccordionContent key={index}>{project.title}</AccordionContent>
+          <AccordionContent key={index} className="truncate">
+            {project.title}
+          </AccordionContent>
         ))}
       </AccordionItem>
     </Accordion>
