@@ -1,9 +1,13 @@
+"use client";
 import AddIssueDialog from "@/components/add-issue-dialog";
 import GoogleSignInButton from "@/components/google-sign-in-button";
 import SignOutButton from "@/components/sign-out-button";
+import getAllProjects from "@/lib/supabase/get-all-projects";
+import { projectsState } from "@/states/projects-state";
 import { userState } from "@/states/user-state";
 import Image from "next/image";
-import { useRecoilValue } from "recoil";
+import { useEffect } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 type Props = {
   isLoadingUser: boolean;
@@ -11,6 +15,20 @@ type Props = {
 
 export default function Sidebar({ isLoadingUser }: Props) {
   const user = useRecoilValue(userState);
+  const setProjects = useSetRecoilState(projectsState);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      if (!user) return;
+      try {
+        const projects = await getAllProjects(user.id);
+        setProjects(projects);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchProjects();
+  }, [user, setProjects]);
 
   return (
     <aside>
