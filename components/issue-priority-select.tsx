@@ -46,7 +46,10 @@ export default function IssuePrioritySelect({
           )}
         </Tooltip>
       </TooltipProvider>
-      <SelectContent className="w-[180px]">
+      <SelectContent
+        className="w-[180px]"
+        onCloseAutoFocus={(e) => e.preventDefault()}
+      >
         {Object.values(IssuePriority).map((priority) => (
           <SelectItem key={priority} value={priority}>
             <div className="flex items-center justify-start gap-x-1">

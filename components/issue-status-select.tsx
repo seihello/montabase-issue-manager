@@ -43,7 +43,10 @@ export default function IssueStatusSelect({
           )}
         </Tooltip>
       </TooltipProvider>
-      <SelectContent className="w-[180px]">
+      <SelectContent
+        className="w-[180px]"
+        onCloseAutoFocus={(e) => e.preventDefault()}
+      >
         {Object.values(IssueStatus).map((status) => (
           <SelectItem key={status} value={status}>
             <div className="flex items-center justify-start gap-x-1">
