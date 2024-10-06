@@ -31,7 +31,7 @@ export default function DatePicker({
     <Popover>
       <TooltipProvider>
         <Tooltip>
-          <TooltipTrigger>
+          <TooltipTrigger asChild>
             <PopoverTrigger asChild>
               <Button
                 variant={"outline"}
