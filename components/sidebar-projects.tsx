@@ -28,7 +28,12 @@ export default function SidebarProjects() {
     fetchProjects();
   }, [user, setProjects]);
   return (
-    <Accordion type="multiple" className="w-full">
+    <Accordion
+      type="single"
+      collapsible
+      className="w-full"
+      defaultValue="projects"
+    >
       <AccordionItem value="projects" className="border-none">
         <AccordionTrigger className="text-xs font-bold text-gray-700 hover:no-underline">
           Your projects
