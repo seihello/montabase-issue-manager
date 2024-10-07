@@ -11,6 +11,7 @@ import { IconPencilPlus } from "@tabler/icons-react";
 
 import DatePicker from "@/components/date-picker";
 import IssuePrioritySelect from "@/components/issue-priority-select";
+import IssueProjectSelect from "@/components/issue-project-select";
 import IssueStatusSelect from "@/components/issue-status-select";
 import {
   Form,
@@ -41,6 +42,7 @@ const schema = z.object({
   status: z.nativeEnum(IssueStatus),
   priority: z.nativeEnum(IssuePriority),
   planned_end_date: z.date().optional(),
+  project_id: z.string(),
 });
 
 export default function AddIssueDialog() {
@@ -161,6 +163,10 @@ export default function AddIssueDialog() {
             />
 
             <div className="flex gap-x-2">
+              <IssueProjectSelect
+                value={form.watch("project_id")}
+                onValueChange={(value) => form.setValue("project_id", value)}
+              />
               <IssueStatusSelect
                 value={form.watch("status")}
                 onValueChange={(value) =>

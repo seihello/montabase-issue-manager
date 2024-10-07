@@ -8,6 +8,7 @@ import { IconPlus } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
+import { toast } from "sonner";
 
 export default function SidebarProjects() {
   const router = useRouter();
@@ -54,11 +55,24 @@ export default function SidebarProjects() {
         !newProjectTitleInput.current.contains(event.target as Node) &&
         newProjectTitle
       ) {
-        const newProject = await addProject(user.id, newProjectTitle);
-        setNewProjectTitle(null);
-        setIsProjectTitleSelected(false);
+        try {
+          const newProject = await addProject(user.id, newProjectTitle);
+          setNewProjectTitle(null);
+          setIsProjectTitleSelected(false);
 
-        setProjects((oldProjects) => [...oldProjects, newProject]);
+          setProjects((oldProjects) => [...oldProjects, newProject]);
+
+          toast.success("Project created", {
+            description: newProject.title,
+            duration: 3000,
+          });
+        } catch (error) {
+          console.error(error);
+
+          toast.error("Error", {
+            description: "Failed to add the project. Please try again.",
+          });
+        }
       }
     };
 
