@@ -27,6 +27,7 @@ import { IssuePriority } from "@/lib/types/issue-priority.enum";
 import { IssueStatus } from "@/lib/types/issue-status.enum";
 import { Issue } from "@/lib/types/issue.type";
 import { issuesState } from "@/states/issues-state";
+import { projectsState } from "@/states/projects-state";
 import { userState } from "@/states/user-state";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
@@ -49,6 +50,8 @@ export default function AddIssueDialog() {
   const user = useRecoilValue(userState);
 
   const setIssues = useSetRecoilState(issuesState);
+  const projects = useRecoilValue(projectsState);
+  console.log("projects", projects);
 
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
@@ -58,6 +61,7 @@ export default function AddIssueDialog() {
       status: IssueStatus.Backlog,
       priority: IssuePriority.NoPriority,
       planned_end_date: undefined,
+      project_id: projects.length > 0 ? projects[0].id : "",
     },
   });
 

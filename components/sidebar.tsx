@@ -4,6 +4,7 @@ import GoogleSignInButton from "@/components/google-sign-in-button";
 import SidebarItem from "@/components/sidebar-item";
 import SidebarProjects from "@/components/sidebar-projects";
 import SignOutButton from "@/components/sign-out-button";
+import { projectsState } from "@/states/projects-state";
 
 import { userState } from "@/states/user-state";
 import { IconList } from "@tabler/icons-react";
@@ -16,6 +17,7 @@ type Props = {
 
 export default function Sidebar({ isLoadingUser }: Props) {
   const user = useRecoilValue(userState);
+  const projects = useRecoilValue(projectsState);
 
   return (
     <aside>
@@ -33,7 +35,7 @@ export default function Sidebar({ isLoadingUser }: Props) {
               />
               Montabase
             </a>
-            <AddIssueDialog />
+            {projects.length > 0 && <AddIssueDialog />}
           </div>
           <div className="flex flex-col">
             <SidebarItem

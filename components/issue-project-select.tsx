@@ -16,7 +16,7 @@ export default function IssueProjectSelect({ value, onValueChange }: Props) {
   const projects = useRecoilValue(projectsState);
 
   return (
-    <Select value={value} onValueChange={onValueChange} open={true}>
+    <Select value={value} onValueChange={onValueChange}>
       <SelectTrigger
         className={`w-[168px] truncate py-1 focus:ring-1 focus:ring-offset-0 ${value ? "" : "text-muted-foreground"}`}
       >
