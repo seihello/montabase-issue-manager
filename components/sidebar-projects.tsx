@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import addProject from "@/lib/supabase/add-project";
 import getAllProjects from "@/lib/supabase/get-all-projects";
 import { projectsState } from "@/states/projects-state";
 import { userState } from "@/states/user-state";
@@ -33,9 +34,9 @@ export default function SidebarProjects() {
     fetchProjects();
   }, [user, setProjects]);
 
-  const addProject = async () => {
+  const onClickedAddProjectButton = async () => {
     // const newProject = setProjects((oldProjects) => [...oldProjects, {}]);
-    setNewProjectTitle("New Project");
+    if (newProjectTitle === null) setNewProjectTitle("New Project");
   };
 
   useEffect(() => {
@@ -45,6 +46,28 @@ export default function SidebarProjects() {
     }
   }, [newProjectTitle, isProjectTitleSelected]);
 
+  useEffect(() => {
+    const handleClickOutside = async (event: MouseEvent) => {
+      if (!user) return;
+      if (
+        newProjectTitleInput.current &&
+        !newProjectTitleInput.current.contains(event.target as Node) &&
+        newProjectTitle
+      ) {
+        const newProject = await addProject(user.id, newProjectTitle);
+        setNewProjectTitle(null);
+        setIsProjectTitleSelected(false);
+
+        setProjects((oldProjects) => [...oldProjects, newProject]);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [user, newProjectTitleInput, newProjectTitle, setProjects]);
+
   return (
     <div className="relative mb-2 mt-4 border-none">
       <div className="mb-2 text-xs font-semibold text-gray-700 hover:no-underline">
@@ -52,7 +75,7 @@ export default function SidebarProjects() {
       </div>
       <Button
         variant="ghost"
-        onClick={addProject}
+        onClick={onClickedAddProjectButton}
         className="absolute -top-[2px] right-0 h-auto w-auto p-1"
       >
         <IconPlus size={12} />
