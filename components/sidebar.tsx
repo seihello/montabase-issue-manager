@@ -19,8 +19,8 @@ export default function Sidebar({ isLoadingUser }: Props) {
 
   return (
     <aside>
-      <div className="h-screen w-48"></div>
-      <nav className="fixed left-0 top-0 flex h-screen w-48 flex-col items-stretch border-r bg-white p-2">
+      <div className="h-screen w-52"></div>
+      <nav className="fixed left-0 top-0 flex h-screen w-52 flex-col items-stretch border-r bg-white p-2">
         <div className="flex flex-1 flex-col gap-y-8">
           <div className="flex justify-between">
             <a href="/" className="flex items-center text-lg font-bold">
