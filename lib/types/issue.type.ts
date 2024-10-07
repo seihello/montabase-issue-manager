@@ -12,5 +12,6 @@ export type Issue = {
   actual_start_date: Date | null;
   actual_end_date: Date | null;
   parent_issue_id: string | null;
+  project_id: string | null;
   created_at: Date;
 };

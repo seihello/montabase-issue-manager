@@ -61,7 +61,8 @@ export default function AddIssueDialog() {
       status: IssueStatus.Backlog,
       priority: IssuePriority.NoPriority,
       planned_end_date: undefined,
-      project_id: projects.length > 0 ? projects[0].id : "",
+      // project_id: projects.length > 0 ? projects[0].id : "",
+      project_id: "NoProject",
     },
   });
 
@@ -81,6 +82,7 @@ export default function AddIssueDialog() {
           values.status,
           values.priority || null,
           values.planned_end_date || null,
+          values.project_id === "NoProject" ? null : values.project_id,
         );
       } else {
         newIssue = {
@@ -95,6 +97,8 @@ export default function AddIssueDialog() {
           actual_end_date: null,
           parent_issue_id: null,
           created_at: new Date(),
+          project_id:
+            values.project_id === "NoProject" ? null : values.project_id,
         };
       }
 

@@ -21,10 +21,18 @@ export default function IssueProjectSelect({ value, onValueChange }: Props) {
         className={`w-[168px] truncate py-1 focus:ring-1 focus:ring-offset-0 ${value ? "" : "text-muted-foreground"}`}
       >
         <span className="w-[120px] truncate text-left">
-          {projects.find((project) => project.id === value)?.title}
+          {value === "NoProject"
+            ? "---"
+            : projects.find((project) => project.id === value)?.title}
         </span>
       </SelectTrigger>
       <SelectContent onCloseAutoFocus={(e) => e.preventDefault()}>
+        <SelectItem
+          value="NoProject"
+          className="flex w-auto max-w-[300px] truncate"
+        >
+          ---
+        </SelectItem>
         {projects.map((project) => (
           <SelectItem
             key={project.id}

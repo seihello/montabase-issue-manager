@@ -9,9 +9,12 @@ export default async function addIssue(
   description: string,
   status: IssueStatus,
   priority: IssuePriority | null,
-  planned_end_date: Date | null,
+  plannedEndDate: Date | null,
+  projectId: string | null,
 ): Promise<Issue> {
   const supabase = createClient();
+  console.log("projectId", projectId);
+  
 
   try {
     const { data, error } = await supabase
@@ -21,7 +24,8 @@ export default async function addIssue(
         description,
         status,
         priority,
-        planned_end_date,
+        planned_end_date: plannedEndDate,
+        project_id: projectId,
         author: userId,
       })
       .select("*")
