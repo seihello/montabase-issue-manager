@@ -1,10 +1,12 @@
 "use client";
 import AddIssueDialog from "@/components/add-issue-dialog";
 import GoogleSignInButton from "@/components/google-sign-in-button";
+import SidebarItem from "@/components/sidebar-item";
 import SidebarProjects from "@/components/sidebar-projects";
 import SignOutButton from "@/components/sign-out-button";
 
 import { userState } from "@/states/user-state";
+import { IconList } from "@tabler/icons-react";
 import Image from "next/image";
 import { useRecoilValue } from "recoil";
 
@@ -19,7 +21,7 @@ export default function Sidebar({ isLoadingUser }: Props) {
     <aside>
       <div className="h-screen w-48"></div>
       <nav className="fixed left-0 top-0 flex h-screen w-48 flex-col items-stretch border-r bg-white p-2">
-        <div className="flex flex-1 flex-col">
+        <div className="flex flex-1 flex-col gap-y-8">
           <div className="flex justify-between">
             <a href="/" className="flex items-center text-lg font-bold">
               <Image
@@ -33,7 +35,14 @@ export default function Sidebar({ isLoadingUser }: Props) {
             </a>
             <AddIssueDialog />
           </div>
-          <SidebarProjects />
+          <div className="flex flex-col">
+            <SidebarItem
+              label="All issues"
+              icon={<IconList size={16} />}
+              link="/"
+            />
+            <SidebarProjects />
+          </div>
         </div>
         <div className="flex flex-col items-center gap-y-1">
           {user && (
