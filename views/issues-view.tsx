@@ -46,7 +46,12 @@ export default function IssuesView({ projectId }: Props) {
   }, [user, projectId, setIssues]);
 
   return (
-    <div className="flex h-full gap-x-2">
+    <div
+      className="flex gap-x-2"
+      style={{
+        height: "100%",
+      }}
+    >
       <DndContext
         sensors={sensors}
         collisionDetection={pointerWithin}
