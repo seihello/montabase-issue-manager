@@ -113,7 +113,7 @@ export default function CourseSlugPage({
         value={editingTitle}
         onChange={(e) => setEditingTitle(e.target.value)}
         placeholder="Issue title"
-        className={`border-none p-0 text-2xl font-bold focus-visible:ring-0 focus-visible:ring-transparent`}
+        className={`border-none p-0 text-2xl font-semibold focus-visible:ring-0 focus-visible:ring-transparent`}
       />
       <Textarea
         value={editingDescription}
