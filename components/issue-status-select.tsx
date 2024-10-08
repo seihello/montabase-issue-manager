@@ -30,7 +30,7 @@ export default function IssueStatusSelect({
         <Tooltip>
           <TooltipTrigger asChild>
             <SelectTrigger
-              className={`${textHidden ? "chevron-hidden h-6 w-[32px] justify-center" : "w-[144px]"} py-1 focus:ring-1 focus:ring-offset-0 ${value ? "" : "text-muted-foreground"}`}
+              className={`${textHidden ? "chevron-hidden h-6 w-[32px] justify-center" : "w-[144px]"} py-1 focus:ring-1 focus:ring-offset-0`}
             >
               <div className="flex items-center justify-start gap-x-1">
                 <IssueStatusBadge status={value as IssueStatus} scale={0.8} />

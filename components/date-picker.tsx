@@ -36,13 +36,12 @@ export default function DatePicker({
               <Button
                 variant={"outline"}
                 className={cn(
-                  "px-2 text-left font-normal hover:bg-transparent",
+                  "px-2 text-left font-normal text-gray-900 hover:bg-transparent",
                   yearHidden
                     ? value
                       ? "h-6 w-[80px] text-xs"
                       : "date-hidden h-6 w-[32px]"
                     : "w-[170px]",
-                  !value && "text-muted-foreground",
                 )}
                 onClick={(e) => e.stopPropagation()}
               >
