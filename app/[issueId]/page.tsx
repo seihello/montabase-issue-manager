@@ -1,6 +1,7 @@
 "use client";
 import DatePicker from "@/components/date-picker";
 import IssuePrioritySelect from "@/components/issue-priority-select";
+import IssueProjectSelect from "@/components/issue-project-select";
 import IssuePropertyItem from "@/components/issue-property-item";
 import IssueStatusSelect from "@/components/issue-status-select";
 import { Input } from "@/components/ui/input";
@@ -28,6 +29,7 @@ export default function CourseSlugPage({
   const {
     setIssueTitle,
     setIssueDescription,
+    setIssueProject,
     setIssueStatus,
     setIssuePriority,
     setIssuePlannedEndDate,
@@ -120,6 +122,19 @@ export default function CourseSlugPage({
         className={`border-none p-0 text-base focus-visible:ring-0 focus-visible:ring-transparent`}
       />
       <div className="flex gap-x-2">
+        <IssuePropertyItem label="Project">
+          <IssueProjectSelect
+            value={issue.project_id || "NoProject"}
+            onValueChange={(value) => {
+              setIssueProject(
+                issue.id,
+                issue.title,
+                value === "NoProject" ? null : value,
+              );
+            }}
+          />
+        </IssuePropertyItem>
+
         <IssuePropertyItem label="Status">
           <IssueStatusSelect
             value={issue.status}

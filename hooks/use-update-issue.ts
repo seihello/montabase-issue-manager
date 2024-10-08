@@ -1,18 +1,21 @@
 import updateIssueDescription from "@/lib/supabase/update-issue-description";
 import updateIssuePlannedEndDate from "@/lib/supabase/update-issue-planned-end-date";
 import updateIssuePriority from "@/lib/supabase/update-issue-priority";
+import updateIssueProjectId from "@/lib/supabase/update-issue-project-id";
 import updateIssueStatus from "@/lib/supabase/update-issue-status";
 import updateIssueTitle from "@/lib/supabase/update-issue-title";
 import { IssuePriority } from "@/lib/types/issue-priority.enum";
 import { IssueStatus } from "@/lib/types/issue-status.enum";
 import { issueState } from "@/states/issue-state";
 import { issuesState } from "@/states/issues-state";
+import { projectsState } from "@/states/projects-state";
 import { userState } from "@/states/user-state";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { toast } from "sonner";
 
 export default function useUpdateIssue(isIndividual: boolean) {
   const user = useRecoilValue(userState);
+  const projects = useRecoilValue(projectsState);
   const setIssue = useSetRecoilState(issueState);
   const setIssues = useSetRecoilState(issuesState);
 
@@ -81,6 +84,49 @@ export default function useUpdateIssue(isIndividual: boolean) {
 
       toast.success("Description updated", {
         description: `${issueTitle} - ${newDescription}`,
+        duration: 3000,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const setIssueProject = async (
+    issueId: string,
+    issueTitle: string,
+    newProjectId: string | null,
+  ) => {
+    try {
+      const targetProject = projects.find(
+        (project) => project.id === newProjectId,
+      );
+      if (newProjectId && !targetProject) return;
+
+      if (user) await updateIssueProjectId(issueId, newProjectId);
+      if (isIndividual) {
+        setIssue((oldIssue) =>
+          oldIssue
+            ? {
+                ...oldIssue,
+                project_id: newProjectId,
+              }
+            : null,
+        );
+      } else {
+        setIssues((oldIssues) =>
+          oldIssues.map((oldIssue) =>
+            oldIssue.id === issueId
+              ? {
+                  ...oldIssue,
+                  project_id: newProjectId,
+                }
+              : oldIssue,
+          ),
+        );
+      }
+
+      toast.success("Linked project updated", {
+        description: `${issueTitle} - ${newProjectId ? (targetProject ? targetProject.title : "") : "Not set"}`,
         duration: 3000,
       });
     } catch (error) {
@@ -214,6 +260,7 @@ export default function useUpdateIssue(isIndividual: boolean) {
   return {
     setIssueTitle,
     setIssueDescription,
+    setIssueProject,
     setIssueStatus,
     setIssuePriority,
     setIssuePlannedEndDate,
