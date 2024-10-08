@@ -52,7 +52,7 @@ export default function DatePicker({
                     day: "numeric",
                   })
                 ) : (
-                  <span>{yearHidden ? "" : "Due date"}</span>
+                  <span>{yearHidden ? "" : "---"}</span>
                 )}
                 <IconCalendarFilled className="ml-auto h-4 w-4 text-red-500" />
               </Button>
