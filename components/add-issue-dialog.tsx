@@ -12,6 +12,7 @@ import { IconPencilPlus } from "@tabler/icons-react";
 import DatePicker from "@/components/date-picker";
 import IssuePrioritySelect from "@/components/issue-priority-select";
 import IssueProjectSelect from "@/components/issue-project-select";
+import IssuePropertyItem from "@/components/issue-property-item";
 import IssueStatusSelect from "@/components/issue-status-select";
 import {
   Form,
@@ -170,29 +171,40 @@ export default function AddIssueDialog() {
               )}
             />
 
-            <div className="flex gap-x-2">
-              <IssueProjectSelect
-                value={form.watch("project_id")}
-                onValueChange={(value) => form.setValue("project_id", value)}
-              />
-              <IssueStatusSelect
-                value={form.watch("status")}
-                onValueChange={(value) =>
-                  form.setValue("status", value as IssueStatus)
-                }
-              />
-              <IssuePrioritySelect
-                value={form.watch("priority")}
-                onValueChange={(value) => {
-                  form.setValue("priority", value as IssuePriority);
-                }}
-              />
-              <DatePicker
-                value={form.watch("planned_end_date")}
-                onValueChange={(value) =>
-                  form.setValue("planned_end_date", value)
-                }
-              />
+            <div className="flex justify-between gap-x-2">
+              <IssuePropertyItem label="Project">
+                <IssueProjectSelect
+                  value={form.watch("project_id")}
+                  onValueChange={(value) => form.setValue("project_id", value)}
+                />
+              </IssuePropertyItem>
+
+              <IssuePropertyItem label="Status">
+                <IssueStatusSelect
+                  value={form.watch("status")}
+                  onValueChange={(value) =>
+                    form.setValue("status", value as IssueStatus)
+                  }
+                />
+              </IssuePropertyItem>
+
+              <IssuePropertyItem label="Priority">
+                <IssuePrioritySelect
+                  value={form.watch("priority")}
+                  onValueChange={(value) => {
+                    form.setValue("priority", value as IssuePriority);
+                  }}
+                />
+              </IssuePropertyItem>
+
+              <IssuePropertyItem label="Due date">
+                <DatePicker
+                  value={form.watch("planned_end_date")}
+                  onValueChange={(value) =>
+                    form.setValue("planned_end_date", value)
+                  }
+                />
+              </IssuePropertyItem>
             </div>
 
             <Button

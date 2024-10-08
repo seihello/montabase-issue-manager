@@ -18,9 +18,9 @@ export default function IssueProjectSelect({ value, onValueChange }: Props) {
   return (
     <Select value={value} onValueChange={onValueChange}>
       <SelectTrigger
-        className={`w-[168px] truncate py-1 focus:ring-1 focus:ring-offset-0 ${value ? "" : "text-muted-foreground"}`}
+        className={`w-full truncate py-1 focus:ring-1 focus:ring-offset-0 ${value ? "" : "text-muted-foreground"}`}
       >
-        <span className="w-[120px] truncate text-left">
+        <span className="w-[196px] truncate text-left">
           {value === "NoProject"
             ? "---"
             : projects.find((project) => project.id === value)?.title}

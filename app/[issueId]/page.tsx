@@ -1,6 +1,7 @@
 "use client";
 import DatePicker from "@/components/date-picker";
 import IssuePrioritySelect from "@/components/issue-priority-select";
+import IssuePropertyItem from "@/components/issue-property-item";
 import IssueStatusSelect from "@/components/issue-status-select";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -110,33 +111,41 @@ export default function CourseSlugPage({
         value={editingTitle}
         onChange={(e) => setEditingTitle(e.target.value)}
         placeholder="Issue title"
-        className={`border-none text-2xl font-bold focus-visible:ring-0 focus-visible:ring-transparent`}
+        className={`border-none p-0 text-2xl font-bold focus-visible:ring-0 focus-visible:ring-transparent`}
       />
       <Textarea
         value={editingDescription}
         onChange={(e) => setEditingDescription(e.target.value)}
         placeholder="Add description here"
-        className={`border-none text-base focus-visible:ring-0 focus-visible:ring-transparent`}
+        className={`border-none p-0 text-base focus-visible:ring-0 focus-visible:ring-transparent`}
       />
       <div className="flex gap-x-2">
-        <IssueStatusSelect
-          value={issue.status}
-          onValueChange={(value) => {
-            setIssueStatus(issue.id, issue.title, value as IssueStatus);
-          }}
-        />
-        <IssuePrioritySelect
-          value={issue.priority || undefined}
-          onValueChange={(value) => {
-            setIssuePriority(issue.id, issue.title, value as IssuePriority);
-          }}
-        />
-        <DatePicker
-          value={issue.planned_end_date || undefined}
-          onValueChange={(value) => {
-            setIssuePlannedEndDate(issue.id, issue.title, value || null);
-          }}
-        />
+        <IssuePropertyItem label="Status">
+          <IssueStatusSelect
+            value={issue.status}
+            onValueChange={(value) => {
+              setIssueStatus(issue.id, issue.title, value as IssueStatus);
+            }}
+          />
+        </IssuePropertyItem>
+
+        <IssuePropertyItem label="Priority">
+          <IssuePrioritySelect
+            value={issue.priority || undefined}
+            onValueChange={(value) => {
+              setIssuePriority(issue.id, issue.title, value as IssuePriority);
+            }}
+          />
+        </IssuePropertyItem>
+
+        <IssuePropertyItem label="Due date">
+          <DatePicker
+            value={issue.planned_end_date || undefined}
+            onValueChange={(value) => {
+              setIssuePlannedEndDate(issue.id, issue.title, value || null);
+            }}
+          />
+        </IssuePropertyItem>
       </div>
     </div>
   );
