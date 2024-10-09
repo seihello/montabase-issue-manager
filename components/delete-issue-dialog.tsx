@@ -7,6 +7,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import deleteIssue from "@/lib/supabase/delete-issue";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -16,7 +17,10 @@ type Props = {
 };
 
 export default function DeleteIssueDialog({ issueId, issueTitle }: Props) {
+  const router = useRouter();
+
   const [isOpen, setIsOpen] = useState(false);
+
   const onClickDeleteIssue = async () => {
     try {
       await deleteIssue(issueId);
@@ -24,6 +28,11 @@ export default function DeleteIssueDialog({ issueId, issueTitle }: Props) {
         description: issueTitle,
         duration: 3000,
       });
+      
+      setIsOpen(false);
+
+      // TODO: Might be better to redirect to the top of the same project
+      router.push("/");
     } catch (error) {
       toast.error("Error", {
         description: "Failed to delete the issue. Please try again.",
