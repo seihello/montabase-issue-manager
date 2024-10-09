@@ -60,8 +60,10 @@ const config: Config = {
         ring: "#002060", // same as primary
         secondary: "#f3f4f6",
         "secondary-foreground": "#111827",
-        destructive: "#dd224f",
-        "destructive-foreground": "#f9fafb",
+        destructive: "#FFF5F7",
+        "destructive-foreground": "#dd224f",
+        "destructive-border": "#F4BAC8",
+        "destructive-hover": "#FFEAEF",
         muted: "#f3f4f6",
         "muted-foreground": "#6b7280",
         accent: "#f3f4f6",

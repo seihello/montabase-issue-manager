@@ -1,5 +1,6 @@
 "use client";
 import DatePicker from "@/components/date-picker";
+import DeleteIssueDialog from "@/components/delete-issue-dialog";
 import IssuePrioritySelect from "@/components/issue-priority-select";
 import IssueProjectSelect from "@/components/issue-project-select";
 import IssuePropertyItem from "@/components/issue-property-item";
@@ -108,7 +109,7 @@ export default function CourseSlugPage({
   if (!issue) return;
 
   return (
-    <div className="flex flex-col gap-y-4 p-16">
+    <div className="flex flex-col items-start gap-y-4 p-16">
       <Input
         value={editingTitle}
         onChange={(e) => setEditingTitle(e.target.value)}
@@ -162,6 +163,8 @@ export default function CourseSlugPage({
           />
         </IssuePropertyItem>
       </div>
+
+      <DeleteIssueDialog issueId={issue.id} issueTitle={issue.title} />
     </div>
   );
 }
