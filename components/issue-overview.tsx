@@ -1,4 +1,5 @@
 import DatePicker from "@/components/date-picker";
+import DeleteIssueDialog from "@/components/delete-issue-dialog";
 import IssuePrioritySelect from "@/components/issue-priority-select";
 import IssueStatusSelect from "@/components/issue-status-select";
 import useUpdateIssue from "@/hooks/use-update-issue";
@@ -51,6 +52,11 @@ export default function IssueOverview({ issue }: Props) {
         </p>
       </div>
       <div className="flex gap-x-1">
+        <DeleteIssueDialog
+          issueId={issue.id}
+          issueTitle={issue.title}
+          isOverview
+        />
         <IssueStatusSelect
           value={issue.status || undefined}
           onValueChange={async (value) => {
