@@ -6,9 +6,11 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import deleteIssue from "@/lib/supabase/delete-issue";
+import { issuesState } from "@/states/issues-state";
 import { IconTrash } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useSetRecoilState } from "recoil";
 import { toast } from "sonner";
 
 type Props = {
@@ -26,6 +28,8 @@ export default function DeleteIssueDialog({
 
   const [isOpen, setIsOpen] = useState(false);
 
+  const setIssues = useSetRecoilState(issuesState);
+
   const onClickDeleteIssue = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
@@ -38,8 +42,12 @@ export default function DeleteIssueDialog({
 
       setIsOpen(false);
 
+      setIssues((oldIssues) =>
+        oldIssues.filter((oldIssue) => oldIssue.id !== issueId),
+      );
+
       // TODO: Might be better to redirect to the top of the same project
-      router.push("/");
+      if (!isOverview) router.push("/");
     } catch (error) {
       toast.error("Error", {
         description: "Failed to delete the issue. Please try again.",
