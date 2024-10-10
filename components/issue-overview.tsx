@@ -52,11 +52,6 @@ export default function IssueOverview({ issue }: Props) {
         </p>
       </div>
       <div className="flex gap-x-1">
-        <DeleteIssueDialog
-          issueId={issue.id}
-          issueTitle={issue.title}
-          isOverview
-        />
         <IssueStatusSelect
           value={issue.status || undefined}
           onValueChange={async (value) => {
@@ -77,6 +72,11 @@ export default function IssueOverview({ issue }: Props) {
             setIssuePlannedEndDate(issue.id, issue.title, value || null);
           }}
           yearHidden
+        />
+        <DeleteIssueDialog
+          issueId={issue.id}
+          issueTitle={issue.title}
+          isOverview
         />
       </div>
     </div>
