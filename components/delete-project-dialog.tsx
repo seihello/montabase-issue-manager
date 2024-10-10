@@ -68,7 +68,8 @@ export default function DeleteProjectDialog({
         <DialogTitle>{`Are you sure you want to delete "${projectTitle}"?`}</DialogTitle>
         <DialogDescription>
           This action cannot be undone. This will permanently delete your
-          account and remove your data from our servers.
+          account and remove your data from our servers. All issues linked to
+          this project will also be deleted.
         </DialogDescription>
         <div className="flex justify-end gap-x-2">
           <Button
