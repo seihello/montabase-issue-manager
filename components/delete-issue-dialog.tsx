@@ -50,7 +50,7 @@ export default function DeleteIssueDialog({
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <Button
         variant="destructive"
-        className={`${isOverview ? "h-6 w-auto px-2 py-1" : "mt-16"}`}
+        className={`${isOverview ? "h-6 w-[32px] px-2 py-1" : "mt-16"}`}
         onClick={(e) => {
           e.stopPropagation();
           setIsOpen(true);
