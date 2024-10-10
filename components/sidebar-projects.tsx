@@ -1,3 +1,4 @@
+import SidebarProject from "@/components/sidebar-project";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import addProject from "@/lib/supabase/add-project";
@@ -95,15 +96,7 @@ export default function SidebarProjects() {
         <IconPlus size={12} />
       </Button>
       {projects.map((project, index) => (
-        <div key={index}>
-          <Button
-            variant="ghost"
-            className="h-8 w-full justify-start"
-            onClick={() => router.push(`/projects/${project.id}`)}
-          >
-            <span className="truncate">{project.title}</span>
-          </Button>
-        </div>
+        <SidebarProject key={index} project={project} />
       ))}
 
       {newProjectTitle !== null && (

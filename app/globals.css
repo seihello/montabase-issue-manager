@@ -154,3 +154,11 @@ button.chevron-hidden .lucide {
 button.date-hidden .tabler-icon {
   margin-left: 0px;
 }
+
+.sidebar-project button {
+  display: none;
+}
+
+.sidebar-project:hover button {
+  display: flex;
+}
