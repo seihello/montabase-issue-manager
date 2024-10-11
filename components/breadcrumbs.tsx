@@ -17,10 +17,6 @@ export default function Breadcrumbs({
   issueId,
   issueTitle,
 }: Props) {
-  console.log("isAllProjects", isAllProjects);
-  console.log("projectId", projectId);
-  console.log("projectTitle", projectTitle);
-  
   if (!isAllProjects && (!projectId || !projectTitle))
     throw new Error("Provide the project data");
   if (!isAllIssues && (!issueId || !issueTitle))
