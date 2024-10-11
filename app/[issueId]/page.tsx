@@ -28,7 +28,7 @@ export default function CourseSlugPage({
 
   const [editingTitle, setEditingTitle] = useState("");
   const [editingDescription, setEditingDescription] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingIssue, setIsLoadingIssue] = useState(true);
 
   const {
     setIssueTitle,
@@ -44,7 +44,7 @@ export default function CourseSlugPage({
   useEffect(() => {
     const fetchIssue = async () => {
       try {
-        setIsLoading(true);
+        setIsLoadingIssue(true);
         const issue = await getIssueById(params.issueId);
         setEditingTitle(issue.title);
         setEditingDescription(issue.description || "");
@@ -52,7 +52,7 @@ export default function CourseSlugPage({
       } catch (error) {
         console.error(error);
       } finally {
-        setIsLoading(false);
+        setIsLoadingIssue(false);
       }
     };
     fetchIssue();
@@ -109,6 +109,7 @@ export default function CourseSlugPage({
     // eslint-disable-next-line
   }, [editingDescription, timerRef]);
 
+  if (isLoadingIssue) return;
   if (!issue) return;
   if (issue.project_id && projects.length === 0) return;
 
