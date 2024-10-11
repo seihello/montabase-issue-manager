@@ -34,24 +34,8 @@ export default function IssuesView({ projectId }: Props) {
     }),
   );
 
-  useEffect(() => {
-    const fetchIssues = async () => {
-      if (!user) return;
-      const issues = projectId
-        ? await getIssuesByProjectId(projectId)
-        : await getAllIssues(user.id);
-      setIssues(issues);
-    };
-    fetchIssues();
-  }, [user, projectId, setIssues]);
-
   return (
-    <div
-      className="flex gap-x-2"
-      style={{
-        height: "100%",
-      }}
-    >
+    <div className="flex flex-1 gap-x-2">
       <DndContext
         sensors={sensors}
         collisionDetection={pointerWithin}

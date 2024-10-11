@@ -15,7 +15,7 @@ export default function TopView({ children }: Props) {
     <RecoilRoot>
       <Auth setIsLoadingUser={setIsLoadingUser} />
       <Sidebar isLoadingUser={isLoadingUser} />
-      <main className="min-h-screen flex-1 overflow-x-scroll bg-white p-4">
+      <main className="flex min-h-screen flex-1 flex-col gap-y-2 overflow-x-scroll bg-white p-4">
         {children}
       </main>
     </RecoilRoot>
