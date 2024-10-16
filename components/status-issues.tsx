@@ -1,5 +1,6 @@
 import IssueOverview from "@/components/issue-overview";
 import IssueStatusBadge from "@/components/issue-status-badge";
+import { Skeleton } from "@/components/ui/skeleton";
 import { IssueStatus } from "@/lib/types/issue-status.enum";
 import { issuesState } from "@/states/issues-state";
 import { useDroppable } from "@dnd-kit/core";
@@ -7,9 +8,10 @@ import { useRecoilValue } from "recoil";
 
 type Props = {
   status: IssueStatus;
+  isLoading: boolean;
 };
 
-export default function StatusIssues({ status }: Props) {
+export default function StatusIssues({ status, isLoading }: Props) {
   const issues = useRecoilValue(issuesState);
   const filteredIssues = issues.filter((issue) => issue.status === status);
 
@@ -27,9 +29,13 @@ export default function StatusIssues({ status }: Props) {
         <span className="font-semibold">{status}</span>
       </div>
       <div className="flex flex-col gap-y-2">
-        {filteredIssues.map((issue, index) => (
-          <IssueOverview key={index} issue={issue} />
-        ))}
+        {isLoading
+          ? [...Array(3)].map((_, index) => (
+              <Skeleton key={index} className="!h-16 rounded-md shadow-sm" />
+            ))
+          : filteredIssues.map((issue, index) => (
+              <IssueOverview key={index} issue={issue} />
+            ))}
       </div>
     </div>
   );

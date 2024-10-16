@@ -1,5 +1,6 @@
 "use client";
 import Breadcrumbs from "@/components/breadcrumbs";
+import BreadcrumbsSkeleton from "@/components/breadcrumbs-skeleton";
 import DatePicker from "@/components/date-picker";
 import DeleteIssueDialog from "@/components/delete-issue-dialog";
 import IssuePrioritySelect from "@/components/issue-priority-select";
@@ -109,79 +110,85 @@ export default function CourseSlugPage({
     // eslint-disable-next-line
   }, [editingDescription, timerRef]);
 
-  if (isLoadingIssue) return;
-  if (!issue) return;
-  if (issue.project_id && projects.length === 0) return;
-
   return (
     <>
-      <Breadcrumbs
-        isAllProjects={issue.project_id === null}
-        projectId={issue.project_id || undefined}
-        projectTitle={
-          projects.find((project) => project.id === issue.project_id)?.title
-        }
-        isAllIssues={false}
-        issueId={issue.id}
-        issueTitle={issue.title}
-      />
-      <div className="flex flex-col items-start gap-y-4 p-16">
-        <Input
-          value={editingTitle}
-          onChange={(e) => setEditingTitle(e.target.value)}
-          placeholder="Issue title"
-          className={`border-none p-0 text-2xl font-semibold focus-visible:ring-0 focus-visible:ring-transparent`}
+      {!isLoadingIssue && issue ? (
+        <Breadcrumbs
+          isAllProjects={issue.project_id === null}
+          projectId={issue.project_id || undefined}
+          projectTitle={
+            projects.find((project) => project.id === issue.project_id)?.title
+          }
+          isAllIssues={false}
+          issueId={issue.id}
+          issueTitle={issue.title}
         />
-        <Textarea
-          value={editingDescription}
-          onChange={(e) => setEditingDescription(e.target.value)}
-          placeholder="Add description here"
-          className={`border-none p-0 text-base focus-visible:ring-0 focus-visible:ring-transparent`}
-        />
-        <div className="flex gap-x-2">
-          <IssuePropertyItem label="Project">
-            <IssueProjectSelect
-              value={issue.project_id || "NoProject"}
-              onValueChange={(value) => {
-                setIssueProject(
-                  issue.id,
-                  issue.title,
-                  value === "NoProject" ? null : value,
-                );
-              }}
-            />
-          </IssuePropertyItem>
+      ) : (
+        <BreadcrumbsSkeleton />
+      )}
+      {!isLoadingIssue && issue && (
+        <div className="flex flex-col items-start gap-y-4 p-16">
+          <Input
+            value={editingTitle}
+            onChange={(e) => setEditingTitle(e.target.value)}
+            placeholder="Issue title"
+            className={`border-none p-0 text-2xl font-semibold focus-visible:ring-0 focus-visible:ring-transparent`}
+          />
+          <Textarea
+            value={editingDescription}
+            onChange={(e) => setEditingDescription(e.target.value)}
+            placeholder="Add description here"
+            className={`border-none p-0 text-base focus-visible:ring-0 focus-visible:ring-transparent`}
+          />
+          <div className="flex gap-x-2">
+            <IssuePropertyItem label="Project">
+              <IssueProjectSelect
+                value={issue.project_id || "NoProject"}
+                onValueChange={(value) => {
+                  setIssueProject(
+                    issue.id,
+                    issue.title,
+                    value === "NoProject" ? null : value,
+                  );
+                }}
+              />
+            </IssuePropertyItem>
 
-          <IssuePropertyItem label="Status">
-            <IssueStatusSelect
-              value={issue.status}
-              onValueChange={(value) => {
-                setIssueStatus(issue.id, issue.title, value as IssueStatus);
-              }}
-            />
-          </IssuePropertyItem>
+            <IssuePropertyItem label="Status">
+              <IssueStatusSelect
+                value={issue.status}
+                onValueChange={(value) => {
+                  setIssueStatus(issue.id, issue.title, value as IssueStatus);
+                }}
+              />
+            </IssuePropertyItem>
 
-          <IssuePropertyItem label="Priority">
-            <IssuePrioritySelect
-              value={issue.priority || undefined}
-              onValueChange={(value) => {
-                setIssuePriority(issue.id, issue.title, value as IssuePriority);
-              }}
-            />
-          </IssuePropertyItem>
+            <IssuePropertyItem label="Priority">
+              <IssuePrioritySelect
+                value={issue.priority || undefined}
+                onValueChange={(value) => {
+                  setIssuePriority(
+                    issue.id,
+                    issue.title,
+                    value as IssuePriority,
+                  );
+                }}
+              />
+            </IssuePropertyItem>
 
-          <IssuePropertyItem label="Due date">
-            <DatePicker
-              value={issue.planned_end_date || undefined}
-              onValueChange={(value) => {
-                setIssuePlannedEndDate(issue.id, issue.title, value || null);
-              }}
-            />
-          </IssuePropertyItem>
+            <IssuePropertyItem label="Due date">
+              <DatePicker
+                value={issue.planned_end_date || undefined}
+                onValueChange={(value) => {
+                  setIssuePlannedEndDate(issue.id, issue.title, value || null);
+                }}
+              />
+            </IssuePropertyItem>
+          </div>
+
+          <DeleteIssueDialog issueId={issue.id} issueTitle={issue.title} />
         </div>
-
-        <DeleteIssueDialog issueId={issue.id} issueTitle={issue.title} />
-      </div>
+      )}
     </>
   );
 }

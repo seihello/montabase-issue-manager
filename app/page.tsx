@@ -4,18 +4,26 @@ import getAllIssues from "@/lib/supabase/get-all-issues";
 import { issuesState } from "@/states/issues-state";
 import { userState } from "@/states/user-state";
 import IssuesView from "@/views/issues-view";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 
 export default function TopPage() {
   const setIssues = useSetRecoilState(issuesState);
   const user = useRecoilValue(userState);
+  const [isLoadingIssues, setIsLoadingIssues] = useState(true);
 
   useEffect(() => {
     const fetchIssues = async () => {
       if (!user) return;
-      const issues = await getAllIssues(user.id);
-      setIssues(issues);
+      try {
+        setIsLoadingIssues(true);
+        const issues = await getAllIssues(user.id);
+        setIssues(issues);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoadingIssues(false);
+      }
     };
     fetchIssues();
   }, [user, setIssues]);
@@ -23,7 +31,7 @@ export default function TopPage() {
   return (
     <>
       <Breadcrumbs isAllProjects={true} isAllIssues={true} />
-      <IssuesView />
+      <IssuesView isLoading={isLoadingIssues} />
     </>
   );
 }

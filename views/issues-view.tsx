@@ -1,7 +1,5 @@
 "use client";
 import StatusIssues from "@/components/status-issues";
-import getAllIssues from "@/lib/supabase/get-all-issues";
-import getIssuesByProjectId from "@/lib/supabase/get-issues-by-project-id";
 import updateIssueStatus from "@/lib/supabase/update-issue-status";
 import { IssueStatus } from "@/lib/types/issue-status.enum";
 import { issuesState } from "@/states/issues-state";
@@ -13,15 +11,14 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import { useEffect } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { toast } from "sonner";
 
 type Props = {
-  projectId?: string;
+  isLoading: boolean;
 };
 
-export default function IssuesView({ projectId }: Props) {
+export default function IssuesView({ isLoading }: Props) {
   const issues = useRecoilValue(issuesState);
   const setIssues = useSetRecoilState(issuesState);
   const user = useRecoilValue(userState);
@@ -75,7 +72,7 @@ export default function IssuesView({ projectId }: Props) {
         }}
       >
         {Object.values(IssueStatus).map((status) => (
-          <StatusIssues key={status} status={status} />
+          <StatusIssues key={status} status={status} isLoading={isLoading} />
         ))}
       </DndContext>
     </div>
