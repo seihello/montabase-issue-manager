@@ -6,6 +6,7 @@ import DeleteIssueDialog from "@/components/delete-issue-dialog";
 import IssuePrioritySelect from "@/components/issue-priority-select";
 import IssueProjectSelect from "@/components/issue-project-select";
 import IssuePropertyItem from "@/components/issue-property-item";
+import IssueSkeletons from "@/components/issue-skeletons";
 import IssueStatusSelect from "@/components/issue-status-select";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -126,7 +127,7 @@ export default function CourseSlugPage({
       ) : (
         <BreadcrumbsSkeleton />
       )}
-      {!isLoadingIssue && issue && (
+      {!isLoadingIssue && issue ? (
         <div className="flex flex-col items-start gap-y-4 p-16">
           <Input
             value={editingTitle}
@@ -188,6 +189,8 @@ export default function CourseSlugPage({
 
           <DeleteIssueDialog issueId={issue.id} issueTitle={issue.title} />
         </div>
+      ) : (
+        <IssueSkeletons />
       )}
     </>
   );
