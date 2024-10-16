@@ -35,7 +35,7 @@ export default function Sidebar({ isLoadingUser }: Props) {
               />
               Montabase
             </a>
-            {projects.length > 0 && <AddIssueDialog />}
+            {projects.length > 0 && <AddIssueDialog type="icon" />}
           </div>
           <div className="flex flex-col">
             <SidebarItem

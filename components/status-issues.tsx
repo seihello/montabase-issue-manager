@@ -1,3 +1,4 @@
+import AddIssueDialog from "@/components/add-issue-dialog";
 import IssueOverview from "@/components/issue-overview";
 import IssueStatusBadge from "@/components/issue-status-badge";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -38,8 +39,9 @@ export default function StatusIssues({ status, isLoading }: Props) {
             <Skeleton key={index} className="!h-16 rounded-md shadow-sm" />
           ))
         ) : filteredIssues.length === 0 ? (
-          <div className="flex w-full flex-1 items-center justify-center">
-            No issues
+          <div className="flex w-full flex-1 flex-col items-center justify-center gap-y-2">
+            <div>No issues</div>
+            <AddIssueDialog type="text" />
           </div>
         ) : (
           filteredIssues.map((issue, index) => (

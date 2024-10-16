@@ -38,6 +38,10 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { toast } from "sonner";
 import * as z from "zod";
 
+type Props = {
+  type: "icon" | "text";
+};
+
 const schema = z.object({
   title: z.string().min(1, { message: "Title is missing" }),
   description: z.string(),
@@ -47,7 +51,7 @@ const schema = z.object({
   project_id: z.string(),
 });
 
-export default function AddIssueDialog() {
+export default function AddIssueDialog({ type }: Props) {
   const user = useRecoilValue(userState);
 
   const setIssues = useSetRecoilState(issuesState);
@@ -124,9 +128,15 @@ export default function AddIssueDialog() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="ghost" className="size-8 rounded-lg p-0 shadow-md">
-          <IconPencilPlus />
-        </Button>
+        {type === "icon" ? (
+          <Button variant="ghost" className="size-8 rounded-lg p-0 shadow-md">
+            <IconPencilPlus />
+          </Button>
+        ) : (
+          <Button variant="outline" className="h-8 text-xs">
+            Add issue
+          </Button>
+        )}
       </DialogTrigger>
 
       <DialogContent>
