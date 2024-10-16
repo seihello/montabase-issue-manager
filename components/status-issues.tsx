@@ -4,6 +4,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { IssueStatus } from "@/lib/types/issue-status.enum";
 import { issuesState } from "@/states/issues-state";
 import { useDroppable } from "@dnd-kit/core";
+import { useMemo } from "react";
 import { useRecoilValue } from "recoil";
 
 type Props = {
@@ -13,7 +14,10 @@ type Props = {
 
 export default function StatusIssues({ status, isLoading }: Props) {
   const issues = useRecoilValue(issuesState);
-  const filteredIssues = issues.filter((issue) => issue.status === status);
+  const filteredIssues = useMemo(
+    () => issues.filter((issue) => issue.status === status),
+    [status, issues],
+  );
 
   const { setNodeRef, isOver } = useDroppable({
     id: status,
