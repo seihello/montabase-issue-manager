@@ -32,14 +32,20 @@ export default function StatusIssues({ status, isLoading }: Props) {
         <IssueStatusBadge status={status} />
         <span className="font-medium">{status}</span>
       </div>
-      <div className="flex flex-col gap-y-2">
-        {isLoading
-          ? [...Array(3)].map((_, index) => (
-              <Skeleton key={index} className="!h-16 rounded-md shadow-sm" />
-            ))
-          : filteredIssues.map((issue, index) => (
-              <IssueOverview key={index} issue={issue} />
-            ))}
+      <div className="flex flex-1 flex-col gap-y-2">
+        {isLoading ? (
+          [...Array(3)].map((_, index) => (
+            <Skeleton key={index} className="!h-16 rounded-md shadow-sm" />
+          ))
+        ) : filteredIssues.length === 0 ? (
+          <div className="flex w-full flex-1 items-center justify-center">
+            No issues
+          </div>
+        ) : (
+          filteredIssues.map((issue, index) => (
+            <IssueOverview key={index} issue={issue} />
+          ))
+        )}
       </div>
     </div>
   );
