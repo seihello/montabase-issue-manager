@@ -41,7 +41,7 @@ export default function StatusIssues({ status, isLoading }: Props) {
         ) : filteredIssues.length === 0 ? (
           <div className="flex w-full flex-1 flex-col items-center justify-center gap-y-2">
             <div>No issues</div>
-            <AddIssueDialog type="text" />
+            <AddIssueDialog type="text" initialStatus={status} />
           </div>
         ) : (
           filteredIssues.map((issue, index) => (

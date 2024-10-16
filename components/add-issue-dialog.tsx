@@ -40,6 +40,7 @@ import * as z from "zod";
 
 type Props = {
   type: "icon" | "text";
+  initialStatus?: IssueStatus;
 };
 
 const schema = z.object({
@@ -51,7 +52,7 @@ const schema = z.object({
   project_id: z.string(),
 });
 
-export default function AddIssueDialog({ type }: Props) {
+export default function AddIssueDialog({ type, initialStatus }: Props) {
   const user = useRecoilValue(userState);
 
   const setIssues = useSetRecoilState(issuesState);
@@ -63,7 +64,7 @@ export default function AddIssueDialog({ type }: Props) {
     defaultValues: {
       title: "",
       description: "",
-      status: IssueStatus.Backlog,
+      status: initialStatus || IssueStatus.Backlog,
       priority: IssuePriority.NoPriority,
       planned_end_date: undefined,
       // project_id: projects.length > 0 ? projects[0].id : "",
