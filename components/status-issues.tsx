@@ -30,7 +30,7 @@ export default function StatusIssues({ status, isLoading }: Props) {
     >
       <div className="flex items-center gap-x-1.5">
         <IssueStatusBadge status={status} />
-        <span className="font-semibold">{status}</span>
+        <span className="font-medium">{status}</span>
       </div>
       <div className="flex flex-col gap-y-2">
         {isLoading
