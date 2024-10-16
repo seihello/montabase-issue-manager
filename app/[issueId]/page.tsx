@@ -113,7 +113,7 @@ export default function CourseSlugPage({
 
   return (
     <>
-      {!isLoadingIssue && issue ? (
+      {!isLoadingIssue && issue && projects.length > 0 ? (
         <Breadcrumbs
           isAllProjects={issue.project_id === null}
           projectId={issue.project_id || undefined}
