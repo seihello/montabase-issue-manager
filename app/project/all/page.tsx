@@ -18,6 +18,7 @@ export default function AllProjectsPage() {
       if (!user) return;
       try {
         setIsLoadingIssues(true);
+
         const issues = await getAllIssues(user.id);
         setIssues(issues);
       } catch (error) {
@@ -27,7 +28,7 @@ export default function AllProjectsPage() {
       }
     };
     fetchIssues();
-  }, [user, setIssues]);
+  }, [user]);
 
   return (
     <CommonView>
