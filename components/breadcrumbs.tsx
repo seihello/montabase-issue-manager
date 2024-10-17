@@ -32,7 +32,7 @@ export default function Breadcrumbs({
           if (isAllProjects) {
             router.push("/");
           } else {
-            router.push(`/projects/${projectId}`);
+            router.push(`/project/${projectId}`);
           }
         }}
       >

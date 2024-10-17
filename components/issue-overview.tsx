@@ -37,7 +37,7 @@ export default function IssueOverview({ issue }: Props) {
       }}
       className="flex flex-col items-end justify-center gap-y-1 rounded-md border bg-white py-2 pl-3 pr-2 shadow-sm"
       onClick={() => {
-        router.push(`/${issue.id}`);
+        router.push(`/issue/${issue.id}`);
       }}
     >
       <p className="h-2 w-full text-xs font-bold text-gray-700">

@@ -5,11 +5,12 @@ import getIssuesByProjectId from "@/lib/supabase/get-issues-by-project-id";
 import getProjectById from "@/lib/supabase/get-project-by-id";
 import { Project } from "@/lib/types/project.type";
 import { issuesState } from "@/states/issues-state";
+import CommonView from "@/views/common-view";
 import IssuesView from "@/views/issues-view";
 import { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
 
-export default function ProjectPage({
+export default function SingleProjectPage({
   params,
 }: {
   params: { projectId: string };
@@ -54,7 +55,7 @@ export default function ProjectPage({
   // if (!project) return;
 
   return (
-    <>
+    <CommonView>
       {!isLoadingProject && project ? (
         <Breadcrumbs
           isAllProjects={false}
@@ -69,6 +70,6 @@ export default function ProjectPage({
         isLoading={isLoadingProject || isLoadingIssues}
         projectId={params.projectId}
       />
-    </>
+    </CommonView>
   );
 }

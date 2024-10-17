@@ -6,20 +6,17 @@ import SidebarProjects from "@/components/sidebar-projects";
 import SignOutButton from "@/components/sign-out-button";
 import { projectsState } from "@/states/projects-state";
 
-import { userState } from "@/states/user-state";
+import { isLoadingUserState, userState } from "@/states/user-state";
 import { IconList } from "@tabler/icons-react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useRecoilValue } from "recoil";
 
-type Props = {
-  isLoadingUser: boolean;
-};
-
-export default function Sidebar({ isLoadingUser }: Props) {
+export default function Sidebar() {
   const params = useParams<{ projectId: string }>();
 
   const user = useRecoilValue(userState);
+  const isLoadingUser = useRecoilValue(isLoadingUserState);
   const projects = useRecoilValue(projectsState);
 
   return (
@@ -46,7 +43,7 @@ export default function Sidebar({ isLoadingUser }: Props) {
             <SidebarItem
               label="All issues"
               icon={<IconList size={16} />}
-              link="/"
+              link="/project/all"
             />
             <SidebarProjects />
           </div>

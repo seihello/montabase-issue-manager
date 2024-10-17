@@ -1,14 +1,12 @@
 import createClient from "@/lib/supabase/client";
 import getUser from "@/lib/supabase/get-user";
-import { userState } from "@/states/user-state";
+import { isLoadingUserState, userState } from "@/states/user-state";
 import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 
-type Props = {
-  setIsLoadingUser: (value: boolean) => void;
-};
-export default function Auth({ setIsLoadingUser }: Props) {
+export default function Auth() {
   const setUser = useSetRecoilState(userState);
+  const setIsLoadingUser = useSetRecoilState(isLoadingUserState);
   useEffect(() => {
     const fetchUser = async () => {
       try {

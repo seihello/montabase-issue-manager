@@ -16,10 +16,11 @@ import { IssuePriority } from "@/lib/types/issue-priority.enum";
 import { IssueStatus } from "@/lib/types/issue-status.enum";
 import { issueState } from "@/states/issue-state";
 import { projectsState } from "@/states/projects-state";
+import CommonView from "@/views/common-view";
 import { useEffect, useRef, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 
-export default function CourseSlugPage({
+export default function SingleIssuePage({
   params,
 }: {
   params: { issueId: string };
@@ -112,7 +113,7 @@ export default function CourseSlugPage({
   }, [editingDescription, timerRef]);
 
   return (
-    <>
+    <CommonView>
       {!isLoadingIssue && issue && projects.length > 0 ? (
         <Breadcrumbs
           isAllProjects={issue.project_id === null}
@@ -192,6 +193,6 @@ export default function CourseSlugPage({
       ) : (
         <IssueSkeletons />
       )}
-    </>
+    </CommonView>
   );
 }
