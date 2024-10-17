@@ -62,7 +62,6 @@ export default function AddIssueDialog({
 
   const setIssues = useSetRecoilState(issuesState);
   const projects = useRecoilValue(projectsState);
-  console.log("projects", projects);
 
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
@@ -113,7 +112,8 @@ export default function AddIssueDialog({
         };
       }
 
-      setIssues((oldIssues) => [...oldIssues, newIssue]);
+      if (!initialProjectId || values.project_id === initialProjectId)
+        setIssues((oldIssues) => [...oldIssues, newIssue]);
       setIsOpen(false);
       form.reset();
 
