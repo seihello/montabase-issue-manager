@@ -65,7 +65,10 @@ export default function ProjectPage({
       ) : (
         <BreadcrumbsSkeleton />
       )}
-      <IssuesView isLoading={isLoadingProject || isLoadingIssues} />
+      <IssuesView
+        isLoading={isLoadingProject || isLoadingIssues}
+        projectId={params.projectId}
+      />
     </>
   );
 }

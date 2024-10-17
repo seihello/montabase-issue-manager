@@ -15,10 +15,11 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { toast } from "sonner";
 
 type Props = {
+  projectId?: string;
   isLoading: boolean;
 };
 
-export default function IssuesView({ isLoading }: Props) {
+export default function IssuesView({ projectId, isLoading }: Props) {
   const issues = useRecoilValue(issuesState);
   const setIssues = useSetRecoilState(issuesState);
   const user = useRecoilValue(userState);
@@ -72,7 +73,12 @@ export default function IssuesView({ isLoading }: Props) {
         }}
       >
         {Object.values(IssueStatus).map((status) => (
-          <StatusIssues key={status} status={status} isLoading={isLoading} />
+          <StatusIssues
+            key={status}
+            projectId={projectId}
+            status={status}
+            isLoading={isLoading}
+          />
         ))}
       </DndContext>
     </div>

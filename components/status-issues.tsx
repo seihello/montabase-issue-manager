@@ -9,11 +9,12 @@ import { useMemo } from "react";
 import { useRecoilValue } from "recoil";
 
 type Props = {
+  projectId?: string;
   status: IssueStatus;
   isLoading: boolean;
 };
 
-export default function StatusIssues({ status, isLoading }: Props) {
+export default function StatusIssues({ projectId, status, isLoading }: Props) {
   const issues = useRecoilValue(issuesState);
   const filteredIssues = useMemo(
     () => issues.filter((issue) => issue.status === status),
@@ -41,7 +42,11 @@ export default function StatusIssues({ status, isLoading }: Props) {
         ) : filteredIssues.length === 0 ? (
           <div className="flex w-full flex-1 flex-col items-center justify-center gap-y-2">
             <div>No issues</div>
-            <AddIssueDialog type="text" initialStatus={status} />
+            <AddIssueDialog
+              type="text"
+              initialProjectId={projectId}
+              initialStatus={status}
+            />
           </div>
         ) : (
           filteredIssues.map((issue, index) => (

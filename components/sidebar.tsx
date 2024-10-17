@@ -9,6 +9,7 @@ import { projectsState } from "@/states/projects-state";
 import { userState } from "@/states/user-state";
 import { IconList } from "@tabler/icons-react";
 import Image from "next/image";
+import { useParams } from "next/navigation";
 import { useRecoilValue } from "recoil";
 
 type Props = {
@@ -16,6 +17,8 @@ type Props = {
 };
 
 export default function Sidebar({ isLoadingUser }: Props) {
+  const params = useParams<{ projectId: string }>();
+
   const user = useRecoilValue(userState);
   const projects = useRecoilValue(projectsState);
 
@@ -35,7 +38,9 @@ export default function Sidebar({ isLoadingUser }: Props) {
               />
               Montabase
             </a>
-            {projects.length > 0 && <AddIssueDialog type="icon" />}
+            {projects.length > 0 && (
+              <AddIssueDialog type="icon" initialProjectId={params.projectId} />
+            )}
           </div>
           <div className="flex flex-col">
             <SidebarItem
