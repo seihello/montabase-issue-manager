@@ -4,6 +4,7 @@ import GoogleSignInButton from "@/components/google-sign-in-button";
 import SidebarItem from "@/components/sidebar-item";
 import SidebarProjects from "@/components/sidebar-projects";
 import SignOutButton from "@/components/sign-out-button";
+import { issueState } from "@/states/issue-state";
 import { projectsState } from "@/states/projects-state";
 
 import { isLoadingUserState, userState } from "@/states/user-state";
@@ -18,6 +19,7 @@ export default function Sidebar() {
   const user = useRecoilValue(userState);
   const isLoadingUser = useRecoilValue(isLoadingUserState);
   const projects = useRecoilValue(projectsState);
+  const issue = useRecoilValue(issueState);
 
   return (
     <aside>
@@ -36,7 +38,16 @@ export default function Sidebar() {
               Montabase
             </a>
             {projects.length > 0 && (
-              <AddIssueDialog type="icon" initialProjectId={params.projectId} />
+              <AddIssueDialog
+                type="icon"
+                initialProjectId={
+                  params.projectId
+                    ? params.projectId
+                    : issue
+                      ? issue.project_id || undefined
+                      : undefined
+                }
+              />
             )}
           </div>
           <div className="flex flex-col">
