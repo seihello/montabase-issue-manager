@@ -10,11 +10,12 @@ import { projectsState } from "@/states/projects-state";
 import { isLoadingUserState, userState } from "@/states/user-state";
 import { IconList } from "@tabler/icons-react";
 import Image from "next/image";
-import { useParams } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { useRecoilValue } from "recoil";
 
 export default function Sidebar() {
   const params = useParams<{ projectId: string }>();
+  const pathname = usePathname();
 
   const user = useRecoilValue(userState);
   const isLoadingUser = useRecoilValue(isLoadingUserState);
@@ -55,6 +56,7 @@ export default function Sidebar() {
               label="All issues"
               icon={<IconList size={16} />}
               link="/project/all"
+              pathname={pathname}
             />
             <SidebarProjects selectedProjectId={selectedProjectId} />
           </div>
