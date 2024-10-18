@@ -11,7 +11,11 @@ import { useEffect, useRef, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { toast } from "sonner";
 
-export default function SidebarProjects() {
+type Props = {
+  selectedProjectId: string | undefined;
+};
+
+export default function SidebarProjects({ selectedProjectId }: Props) {
   const router = useRouter();
 
   const user = useRecoilValue(userState);
@@ -96,7 +100,11 @@ export default function SidebarProjects() {
         <IconPlus size={12} />
       </Button>
       {projects.map((project, index) => (
-        <SidebarProject key={index} project={project} />
+        <SidebarProject
+          key={index}
+          project={project}
+          isSelected={project.id === selectedProjectId}
+        />
       ))}
 
       {newProjectTitle !== null && (

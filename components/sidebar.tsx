@@ -21,6 +21,12 @@ export default function Sidebar() {
   const projects = useRecoilValue(projectsState);
   const issue = useRecoilValue(issueState);
 
+  const selectedProjectId = params.projectId
+    ? params.projectId
+    : issue
+      ? issue.project_id || undefined
+      : undefined;
+
   return (
     <aside className="z-50">
       <div className="h-screen w-52"></div>
@@ -40,13 +46,7 @@ export default function Sidebar() {
             {projects.length > 0 && (
               <AddIssueDialog
                 type="icon"
-                initialProjectId={
-                  params.projectId
-                    ? params.projectId
-                    : issue
-                      ? issue.project_id || undefined
-                      : undefined
-                }
+                initialProjectId={selectedProjectId}
               />
             )}
           </div>
@@ -56,7 +56,7 @@ export default function Sidebar() {
               icon={<IconList size={16} />}
               link="/project/all"
             />
-            <SidebarProjects />
+            <SidebarProjects selectedProjectId={selectedProjectId} />
           </div>
         </div>
         <div className="flex flex-col items-center gap-y-1">
