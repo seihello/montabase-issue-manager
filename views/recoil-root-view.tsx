@@ -1,4 +1,6 @@
 "use client";
+import Auth from "@/components/auth";
+import Sidebar from "@/components/sidebar";
 import { RecoilRoot } from "recoil";
 
 type Props = {
@@ -6,5 +8,11 @@ type Props = {
 };
 
 export default function RecoilRootView({ children }: Props) {
-  return <RecoilRoot>{children}</RecoilRoot>;
+  return (
+    <RecoilRoot>
+      <Auth />
+      <Sidebar />
+      {children}
+    </RecoilRoot>
+  );
 }
