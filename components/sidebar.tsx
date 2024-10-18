@@ -22,7 +22,7 @@ export default function Sidebar() {
   const issue = useRecoilValue(issueState);
 
   return (
-    <aside>
+    <aside className="z-50">
       <div className="h-screen w-52"></div>
       <nav className="fixed left-0 top-0 flex h-screen w-52 flex-col items-stretch border-r bg-white p-2">
         <div className="flex flex-1 flex-col gap-y-8">
