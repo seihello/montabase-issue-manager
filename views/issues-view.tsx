@@ -42,7 +42,9 @@ export default function IssuesView({ projectId, isLoading }: Props) {
           const targetIssueStatus = event.over.id;
           const droppedIssueId = event.active.id;
 
-          let targetIssue = issues.find((issue) => issue.id === droppedIssueId);
+          const targetIssue = issues.find(
+            (issue) => issue.id === droppedIssueId,
+          );
           if (!targetIssue) return;
 
           if (targetIssueStatus === targetIssue.status) return;

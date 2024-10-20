@@ -15,7 +15,9 @@ import getIssueById from "@/lib/supabase/get-issue-by-id";
 import { IssuePriority } from "@/lib/types/issue-priority.enum";
 import { IssueStatus } from "@/lib/types/issue-status.enum";
 import { issueState } from "@/states/issue-state";
+import { issuesState } from "@/states/issues-state";
 import { projectsState } from "@/states/projects-state";
+import { isLoadingUserState, userState } from "@/states/user-state";
 import CommonView from "@/views/common-view";
 import { useEffect, useRef, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
@@ -25,7 +27,10 @@ export default function SingleIssuePage({
 }: {
   params: { issueId: string };
 }) {
+  const user = useRecoilValue(userState);
+  const isLoadingUser = useRecoilValue(isLoadingUserState);
   const projects = useRecoilValue(projectsState);
+  const issues = useRecoilValue(issuesState);
   const issue = useRecoilValue(issueState);
   const setIssue = useSetRecoilState(issueState);
 
@@ -46,12 +51,25 @@ export default function SingleIssuePage({
 
   useEffect(() => {
     const fetchIssue = async () => {
+      if (isLoadingUser) return;
       try {
         setIsLoadingIssue(true);
-        const issue = await getIssueById(params.issueId);
-        setEditingTitle(issue.title);
-        setEditingDescription(issue.description || "");
-        setIssue(issue);
+
+        if (user) {
+          const issue = await getIssueById(params.issueId);
+          setEditingTitle(issue.title);
+          setEditingDescription(issue.description || "");
+          setIssue(issue);
+        } else {
+          const dummyIssue = issues.find(
+            (issue) => issue.id === params.issueId,
+          );
+          if (dummyIssue) {
+            setEditingTitle(dummyIssue.title);
+            setEditingDescription(dummyIssue.description || "");
+            setIssue(dummyIssue);
+          }
+        }
       } catch (error) {
         console.error(error);
       } finally {
@@ -59,7 +77,7 @@ export default function SingleIssuePage({
       }
     };
     fetchIssue();
-  }, [params.issueId, setIssue]);
+  }, [user, isLoadingUser, issues, params.issueId, setIssue]);
 
   // const saveIssue = useCallback(async (issue: Issue) => {
   //   try {
@@ -190,6 +208,8 @@ export default function SingleIssuePage({
 
           <DeleteIssueDialog issueId={issue.id} issueTitle={issue.title} />
         </div>
+      ) : !isLoadingIssue ? (
+        <div>Issue Not Found</div>
       ) : (
         <IssueSkeletons />
       )}

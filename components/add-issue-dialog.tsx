@@ -6,6 +6,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { v4 as uuidv4 } from "uuid";
 
 import { IconPencilPlus } from "@tabler/icons-react";
 
@@ -96,7 +97,7 @@ export default function AddIssueDialog({
         );
       } else {
         newIssue = {
-          id: new Date().getMilliseconds().toString(),
+          id: uuidv4(),
           title: values.title,
           description: values.description,
           status: values.status,
