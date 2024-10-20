@@ -18,6 +18,7 @@ export default function Auth() {
         const { data, error } = await supabase.auth.getSession();
         if (error) {
           console.error(error.message);
+          setIsLoadingUser(false);
           return;
         }
 
@@ -28,17 +29,17 @@ export default function Auth() {
 
         const user = await getUser(data.session.user.id);
 
-        console.log("getUser");
-
         setUser(user);
       } catch (error) {
         console.error(error);
       } finally {
+        console.log("finally");
+
         setIsLoadingUser(false);
       }
     };
     fetchUser();
-  }, []);
+  }, [user, setUser, setIsLoadingUser]);
 
   return <></>;
 }
