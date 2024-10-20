@@ -7,10 +7,11 @@ import {
 } from "@/components/ui/dialog";
 import deleteIssue from "@/lib/supabase/delete-issue";
 import { issuesState } from "@/states/issues-state";
+import { userState } from "@/states/user-state";
 import { IconTrash } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { toast } from "sonner";
 
 type Props = {
@@ -26,25 +27,26 @@ export default function DeleteIssueDialog({
 }: Props) {
   const router = useRouter();
 
-  const [isOpen, setIsOpen] = useState(false);
-
+  const user = useRecoilValue(userState);
   const setIssues = useSetRecoilState(issuesState);
+
+  const [isOpen, setIsOpen] = useState(false);
 
   const onClickDeleteIssue = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
     try {
-      await deleteIssue(issueId);
+      if (user) await deleteIssue(issueId);
+      setIssues((oldIssues) =>
+        oldIssues.filter((oldIssue) => oldIssue.id !== issueId),
+      );
+
       toast.success("Issue deleted", {
         description: issueTitle,
         duration: 3000,
       });
 
       setIsOpen(false);
-
-      setIssues((oldIssues) =>
-        oldIssues.filter((oldIssue) => oldIssue.id !== issueId),
-      );
 
       // TODO: Might be better to redirect to the top of the same project
       if (!isOverview) router.push("/projects/all");
