@@ -39,8 +39,10 @@ export default function SidebarProjects({ selectedProjectId }: Props) {
           const projects = await getAllProjects(user.id);
           setProjects(projects);
         } else {
-          const dummyProjects = await getDummyProjects();
-          setProjects(dummyProjects);
+          if (projects.length === 0) {
+            const dummyProjects = await getDummyProjects();
+            setProjects(dummyProjects);
+          }
         }
       } catch (error) {
         console.error(error);
