@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import addProject from "@/lib/supabase/add-project";
 import getDummyProjects from "@/lib/supabase/demo/get-dummy-projects";
 import getAllProjects from "@/lib/supabase/get-all-projects";
+import { Project } from "@/lib/types/project.type";
 import { projectsState } from "@/states/projects-state";
 import { isLoadingUserState, userState } from "@/states/user-state";
 import { IconPlus } from "@tabler/icons-react";
@@ -11,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { toast } from "sonner";
+import { v4 as uuidv4 } from "uuid";
 
 type Props = {
   selectedProjectId: string | undefined;
@@ -61,14 +63,19 @@ export default function SidebarProjects({ selectedProjectId }: Props) {
 
   useEffect(() => {
     const handleClickOutside = async (event: MouseEvent) => {
-      if (!user) return;
       if (
         newProjectTitleInput.current &&
         !newProjectTitleInput.current.contains(event.target as Node) &&
         newProjectTitle
       ) {
         try {
-          const newProject = await addProject(user.id, newProjectTitle);
+          const newProject: Project = user
+            ? await addProject(user.id, newProjectTitle)
+            : {
+                id: uuidv4(),
+                title: newProjectTitle,
+              };
+
           setNewProjectTitle(null);
           setIsProjectTitleSelected(false);
 
