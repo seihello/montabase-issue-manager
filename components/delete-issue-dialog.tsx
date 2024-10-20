@@ -49,7 +49,7 @@ export default function DeleteIssueDialog({
       setIsOpen(false);
 
       // TODO: Might be better to redirect to the top of the same project
-      if (!isOverview) router.push("/projects/all");
+      if (!isOverview) router.push("/project/all");
     } catch (error) {
       toast.error("Error", {
         description: "Failed to delete the issue. Please try again.",
