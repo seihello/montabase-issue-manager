@@ -7,10 +7,11 @@ import {
 } from "@/components/ui/dialog";
 import deleteProject from "@/lib/supabase/delete-project";
 import { projectsState } from "@/states/projects-state";
+import { userState } from "@/states/user-state";
 import { IconTrash } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { toast } from "sonner";
 
 type Props = {
@@ -24,6 +25,8 @@ export default function DeleteProjectDialog({
 }: Props) {
   const router = useRouter();
 
+  const user = useRecoilValue(userState);
+
   const [isOpen, setIsOpen] = useState(false);
 
   const setProjects = useSetRecoilState(projectsState);
@@ -34,17 +37,18 @@ export default function DeleteProjectDialog({
     e.stopPropagation();
 
     try {
-      await deleteProject(projectId);
-      toast.success("Project deleted", {
-        description: projectTitle,
-        duration: 3000,
-      });
-
-      setIsOpen(false);
+      if (user) await deleteProject(projectId);
 
       setProjects((oldProjects) =>
         oldProjects.filter((oldProject) => oldProject.id !== projectId),
       );
+
+      setIsOpen(false);
+
+      toast.success("Project deleted", {
+        description: projectTitle,
+        duration: 3000,
+      });
     } catch (error) {
       toast.error("Error", {
         description: "Failed to delete the project. Please try again.",
