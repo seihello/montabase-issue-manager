@@ -1,10 +1,11 @@
 import SidebarProject from "@/components/sidebar-project";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import getDummyProjects from "@/lib/get-dummy-projects";
 import addProject from "@/lib/supabase/add-project";
 import getAllProjects from "@/lib/supabase/get-all-projects";
 import { projectsState } from "@/states/projects-state";
-import { userState } from "@/states/user-state";
+import { isLoadingUserState, userState } from "@/states/user-state";
 import { IconPlus } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -19,6 +20,7 @@ export default function SidebarProjects({ selectedProjectId }: Props) {
   const router = useRouter();
 
   const user = useRecoilValue(userState);
+  const isLoadingUser = useRecoilValue(isLoadingUserState);
   const projects = useRecoilValue(projectsState);
   const setProjects = useSetRecoilState(projectsState);
 
@@ -29,16 +31,21 @@ export default function SidebarProjects({ selectedProjectId }: Props) {
 
   useEffect(() => {
     const fetchProjects = async () => {
-      if (!user) return;
+      if (isLoadingUser) return;
       try {
-        const projects = await getAllProjects(user.id);
-        setProjects(projects);
+        if (user) {
+          const projects = await getAllProjects(user.id);
+          setProjects(projects);
+        } else {
+          const dummyProjects = await getDummyProjects();
+          setProjects(dummyProjects);
+        }
       } catch (error) {
         console.error(error);
       }
     };
     fetchProjects();
-  }, [user, setProjects]);
+  }, [user, isLoadingUser, setProjects]);
 
   const onClickedAddProjectButton = async () => {
     // const newProject = setProjects((oldProjects) => [...oldProjects, {}]);
