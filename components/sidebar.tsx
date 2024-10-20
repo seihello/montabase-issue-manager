@@ -1,5 +1,6 @@
 "use client";
 import AddIssueDialog from "@/components/add-issue-dialog";
+import DemoMessage from "@/components/demo-message";
 import GoogleSignInButton from "@/components/google-sign-in-button";
 import SidebarItem from "@/components/sidebar-item";
 import SidebarProjects from "@/components/sidebar-projects";
@@ -31,7 +32,7 @@ export default function Sidebar() {
   return (
     <aside className="z-50">
       <div className="h-screen w-52"></div>
-      <nav className="fixed left-0 top-0 flex h-screen w-52 flex-col items-stretch border-r bg-white p-2">
+      <nav className="fixed left-0 top-0 flex h-screen w-52 flex-col items-stretch border-r bg-white p-2 pb-3">
         <div className="flex flex-1 flex-col gap-y-8">
           <div className="flex justify-between">
             <a href="/" className="flex items-center text-lg font-bold">
@@ -81,7 +82,10 @@ export default function Sidebar() {
           {isLoadingUser ? null : user ? (
             <SignOutButton />
           ) : (
-            <GoogleSignInButton />
+            <div className="relative">
+              <DemoMessage />
+              <GoogleSignInButton />
+            </div>
           )}
         </div>
       </nav>
