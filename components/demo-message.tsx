@@ -1,11 +1,14 @@
 import { Button } from "@/components/ui/button";
+import { isDemoMessageHiddenState } from "@/states/demo-state";
 import { IconX } from "@tabler/icons-react";
-import { useState } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 export default function DemoMessage() {
-  const [isHidden, setIsHidden] = useState(false);
+  // const [isHidden, setIsHidden] = useState(false);
+  const isDemoMessageHidden = useRecoilValue(isDemoMessageHiddenState);
+  const setIsDemoMessageHidden = useSetRecoilState(isDemoMessageHiddenState);
 
-  if (isHidden) return;
+  if (isDemoMessageHidden) return;
   return (
     <div
       className="absolute -right-2 top-1/2 flex -translate-y-1/2 translate-x-full items-center"
@@ -23,7 +26,7 @@ export default function DemoMessage() {
         <Button
           variant="ghost"
           className="h-8 rounded-full px-2 hover:bg-transparent"
-          onClick={() => setIsHidden(true)}
+          onClick={() => setIsDemoMessageHidden(true)}
         >
           <IconX size={16} />
         </Button>
