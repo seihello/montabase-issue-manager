@@ -17,8 +17,13 @@ type Props = {
 export default function StatusIssues({ projectId, status, isLoading }: Props) {
   const issues = useRecoilValue(issuesState);
   const filteredIssues = useMemo(
-    () => issues.filter((issue) => issue.status === status),
-    [status, issues],
+    () =>
+      issues.filter((issue) =>
+        projectId
+          ? issue.status === status && issue.project_id === projectId
+          : issue.status === status,
+      ),
+    [projectId, status, issues],
   );
 
   const { setNodeRef, isOver } = useDroppable({

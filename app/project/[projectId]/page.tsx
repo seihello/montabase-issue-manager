@@ -1,9 +1,9 @@
 "use client";
 import Breadcrumbs from "@/components/breadcrumbs";
 import BreadcrumbsSkeleton from "@/components/breadcrumbs-skeleton";
-import getDummyIssuesByProjectId from "@/lib/supabase/demo/get-dummy-issues-by-project-id";
+import getDummyIssues from "@/lib/supabase/demo/get-dummy-issues";
 import getDummyProjectById from "@/lib/supabase/demo/get-dummy-project-by-id";
-import getIssuesByProjectId from "@/lib/supabase/get-issues-by-project-id";
+import getAllIssues from "@/lib/supabase/get-all-issues";
 import getProjectById from "@/lib/supabase/get-project-by-id";
 import { Project } from "@/lib/types/project.type";
 import { issuesState } from "@/states/issues-state";
@@ -50,19 +50,16 @@ export default function SingleProjectPage({
 
   useEffect(() => {
     const fetchIssues = async () => {
-      // TODO: verify the user to avoid fetching issues not related to this user
       if (isLoadingUser) return;
       try {
         setIsLoadingIssues(true);
 
         if (user) {
-          const issues = await getIssuesByProjectId(params.projectId);
+          const issues = await getAllIssues(user.id);
           setIssues(issues);
         } else {
           if (issues.length === 0) {
-            const dummyIssues = await getDummyIssuesByProjectId(
-              params.projectId,
-            );
+            const dummyIssues = await getDummyIssues();
             setIssues(dummyIssues);
           }
         }
@@ -73,7 +70,7 @@ export default function SingleProjectPage({
       }
     };
     fetchIssues();
-  }, [user, isLoadingUser, params.projectId, setIssues]);
+  }, [user, isLoadingUser, issues, setIssues]);
 
   // if (!project) return;
 
