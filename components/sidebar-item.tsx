@@ -25,7 +25,7 @@ export default function SidebarItem({
   return (
     <Button
       variant="ghost"
-      className={`h-8 justify-start gap-x-2 px-0 ${pathname === link ? "bg-blue-100" : ""}`}
+      className={`h-8 justify-start gap-x-2 px-0 ${pathname === link ? "bg-blue-100 hover:bg-blue-100" : ""}`}
       onClick={() => {
         if (link) {
           router.push(link);
