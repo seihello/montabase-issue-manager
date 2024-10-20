@@ -29,6 +29,9 @@ export default function Sidebar() {
       ? issue.project_id || undefined
       : undefined;
 
+  console.log("params.projectId", params.projectId);
+  console.log("selectedProjectId", selectedProjectId);
+
   return (
     <aside className="z-50">
       <div className="h-screen w-52"></div>

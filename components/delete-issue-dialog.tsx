@@ -6,6 +6,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import deleteIssue from "@/lib/supabase/delete-issue";
+import { issueState } from "@/states/issue-state";
 import { issuesState } from "@/states/issues-state";
 import { userState } from "@/states/user-state";
 import { IconTrash } from "@tabler/icons-react";
@@ -29,6 +30,7 @@ export default function DeleteIssueDialog({
 
   const user = useRecoilValue(userState);
   const setIssues = useSetRecoilState(issuesState);
+  const setIssue = useSetRecoilState(issueState);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -40,6 +42,7 @@ export default function DeleteIssueDialog({
       setIssues((oldIssues) =>
         oldIssues.filter((oldIssue) => oldIssue.id !== issueId),
       );
+      setIssue(null);
 
       toast.success("Issue deleted", {
         description: issueTitle,
