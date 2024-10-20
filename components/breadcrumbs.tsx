@@ -30,7 +30,7 @@ export default function Breadcrumbs({
         className="cursor-pointer hover:underline"
         onClick={() => {
           if (isAllProjects) {
-            router.push("/");
+            router.push("/project/all");
           } else {
             router.push(`/project/${projectId}`);
           }
