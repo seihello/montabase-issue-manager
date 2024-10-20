@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 
 export default function AllProjectsPage() {
+  const issues = useRecoilValue(issuesState);
   const setIssues = useSetRecoilState(issuesState);
   const user = useRecoilValue(userState);
   const isLoadingUser = useRecoilValue(isLoadingUserState);
@@ -26,8 +27,10 @@ export default function AllProjectsPage() {
           const issues = await getAllIssues(user.id);
           setIssues(issues);
         } else {
-          const dummyIssues = await getDummyIssues();
-          setIssues(dummyIssues);
+          if (issues.length === 0) {
+            const dummyIssues = await getDummyIssues();
+            setIssues(dummyIssues);
+          }
         }
       } catch (error) {
         console.error(error);
@@ -36,7 +39,7 @@ export default function AllProjectsPage() {
       }
     };
     fetchIssues();
-  }, [user, isLoadingUser, setIssues]);
+  }, [user, isLoadingUser, issues, setIssues]);
 
   return (
     <CommonView>

@@ -18,6 +18,7 @@ export default function SingleProjectPage({
 }: {
   params: { projectId: string };
 }) {
+  const issues = useRecoilValue(issuesState);
   const setIssues = useSetRecoilState(issuesState);
   const user = useRecoilValue(userState);
   const isLoadingUser = useRecoilValue(isLoadingUserState);
@@ -58,8 +59,12 @@ export default function SingleProjectPage({
           const issues = await getIssuesByProjectId(params.projectId);
           setIssues(issues);
         } else {
-          const dummyIssues = await getDummyIssuesByProjectId(params.projectId);
-          setIssues(dummyIssues);
+          if (issues.length === 0) {
+            const dummyIssues = await getDummyIssuesByProjectId(
+              params.projectId,
+            );
+            setIssues(dummyIssues);
+          }
         }
       } catch (error) {
         console.error(error);
