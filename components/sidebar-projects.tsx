@@ -1,8 +1,8 @@
 import SidebarProject from "@/components/sidebar-project";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import getDummyProjects from "@/lib/get-dummy-projects";
 import addProject from "@/lib/supabase/add-project";
+import getDummyProjects from "@/lib/supabase/demo/get-dummy-projects";
 import getAllProjects from "@/lib/supabase/get-all-projects";
 import { projectsState } from "@/states/projects-state";
 import { isLoadingUserState, userState } from "@/states/user-state";

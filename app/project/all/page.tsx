@@ -1,5 +1,6 @@
 "use client";
 import Breadcrumbs from "@/components/breadcrumbs";
+import getDummyIssues from "@/lib/supabase/demo/get-dummy-issues";
 import getAllIssues from "@/lib/supabase/get-all-issues";
 import { issuesState } from "@/states/issues-state";
 import { isLoadingUserState, userState } from "@/states/user-state";
@@ -24,6 +25,9 @@ export default function AllProjectsPage() {
         if (user) {
           const issues = await getAllIssues(user.id);
           setIssues(issues);
+        } else {
+          const dummyIssues = await getDummyIssues();
+          setIssues(dummyIssues);
         }
       } catch (error) {
         console.error(error);
@@ -33,8 +37,6 @@ export default function AllProjectsPage() {
     };
     fetchIssues();
   }, [user, isLoadingUser, setIssues]);
-
-  console.log("isLoadingUser", isLoadingUser);
 
   return (
     <CommonView>
