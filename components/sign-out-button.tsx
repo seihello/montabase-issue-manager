@@ -1,12 +1,16 @@
 import { Button } from "@/components/ui/button";
 import createClient from "@/lib/supabase/client";
 import { issuesState } from "@/states/issues-state";
+import { projectsState } from "@/states/projects-state";
 import { userState } from "@/states/user-state";
+import { useRouter } from "next/navigation";
 import { useSetRecoilState } from "recoil";
 
 export default function SignOutButton() {
+  const router = useRouter();
   const setUser = useSetRecoilState(userState);
   const setIssues = useSetRecoilState(issuesState);
+  const setProjects = useSetRecoilState(projectsState);
 
   return (
     <Button
@@ -19,6 +23,9 @@ export default function SignOutButton() {
         }
         setUser(null);
         setIssues([]);
+        setProjects([]);
+
+        router.push("/project/all");
       }}
       className="h-8"
     >
