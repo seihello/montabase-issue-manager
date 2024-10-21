@@ -8,7 +8,6 @@ import { Project } from "@/lib/types/project.type";
 import { projectsState } from "@/states/projects-state";
 import { isLoadingUserState, userState } from "@/states/user-state";
 import { IconPlus } from "@tabler/icons-react";
-import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { toast } from "sonner";
@@ -19,11 +18,6 @@ type Props = {
 };
 
 export default function SidebarProjects({ selectedProjectId }: Props) {
-  const router = useRouter();
-
-  console.log("selectedProjectId", selectedProjectId);
-  
-
   const user = useRecoilValue(userState);
   const isLoadingUser = useRecoilValue(isLoadingUserState);
   const projects = useRecoilValue(projectsState);
