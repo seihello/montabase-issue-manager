@@ -10,10 +10,12 @@ import { projectsState } from "@/states/projects-state";
 import { isLoadingUserState, userState } from "@/states/user-state";
 import { IconList } from "@tabler/icons-react";
 import Image from "next/image";
-import { useParams, usePathname } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { useRecoilValue } from "recoil";
 
 export default function Sidebar() {
+  const router = useRouter();
+
   const params = useParams<{ projectId: string }>();
   const pathname = usePathname();
 
@@ -29,7 +31,10 @@ export default function Sidebar() {
       <nav className="fixed left-0 top-0 flex h-screen w-52 flex-col items-stretch border-r bg-white p-2 pb-3">
         <div className="flex flex-1 flex-col gap-y-8">
           <div className="flex justify-between">
-            <a href="/" className="flex items-center text-lg font-bold">
+            <div
+              className="flex cursor-pointer items-center text-lg font-bold"
+              onClick={() => router.push("/project/all")}
+            >
               <Image
                 src="/img/snow-capped-mountain.png"
                 alt="profile_avatar"
@@ -38,7 +43,7 @@ export default function Sidebar() {
                 className="mb-1 rounded-full"
               />
               Montabase
-            </a>
+            </div>
             {projects.length > 0 && (
               <AddIssueDialog
                 type="icon"
