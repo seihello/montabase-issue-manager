@@ -1,5 +1,4 @@
 import Sidebar from "@/components/sidebar";
-import { Toaster } from "@/components/ui/toaster";
 
 type Props = {
   children: React.ReactNode;
@@ -15,7 +14,6 @@ export default function CommonView({ children }: Props) {
           overflowX: "scroll",
         }}
       >
-        <Toaster richColors closeButton />
         {children}
       </main>
     </>
