@@ -26,7 +26,8 @@ export default async function getAllProjects(
       .in(
         "id",
         projectIdsRes.data.map((row) => row.project_id),
-      );
+      )
+      .order("created_at", { ascending: true });
 
     if (projectsRes.error) {
       throw new Error(projectsRes.error.message);

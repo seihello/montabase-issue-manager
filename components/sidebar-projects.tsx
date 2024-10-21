@@ -23,6 +23,8 @@ export default function SidebarProjects({ selectedProjectId }: Props) {
   const projects = useRecoilValue(projectsState);
   const setProjects = useSetRecoilState(projectsState);
 
+  const [isLoadingProjects, setIsLoadingProjects] = useState<boolean>(true);
+
   const [newProjectTitle, setNewProjectTitle] = useState<string | null>(null);
   const [isProjectTitleSelected, setIsProjectTitleSelected] =
     useState<boolean>(false);
@@ -32,17 +34,20 @@ export default function SidebarProjects({ selectedProjectId }: Props) {
     const fetchProjects = async () => {
       if (isLoadingUser) return;
       try {
-        if (user) {
-          const projects = await getAllProjects(user.id);
-          setProjects(projects);
-        } else {
-          if (projects.length === 0) {
+        if (projects.length === 0) {
+          setIsLoadingProjects(true);
+          if (user) {
+            const projects = await getAllProjects(user.id);
+            setProjects(projects);
+          } else {
             const dummyProjects = await getDummyProjects();
             setProjects(dummyProjects);
           }
         }
       } catch (error) {
         console.error(error);
+      } finally {
+        setIsLoadingProjects(false);
       }
     };
     fetchProjects();
