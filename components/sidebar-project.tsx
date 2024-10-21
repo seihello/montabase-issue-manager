@@ -9,7 +9,6 @@ type Props = {
 
 export default function SidebarProject({ project, isSelected }: Props) {
   const router = useRouter();
-  console.log("isSelected", isSelected, project.title);
 
   return (
     <div

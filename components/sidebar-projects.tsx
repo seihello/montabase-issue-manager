@@ -21,6 +21,9 @@ type Props = {
 export default function SidebarProjects({ selectedProjectId }: Props) {
   const router = useRouter();
 
+  console.log("selectedProjectId", selectedProjectId);
+  
+
   const user = useRecoilValue(userState);
   const isLoadingUser = useRecoilValue(isLoadingUserState);
   const projects = useRecoilValue(projectsState);
