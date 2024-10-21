@@ -155,77 +155,81 @@ export default function AddIssueDialog({
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col items-stretch gap-y-2"
+            className="flex flex-col items-stretch gap-y-4"
           >
-            <FormField
-              control={form.control}
-              name="title"
-              render={({ field, fieldState }) => (
-                <FormItem>
-                  {/* <FormLabel>Issue Title</FormLabel> */}
-                  <FormControl>
-                    <Input
-                      autoFocus
-                      placeholder="Issue title"
-                      className={`border-none text-xl font-medium focus-visible:ring-0 focus-visible:ring-transparent ${fieldState.invalid ? "border-destructive" : ""}`}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field, fieldState }) => (
-                <FormItem>
-                  <FormControl>
-                    <Textarea
-                      placeholder="Add description here"
-                      className={`border-none focus-visible:ring-0 focus-visible:ring-transparent ${fieldState.invalid ? "border-destructive" : ""}`}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className="flex flex-col gap-y-2">
+              <FormField
+                control={form.control}
+                name="title"
+                render={({ field, fieldState }) => (
+                  <FormItem>
+                    {/* <FormLabel>Issue Title</FormLabel> */}
+                    <FormControl>
+                      <Input
+                        autoFocus
+                        placeholder="Issue title"
+                        className={`border-none text-xl font-medium focus-visible:ring-0 focus-visible:ring-transparent ${fieldState.invalid ? "border-destructive" : ""}`}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field, fieldState }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Add description here"
+                        className={`border-none focus-visible:ring-0 focus-visible:ring-transparent ${fieldState.invalid ? "border-destructive" : ""}`}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <div className="flex justify-between gap-x-2">
-              <IssuePropertyItem label="Project">
-                <IssueProjectSelect
-                  value={form.watch("project_id")}
-                  onValueChange={(value) => form.setValue("project_id", value)}
-                />
-              </IssuePropertyItem>
+              <div className="flex justify-between gap-x-2">
+                <IssuePropertyItem label="Project">
+                  <IssueProjectSelect
+                    value={form.watch("project_id")}
+                    onValueChange={(value) =>
+                      form.setValue("project_id", value)
+                    }
+                  />
+                </IssuePropertyItem>
 
-              <IssuePropertyItem label="Status">
-                <IssueStatusSelect
-                  value={form.watch("status")}
-                  onValueChange={(value) =>
-                    form.setValue("status", value as IssueStatus)
-                  }
-                />
-              </IssuePropertyItem>
+                <IssuePropertyItem label="Status">
+                  <IssueStatusSelect
+                    value={form.watch("status")}
+                    onValueChange={(value) =>
+                      form.setValue("status", value as IssueStatus)
+                    }
+                  />
+                </IssuePropertyItem>
 
-              <IssuePropertyItem label="Priority">
-                <IssuePrioritySelect
-                  value={form.watch("priority")}
-                  onValueChange={(value) => {
-                    form.setValue("priority", value as IssuePriority);
-                  }}
-                />
-              </IssuePropertyItem>
+                <IssuePropertyItem label="Priority">
+                  <IssuePrioritySelect
+                    value={form.watch("priority")}
+                    onValueChange={(value) => {
+                      form.setValue("priority", value as IssuePriority);
+                    }}
+                  />
+                </IssuePropertyItem>
 
-              <IssuePropertyItem label="Due date">
-                <DatePicker
-                  value={form.watch("planned_end_date")}
-                  onValueChange={(value) =>
-                    form.setValue("planned_end_date", value)
-                  }
-                />
-              </IssuePropertyItem>
+                <IssuePropertyItem label="Due date">
+                  <DatePicker
+                    value={form.watch("planned_end_date")}
+                    onValueChange={(value) =>
+                      form.setValue("planned_end_date", value)
+                    }
+                  />
+                </IssuePropertyItem>
+              </div>
             </div>
 
             <Button
