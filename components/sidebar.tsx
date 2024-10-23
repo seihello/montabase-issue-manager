@@ -30,19 +30,17 @@ export default function Sidebar() {
       <div className="h-screen w-52"></div>
       <nav className="fixed left-0 top-0 flex h-screen w-52 flex-col items-stretch border-r bg-white p-2 pb-3">
         <div className="flex flex-1 flex-col gap-y-8">
-          <div className="flex justify-between">
+          <div className="flex items-center justify-between gap-x-8">
             <div
-              className="flex cursor-pointer items-center text-lg font-bold"
+              className="relative flex h-full flex-1 cursor-pointer items-center"
               onClick={() => router.push("/project/all")}
             >
               <Image
-                src="/img/snow-capped-mountain.png"
+                src="/img/montabase.svg"
                 alt="profile_avatar"
-                width={32}
-                height={32}
-                className="mb-1 rounded-full"
+                fill
+                className="object-contain"
               />
-              Montabase
             </div>
             {projects.length > 0 && (
               <AddIssueDialog
