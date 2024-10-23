@@ -5,6 +5,7 @@ import {
   DialogDescription,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import deleteProject from "@/lib/supabase/delete-project";
 import { projectsState } from "@/states/projects-state";
 import { userState } from "@/states/user-state";
@@ -57,17 +58,15 @@ export default function DeleteProjectDialog({
   };
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <Button
-        variant="destructive"
-        className="absolute right-0 top-1/2 h-6 w-[32px] -translate-y-1/2 px-2 py-1"
+      <DropdownMenuItem
         onClick={(e) => {
           e.stopPropagation();
           setIsOpen(true);
         }}
       >
         <IconTrash size={16} />
-      </Button>
-
+        <span>Delete</span>
+      </DropdownMenuItem>
       <DialogContent className="w-144">
         <DialogTitle>{`Are you sure you want to delete "${projectTitle}"?`}</DialogTitle>
         <DialogDescription>
