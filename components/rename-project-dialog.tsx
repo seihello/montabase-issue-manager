@@ -74,7 +74,7 @@ export default function RenameProjectDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="w-144">
+      <DialogContent className="w-144" onClick={(e) => e.stopPropagation()}>
         <DialogTitle>Rename project</DialogTitle>
         <Form {...form}>
           <form
@@ -93,6 +93,8 @@ export default function RenameProjectDialog({
                       placeholder="Project title"
                       className={`${fieldState.invalid ? "border-destructive" : ""}`}
                       {...field}
+                      onClick={(e) => e.stopPropagation()}
+                      onBlur={(e) => e.stopPropagation()}
                     />
                   </FormControl>
                   <FormMessage />

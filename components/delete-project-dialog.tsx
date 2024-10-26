@@ -62,7 +62,7 @@ export default function DeleteProjectDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="w-144">
+      <DialogContent className="w-144" onClick={(e) => e.stopPropagation()}>
         <DialogTitle>{`Are you sure you want to delete "${projectTitle}"?`}</DialogTitle>
         <DialogDescription>
           This action cannot be undone. This will permanently delete your
