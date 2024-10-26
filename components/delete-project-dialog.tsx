@@ -5,30 +5,29 @@ import {
   DialogDescription,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import deleteProject from "@/lib/supabase/delete-project";
 import { projectsState } from "@/states/projects-state";
 import { userState } from "@/states/user-state";
-import { IconTrash } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { toast } from "sonner";
 
 type Props = {
   projectId: string;
   projectTitle: string;
+  isOpen: boolean;
+  setIsOpen: (value: boolean) => void;
 };
 
 export default function DeleteProjectDialog({
   projectId,
   projectTitle,
+  isOpen,
+  setIsOpen,
 }: Props) {
   const router = useRouter();
 
   const user = useRecoilValue(userState);
-
-  const [isOpen, setIsOpen] = useState(false);
 
   const setProjects = useSetRecoilState(projectsState);
 
@@ -56,17 +55,9 @@ export default function DeleteProjectDialog({
       });
     }
   };
+
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DropdownMenuItem
-        onClick={(e) => {
-          e.stopPropagation();
-          setIsOpen(true);
-        }}
-      >
-        <IconTrash size={16} />
-        <span>Delete</span>
-      </DropdownMenuItem>
       <DialogContent className="w-144">
         <DialogTitle>{`Are you sure you want to delete "${projectTitle}"?`}</DialogTitle>
         <DialogDescription>
