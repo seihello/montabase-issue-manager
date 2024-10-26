@@ -19,9 +19,9 @@ export default function DemoMessage() {
       <div className="border-[8px] border-transparent border-r-yellow-100" />
       <div className="flex flex-1 items-center justify-between rounded-md bg-yellow-100 py-1 pl-4 pr-1">
         <p>
-          This is a demo mode. While you are able to add projects and issues,
-          they will be lost once you leave the page. Please sign in with Google
-          to save your items.
+          This is a demo mode. Feel free to add projects and issues. Please note
+          that all your changes will be lost once you leave the page. Please
+          sign in with Google to save your items.
         </p>
         <Button
           variant="ghost"
