@@ -10,6 +10,7 @@ import updateIssueStatus from "@/lib/supabase/update-issue-status";
 import { IssueStatus } from "@/lib/types/issue-status.enum";
 import { Project } from "@/lib/types/project.type";
 import { issuesState } from "@/states/issues-state";
+import { projectsState } from "@/states/projects-state";
 import { isLoadingUserState, userState } from "@/states/user-state";
 import CommonView from "@/views/common-view";
 import {
@@ -28,9 +29,10 @@ type Props = {
 };
 
 export default function IssuesView({ projectId }: Props) {
+  const user = useRecoilValue(userState);
+  const projects = useRecoilValue(projectsState);
   const issues = useRecoilValue(issuesState);
   const setIssues = useSetRecoilState(issuesState);
-  const user = useRecoilValue(userState);
 
   const isLoadingUser = useRecoilValue(isLoadingUserState);
 
@@ -48,12 +50,19 @@ export default function IssuesView({ projectId }: Props) {
       try {
         setIsLoadingProject(true);
 
-        if (user) {
-          const project = await getProjectById(projectId);
-          setProject(project);
+        const existingProject = projects.find(
+          (project) => project.id === projectId,
+        );
+        if (existingProject) {
+          setProject(existingProject);
         } else {
-          const dummyProject = await getDummyProjectById(projectId);
-          setProject(dummyProject);
+          if (user) {
+            const project = await getProjectById(projectId);
+            setProject(project);
+          } else {
+            const dummyProject = await getDummyProjectById(projectId);
+            setProject(dummyProject);
+          }
         }
       } catch (error) {
         console.error(error);
