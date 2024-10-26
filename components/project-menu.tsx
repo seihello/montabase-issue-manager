@@ -1,4 +1,5 @@
 import DeleteProjectDialog from "@/components/delete-project-dialog";
+import RenameProjectDialog from "@/components/rename-project-dialog";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -6,7 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { IconDots, IconTrash } from "@tabler/icons-react";
+import { IconDots, IconPencil, IconTrash } from "@tabler/icons-react";
 import { useState } from "react";
 
 type Props = {
@@ -16,6 +17,8 @@ type Props = {
 
 export default function ProjectMenu({ projectId, projectTitle }: Props) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isRenameProjectDialogOpen, setIsRenameProjectDialogOpen] =
+    useState(false);
   const [isDeleteProjectDialogOpen, setIsDeleteProjectDialogOpen] =
     useState(false);
   return (
@@ -30,10 +33,17 @@ export default function ProjectMenu({ projectId, projectTitle }: Props) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          {/* <DropdownMenuItem>
+          <DropdownMenuItem
+            onSelect={(e) => {
+              e.stopPropagation();
+              setIsOpen(false);
+              setIsRenameProjectDialogOpen(true);
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
             <IconPencil size={16} />
             <span>Rename</span>
-          </DropdownMenuItem> */}
+          </DropdownMenuItem>
           <DropdownMenuItem
             onSelect={(e) => {
               e.stopPropagation();
@@ -47,6 +57,12 @@ export default function ProjectMenu({ projectId, projectTitle }: Props) {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+      <RenameProjectDialog
+        projectId={projectId}
+        projectTitle={projectTitle}
+        isOpen={isRenameProjectDialogOpen}
+        setIsOpen={setIsRenameProjectDialogOpen}
+      />
       <DeleteProjectDialog
         projectId={projectId}
         projectTitle={projectTitle}
