@@ -12,6 +12,7 @@ import updateProjectTitle from "@/lib/supabase/update-project-title";
 import { projectsState } from "@/states/projects-state";
 import { userState } from "@/states/user-state";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { toast } from "sonner";
@@ -71,6 +72,10 @@ export default function RenameProjectDialog({
       });
     }
   }
+
+  useEffect(() => {
+    form.setValue("title", projectTitle);
+  }, [form, projectTitle]);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
