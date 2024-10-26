@@ -16,7 +16,11 @@ export default function SidebarProject({ project, isSelected }: Props) {
       onClick={() => router.push(`/project/${project.id}`)}
     >
       <span className="truncate">{project.title}</span>
-      <ProjectMenu projectId={project.id} projectTitle={project.title} />
+      <ProjectMenu
+        projectId={project.id}
+        projectTitle={project.title}
+        isSelected={isSelected}
+      />
     </div>
   );
 }

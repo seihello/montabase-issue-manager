@@ -13,9 +13,14 @@ import { useState } from "react";
 type Props = {
   projectId: string;
   projectTitle: string;
+  isSelected: boolean;
 };
 
-export default function ProjectMenu({ projectId, projectTitle }: Props) {
+export default function ProjectMenu({
+  projectId,
+  projectTitle,
+  isSelected,
+}: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [isRenameProjectDialogOpen, setIsRenameProjectDialogOpen] =
     useState(false);
@@ -66,6 +71,7 @@ export default function ProjectMenu({ projectId, projectTitle }: Props) {
       <DeleteProjectDialog
         projectId={projectId}
         projectTitle={projectTitle}
+        isSelected={isSelected}
         isOpen={isDeleteProjectDialogOpen}
         setIsOpen={setIsDeleteProjectDialogOpen}
       />

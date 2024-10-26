@@ -15,6 +15,7 @@ import { toast } from "sonner";
 type Props = {
   projectId: string;
   projectTitle: string;
+  isSelected: boolean;
   isOpen: boolean;
   setIsOpen: (value: boolean) => void;
 };
@@ -22,6 +23,7 @@ type Props = {
 export default function DeleteProjectDialog({
   projectId,
   projectTitle,
+  isSelected,
   isOpen,
   setIsOpen,
 }: Props) {
@@ -49,6 +51,8 @@ export default function DeleteProjectDialog({
         description: projectTitle,
         duration: 3000,
       });
+
+      if (isSelected) router.push("/project/all");
     } catch (error) {
       toast.error("Error", {
         description: "Failed to delete the project. Please try again.",
