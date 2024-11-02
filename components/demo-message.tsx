@@ -25,8 +25,6 @@ export default function DemoMessage() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  console.log("height", height);
-
   return (
     <div
       ref={ref}
