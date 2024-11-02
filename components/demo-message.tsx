@@ -13,14 +13,14 @@ export default function DemoMessage() {
   if (isDemoMessageHidden) return;
 
   return (
-    <div className="flex items-center justify-between border-y-[1px] border-yellow-300 bg-yellow-50 py-1 pl-4 pr-1 text-yellow-700">
+    <div className="flex items-center justify-between border-y-[1px] border-yellow-300 bg-yellow-50 pl-4 pr-1 text-yellow-700">
       <p>
-        This is a demo mode. Feel free to add projects and issues. Please note
-        that all your changes will be lost once you leave the page. Please{" "}
+        This is a demo mode. Feel free to add projects and issues. Note that all
+        your changes will be lost once you leave the page. To save your items,{" "}
         <span onClick={signInWithGoogle} className="cursor-pointer underline">
           sign in with Google
-        </span>{" "}
-        to save your items.
+        </span>
+        .
       </p>
       <Button
         variant="ghost"
