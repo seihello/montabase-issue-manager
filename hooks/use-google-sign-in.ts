@@ -10,7 +10,7 @@ export default function useGoogleSignIn() {
           access_type: "offline",
           prompt: "consent",
         },
-        redirectTo: window.location.origin,
+        redirectTo: `${process.env.NEXT_PUBLIC_DOMAIN}/project/all`,
       },
     });
 
