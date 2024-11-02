@@ -1,11 +1,16 @@
 import DemoMessage from "@/components/demo-message";
 import Sidebar from "@/components/sidebar";
+import { isLoadingUserState, userState } from "@/states/user-state";
+import { useRecoilValue } from "recoil";
 
 type Props = {
   children: React.ReactNode;
 };
 
 export default function CommonView({ children }: Props) {
+  const user = useRecoilValue(userState);
+  const isLoadingUser = useRecoilValue(isLoadingUserState);
+
   return (
     <>
       <Sidebar />
@@ -15,7 +20,7 @@ export default function CommonView({ children }: Props) {
           overflowX: "scroll",
         }}
       >
-        <DemoMessage />
+        {!isLoadingUser && !user && <DemoMessage />}
         <div className="p-4">{children}</div>
       </main>
     </>
