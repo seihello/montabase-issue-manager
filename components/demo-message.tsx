@@ -33,7 +33,8 @@ export default function DemoMessage() {
       className="flex justify-between overflow-hidden border-yellow-300 bg-yellow-50 pl-4 pr-1 text-yellow-700"
       style={{
         maxHeight: isDemoMessageHidden ? 0 : height,
-        transition: "max-height 0.5s",
+        opacity: isDemoMessageHidden ? 0 : 1,
+        transition: "max-height 0.5s, opacity 0.3s",
       }}
     >
       <p className="py-2">
