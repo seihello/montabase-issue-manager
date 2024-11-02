@@ -30,15 +30,15 @@ export default function DemoMessage() {
   return (
     <div
       ref={ref}
-      className="flex items-center justify-between overflow-hidden border-yellow-300 bg-yellow-50 pl-4 pr-1 text-yellow-700"
+      className="flex justify-between overflow-hidden border-yellow-300 bg-yellow-50 pl-4 pr-1 text-yellow-700"
       style={{
         maxHeight: isDemoMessageHidden ? 0 : height,
         transition: "max-height 0.5s",
       }}
     >
-      <p>
+      <p className="py-2">
         This is a demo mode. Feel free to add projects and issues. Note that all
-        your changes will be lost once you leave the page. To save your items,{" "}
+        your changes will be loage. To save your items,{" "}
         <span onClick={signInWithGoogle} className="cursor-pointer underline">
           sign in with Google
         </span>
@@ -46,7 +46,7 @@ export default function DemoMessage() {
       </p>
       <Button
         variant="ghost"
-        className="h-8 rounded-full px-2 hover:bg-transparent"
+        className="mx-2 h-auto rounded-full p-0 hover:bg-transparent"
         onClick={() => setIsDemoMessageHidden(true)}
       >
         <IconX size={16} />
