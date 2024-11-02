@@ -21,7 +21,7 @@ export default function CommonView({ children }: Props) {
         }}
       >
         {!isLoadingUser && !user && <DemoMessage />}
-        <div className="flex flex-1 flex-col gap-y-2 p-4">{children}</div>
+        <div className="flex flex-1 flex-col gap-y-2 p-2">{children}</div>
       </main>
     </>
   );

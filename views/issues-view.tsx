@@ -127,7 +127,12 @@ export default function IssuesView({ projectId }: Props) {
           isAllIssues={true}
         />
       )}
-      <div className="flex flex-1 gap-x-2">
+      <div
+        className="flex flex-1 gap-x-2"
+        style={{
+          overflowX: "scroll",
+        }}
+      >
         <DndContext
           sensors={sensors}
           collisionDetection={pointerWithin}
