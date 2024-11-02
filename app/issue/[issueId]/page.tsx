@@ -19,6 +19,7 @@ import { issuesState } from "@/states/issues-state";
 import { projectsState } from "@/states/projects-state";
 import { isLoadingUserState, userState } from "@/states/user-state";
 import CommonView from "@/views/common-view";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 
@@ -27,6 +28,8 @@ export default function SingleIssuePage({
 }: {
   params: { issueId: string };
 }) {
+  const router = useRouter();
+
   const user = useRecoilValue(userState);
   const isLoadingUser = useRecoilValue(isLoadingUserState);
   const projects = useRecoilValue(projectsState);
@@ -68,6 +71,8 @@ export default function SingleIssuePage({
             setEditingTitle(dummyIssue.title);
             setEditingDescription(dummyIssue.description || "");
             setIssue(dummyIssue);
+          } else {
+            router.push("/project/all");
           }
         }
       } catch (error) {
