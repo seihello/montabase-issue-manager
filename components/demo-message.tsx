@@ -36,8 +36,9 @@ export default function DemoMessage() {
       }}
     >
       <p className="py-2">
-        This is a demo mode. Feel free to add projects and issues. Note that all
-        your changes will be loage. To save your items,{" "}
+        You are currently in demo mode. Feel free to add, edit, and delete
+        projects and issues. All your changes will be lost once you leave the
+        page. To save your items,{" "}
         <span onClick={signInWithGoogle} className="cursor-pointer underline">
           sign in with Google
         </span>
