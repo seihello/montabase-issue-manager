@@ -1,27 +1,10 @@
 "use client";
-import createClient from "@/lib/supabase/client";
+import useGoogleSignIn from "@/hooks/use-google-sign-in";
 
 export default function GoogleSignInButton() {
-  const handleSocialLogin = async () => {
-    const supabase = createClient();
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        queryParams: {
-          access_type: "offline",
-          prompt: "consent",
-        },
-      },
-    });
-
-    if (error) {
-      console.error(error);
-      return;
-    }
-  };
-
+  const { signInWithGoogle } = useGoogleSignIn();
   return (
-    <button onClick={handleSocialLogin} className="gsi-material-button">
+    <button onClick={signInWithGoogle} className="gsi-material-button">
       <div className="gsi-material-button-state"></div>
       <div className="gsi-material-button-content-wrapper">
         <div className="gsi-material-button-icon">
