@@ -10,27 +10,19 @@ export default function DemoMessage() {
 
   if (isDemoMessageHidden) return;
   return (
-    <div
-      className="absolute -right-2 top-1/2 flex -translate-y-1/2 translate-x-full items-center"
-      style={{
-        width: "calc(100vw - 13rem)",
-      }}
-    >
-      <div className="border-[8px] border-transparent border-r-yellow-100" />
-      <div className="flex flex-1 items-center justify-between rounded-md bg-yellow-100 py-1 pl-4 pr-1">
-        <p>
-          This is a demo mode. Feel free to add projects and issues. Please note
-          that all your changes will be lost once you leave the page. Please
-          sign in with Google to save your items.
-        </p>
-        <Button
-          variant="ghost"
-          className="h-8 rounded-full px-2 hover:bg-transparent"
-          onClick={() => setIsDemoMessageHidden(true)}
-        >
-          <IconX size={16} />
-        </Button>
-      </div>
+    <div className="flex items-center justify-between border-y-[1px] border-yellow-300 bg-yellow-50 py-1 pl-4 pr-1 text-yellow-700">
+      <p>
+        This is a demo mode. Feel free to add projects and issues. Please note
+        that all your changes will be lost once you leave the page. Please sign
+        in with Google to save your items.
+      </p>
+      <Button
+        variant="ghost"
+        className="h-8 rounded-full px-2 hover:bg-transparent"
+        onClick={() => setIsDemoMessageHidden(true)}
+      >
+        <IconX size={16} />
+      </Button>
     </div>
   );
 }

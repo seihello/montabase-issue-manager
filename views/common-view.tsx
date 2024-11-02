@@ -1,3 +1,4 @@
+import DemoMessage from "@/components/demo-message";
 import Sidebar from "@/components/sidebar";
 
 type Props = {
@@ -9,12 +10,13 @@ export default function CommonView({ children }: Props) {
     <>
       <Sidebar />
       <main
-        className="flex min-h-screen flex-1 flex-col gap-y-2 bg-white p-4"
+        className="flex min-h-screen flex-1 flex-col gap-y-2 bg-white"
         style={{
           overflowX: "scroll",
         }}
       >
-        {children}
+        <DemoMessage />
+        <div className="p-4">{children}</div>
       </main>
     </>
   );

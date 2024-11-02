@@ -1,6 +1,5 @@
 "use client";
 import AddIssueDialog from "@/components/add-issue-dialog";
-import DemoMessage from "@/components/demo-message";
 import GoogleSignInButton from "@/components/google-sign-in-button";
 import SidebarItem from "@/components/sidebar-item";
 import SidebarProjects from "@/components/sidebar-projects";
@@ -80,7 +79,6 @@ export default function Sidebar() {
             <SignOutButton />
           ) : (
             <div className="relative">
-              <DemoMessage />
               <GoogleSignInButton />
             </div>
           )}
