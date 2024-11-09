@@ -79,7 +79,7 @@ export default function RenameProjectDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="w-144" onClick={(e) => e.stopPropagation()}>
+      <DialogContent className="w-144">
         <DialogTitle>Rename project</DialogTitle>
         <Form {...form}>
           <form
