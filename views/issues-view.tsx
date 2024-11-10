@@ -2,6 +2,7 @@
 import Breadcrumbs from "@/components/breadcrumbs";
 import BreadcrumbsSkeleton from "@/components/breadcrumbs-skeleton";
 import StatusIssues from "@/components/status-issues";
+import { Button } from "@/components/ui/button";
 import getDummyIssues from "@/lib/supabase/demo/get-dummy-issues";
 import getDummyProjectById from "@/lib/supabase/demo/get-dummy-project-by-id";
 import getAllIssues from "@/lib/supabase/get-all-issues";
@@ -20,6 +21,7 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { toast } from "sonner";
@@ -29,6 +31,8 @@ type Props = {
 };
 
 export default function IssuesView({ projectId }: Props) {
+  const router = useRouter();
+
   const user = useRecoilValue(userState);
   const projects = useRecoilValue(projectsState);
   const issues = useRecoilValue(issuesState);
@@ -192,7 +196,13 @@ export default function IssuesView({ projectId }: Props) {
           </DndContext>
         </div>
       ) : (
-        <div>Project Not Found</div>
+        <div className="flex flex-1 flex-col items-center justify-center gap-y-8 text-lg">
+          <p>{`I'm sorry. This project does not exist.`}</p>
+          <img src="/img/illustrations/empty.svg" className="h-auto w-72" />
+          <Button variant="outline" onClick={() => router.push("/project/all")}>
+            See all issues
+          </Button>
+        </div>
       )}
     </CommonView>
   );
