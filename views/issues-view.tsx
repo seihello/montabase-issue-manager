@@ -130,7 +130,7 @@ export default function IssuesView({ projectId }: Props) {
         />
       )}
       <div
-        className="flex flex-1 gap-x-2"
+        className="flex flex-1 gap-x-2 min-h-0"
         style={{
           overflowX: "scroll",
         }}

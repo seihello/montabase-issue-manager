@@ -15,13 +15,15 @@ export default function CommonView({ children }: Props) {
     <>
       <Sidebar />
       <main
-        className="flex min-h-screen flex-1 flex-col bg-white"
+        className="flex h-screen flex-1 flex-col bg-white"
         style={{
           overflowX: "scroll",
         }}
       >
         {!isLoadingUser && !user && <DemoMessage />}
-        <div className="flex flex-1 flex-col gap-y-2 p-2">{children}</div>
+        <div className="flex min-h-0 flex-1 flex-col gap-y-2 overflow-y-scroll p-2">
+          {children}
+        </div>
       </main>
     </>
   );
