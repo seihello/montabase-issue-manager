@@ -121,75 +121,79 @@ export default function IssuesView({ projectId }: Props) {
     <CommonView>
       {isLoadingProject || isLoadingIssues ? (
         <BreadcrumbsSkeleton />
-      ) : (
+      ) : !projectId || project ? (
         <Breadcrumbs
           isAllProjects={projectId === undefined}
           projectId={project ? project.id : undefined}
           projectTitle={project ? project.title : undefined}
           isAllIssues={true}
         />
-      )}
-      <div
-        className="flex flex-1 gap-x-2 min-h-0"
-        style={{
-          overflowX: "scroll",
-        }}
-      >
-        <DndContext
-          sensors={sensors}
-          collisionDetection={pointerWithin}
-          onDragStart={async (event) => {
-            setActiveId(event.active.id.toString());
-          }}
-          onDragEnd={async (event) => {
-            if (event.over === null) return;
-            setActiveId(null);
-            const targetIssueStatus = event.over.id;
-            const droppedIssueId = event.active.id;
-
-            const targetIssue = issues.find(
-              (issue) => issue.id === droppedIssueId,
-            );
-            if (!targetIssue) return;
-
-            if (targetIssueStatus === targetIssue.status) return;
-
-            setIssues((oldIssues) =>
-              oldIssues.map((issue) =>
-                issue.id === droppedIssueId
-                  ? {
-                      ...issue,
-                      status: targetIssueStatus as IssueStatus,
-                    }
-                  : issue,
-              ),
-            );
-
-            // Save the status to the database if the user is signed in
-            if (user) {
-              await updateIssueStatus(
-                droppedIssueId.toString(),
-                targetIssueStatus as IssueStatus,
-              );
-            }
-
-            toast.success("Status updated", {
-              description: `${targetIssue.title} - ${targetIssueStatus}`,
-              duration: 3000,
-            });
+      ) : null}
+      {isLoadingProject || !projectId || project ? (
+        <div
+          className="flex min-h-0 flex-1 gap-x-2"
+          style={{
+            overflowX: "scroll",
           }}
         >
-          {Object.values(IssueStatus).map((status) => (
-            <StatusIssues
-              key={status}
-              projectId={projectId}
-              status={status}
-              isLoading={isLoadingProject || isLoadingIssues}
-              activeId={activeId}
-            />
-          ))}
-        </DndContext>
-      </div>
+          <DndContext
+            sensors={sensors}
+            collisionDetection={pointerWithin}
+            onDragStart={async (event) => {
+              setActiveId(event.active.id.toString());
+            }}
+            onDragEnd={async (event) => {
+              if (event.over === null) return;
+              setActiveId(null);
+              const targetIssueStatus = event.over.id;
+              const droppedIssueId = event.active.id;
+
+              const targetIssue = issues.find(
+                (issue) => issue.id === droppedIssueId,
+              );
+              if (!targetIssue) return;
+
+              if (targetIssueStatus === targetIssue.status) return;
+
+              setIssues((oldIssues) =>
+                oldIssues.map((issue) =>
+                  issue.id === droppedIssueId
+                    ? {
+                        ...issue,
+                        status: targetIssueStatus as IssueStatus,
+                      }
+                    : issue,
+                ),
+              );
+
+              // Save the status to the database if the user is signed in
+              if (user) {
+                await updateIssueStatus(
+                  droppedIssueId.toString(),
+                  targetIssueStatus as IssueStatus,
+                );
+              }
+
+              toast.success("Status updated", {
+                description: `${targetIssue.title} - ${targetIssueStatus}`,
+                duration: 3000,
+              });
+            }}
+          >
+            {Object.values(IssueStatus).map((status) => (
+              <StatusIssues
+                key={status}
+                projectId={projectId}
+                status={status}
+                isLoading={isLoadingProject || isLoadingIssues}
+                activeId={activeId}
+              />
+            ))}
+          </DndContext>
+        </div>
+      ) : (
+        <div>Project Not Found</div>
+      )}
     </CommonView>
   );
 }
