@@ -8,6 +8,7 @@ import IssueProjectSelect from "@/components/issue-project-select";
 import IssuePropertyItem from "@/components/issue-property-item";
 import IssueSkeletons from "@/components/issue-skeletons";
 import IssueStatusSelect from "@/components/issue-status-select";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import useUpdateIssue from "@/hooks/use-update-issue";
@@ -148,9 +149,9 @@ export default function SingleIssuePage({
           issueId={issue.id}
           issueTitle={issue.title}
         />
-      ) : (
+      ) : isLoadingIssue ? (
         <BreadcrumbsSkeleton />
-      )}
+      ) : null}
       {!isLoadingIssue && issue ? (
         <div className="flex flex-col items-start gap-y-4 p-16">
           <Input
@@ -214,7 +215,13 @@ export default function SingleIssuePage({
           <DeleteIssueDialog issueId={issue.id} issueTitle={issue.title} />
         </div>
       ) : !isLoadingIssue ? (
-        <div>Issue Not Found</div>
+        <div className="flex flex-1 flex-col items-center justify-center gap-y-8 text-lg">
+          <p>{`I'm sorry. This issue does not exist.`}</p>
+          <img src="/img/illustrations/empty.svg" className="h-auto w-72" />
+          <Button variant="outline" onClick={() => router.push("/project/all")}>
+            See all issues
+          </Button>
+        </div>
       ) : (
         <IssueSkeletons />
       )}
