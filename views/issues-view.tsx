@@ -40,6 +40,8 @@ export default function IssuesView({ projectId }: Props) {
   const [isLoadingProject, setIsLoadingProject] = useState<boolean>(true);
   const [isLoadingIssues, setIsLoadingIssues] = useState(true);
 
+  const [activeId, setActiveId] = useState<string | null>(null);
+
   useEffect(() => {
     const fetchProject = async () => {
       if (!projectId) {
@@ -136,8 +138,12 @@ export default function IssuesView({ projectId }: Props) {
         <DndContext
           sensors={sensors}
           collisionDetection={pointerWithin}
+          onDragStart={async (event) => {
+            setActiveId(event.active.id.toString());
+          }}
           onDragEnd={async (event) => {
             if (event.over === null) return;
+            setActiveId(null);
             const targetIssueStatus = event.over.id;
             const droppedIssueId = event.active.id;
 
@@ -179,6 +185,7 @@ export default function IssuesView({ projectId }: Props) {
               projectId={projectId}
               status={status}
               isLoading={isLoadingProject || isLoadingIssues}
+              activeId={activeId}
             />
           ))}
         </DndContext>

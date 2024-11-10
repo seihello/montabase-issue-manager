@@ -4,7 +4,7 @@ import IssueStatusBadge from "@/components/issue-status-badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { IssueStatus } from "@/lib/types/issue-status.enum";
 import { issuesState } from "@/states/issues-state";
-import { useDroppable } from "@dnd-kit/core";
+import { DragOverlay, useDroppable } from "@dnd-kit/core";
 import { useMemo } from "react";
 import { useRecoilValue } from "recoil";
 
@@ -12,9 +12,15 @@ type Props = {
   projectId?: string;
   status: IssueStatus;
   isLoading: boolean;
+  activeId: string | null;
 };
 
-export default function StatusIssues({ projectId, status, isLoading }: Props) {
+export default function StatusIssues({
+  projectId,
+  status,
+  isLoading,
+  activeId,
+}: Props) {
   const issues = useRecoilValue(issuesState);
   const filteredIssues = useMemo(
     () =>
@@ -29,6 +35,8 @@ export default function StatusIssues({ projectId, status, isLoading }: Props) {
   const { setNodeRef, isOver } = useDroppable({
     id: status,
   });
+
+  console.log("activeId", activeId);
 
   return (
     <div
@@ -54,9 +62,22 @@ export default function StatusIssues({ projectId, status, isLoading }: Props) {
             />
           </div>
         ) : (
-          filteredIssues.map((issue, index) => (
-            <IssueOverview key={index} issue={issue} />
-          ))
+          <>
+            {filteredIssues.map((issue, index) => (
+              <IssueOverview key={index} issue={issue} />
+            ))}
+            {activeId &&
+              filteredIssues.findIndex((issue) => issue.id === activeId) !==
+                -1 && (
+                <DragOverlay>
+                  <IssueOverview
+                    issue={
+                      filteredIssues.find((issue) => issue.id === activeId)!
+                    }
+                  />
+                </DragOverlay>
+              )}
+          </>
         )}
       </div>
     </div>
