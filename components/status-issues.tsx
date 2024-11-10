@@ -36,6 +36,8 @@ export default function StatusIssues({
     id: status,
   });
 
+  const draggedIssue = filteredIssues.find((issue) => issue.id === activeId);
+
   return (
     <div
       ref={setNodeRef}
@@ -61,20 +63,14 @@ export default function StatusIssues({
           </div>
         ) : (
           <>
-            {filteredIssues.map((issue, index) => (
-              <IssueOverview key={index} issue={issue} />
+            {filteredIssues.map((issue) => (
+              <IssueOverview key={issue.id} issue={issue} />
             ))}
-            {activeId &&
-              filteredIssues.findIndex((issue) => issue.id === activeId) !==
-                -1 && (
-                <DragOverlay>
-                  <IssueOverview
-                    issue={
-                      filteredIssues.find((issue) => issue.id === activeId)!
-                    }
-                  />
-                </DragOverlay>
-              )}
+            {activeId && draggedIssue && (
+              <DragOverlay key={draggedIssue.id}>
+                <IssueOverview issue={draggedIssue} />
+              </DragOverlay>
+            )}
           </>
         )}
       </div>
