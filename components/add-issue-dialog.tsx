@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import { v4 as uuidv4 } from "uuid";
 
-import { IconPencilPlus } from "@tabler/icons-react";
+import { IconPencilPlus, IconPlus } from "@tabler/icons-react";
 
 import DatePicker from "@/components/date-picker";
 import IssuePrioritySelect from "@/components/issue-priority-select";
@@ -40,7 +40,7 @@ import { toast } from "sonner";
 import * as z from "zod";
 
 type Props = {
-  type: "icon" | "text";
+  type: "icon" | "plus" | "text";
   initialProjectId?: string;
   initialStatus?: IssueStatus;
 };
@@ -142,6 +142,10 @@ export default function AddIssueDialog({
         {type === "icon" ? (
           <Button variant="ghost" className="size-8 rounded-lg p-0 shadow-md">
             <IconPencilPlus />
+          </Button>
+        ) : type === "plus" ? (
+          <Button variant="ghost" className="size-4 rounded-lg p-0">
+            <IconPlus />
           </Button>
         ) : (
           <Button variant="outline" className="h-8 text-xs">

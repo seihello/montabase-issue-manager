@@ -43,9 +43,16 @@ export default function StatusIssues({
       ref={setNodeRef}
       className={`flex min-h-0 w-80 shrink-0 flex-col gap-y-2 rounded-lg p-2 ${isOver ? "bg-gray-200" : "bg-gray-50"}`}
     >
-      <div className="flex items-center gap-x-1.5">
-        <IssueStatusBadge status={status} />
-        <span className="font-medium">{status}</span>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-x-1.5">
+          <IssueStatusBadge status={status} />
+          <span className="font-medium">{status}</span>
+        </div>
+        <AddIssueDialog
+          type="plus"
+          initialProjectId={projectId}
+          initialStatus={status}
+        />
       </div>
       <div className="flex min-h-0 flex-1 flex-col gap-y-2 overflow-y-scroll">
         {isLoading ? (
