@@ -3,6 +3,7 @@ import AddIssueDialog from "@/components/add-issue-dialog";
 import GoogleSignInButton from "@/components/google-sign-in-button";
 import SidebarItem from "@/components/sidebar-item";
 import SidebarProjects from "@/components/sidebar-projects";
+import SidebarResizeHandle from "@/components/sidebar-resize-handle";
 import SignOutButton from "@/components/sign-out-button";
 import { projectsState } from "@/states/projects-state";
 
@@ -10,6 +11,7 @@ import { isLoadingUserState, userState } from "@/states/user-state";
 import { IconList } from "@tabler/icons-react";
 import Image from "next/image";
 import { useParams, usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 import { useRecoilValue } from "recoil";
 
 export default function Sidebar() {
@@ -24,10 +26,23 @@ export default function Sidebar() {
 
   const selectedProjectId = params.projectId ? params.projectId : undefined;
 
+  const [width, setWidth] = useState(208);
+
   return (
     <aside className="z-50">
-      <div className="h-screen w-52"></div>
-      <nav className="fixed left-0 top-0 flex h-screen w-52 flex-col items-stretch border-r bg-white p-2 pb-3">
+      <div
+        className="h-screen"
+        style={{
+          width: width,
+        }}
+      />
+      <nav
+        className="fixed left-0 top-0 flex h-screen flex-col items-stretch border-r bg-white p-2 pb-3"
+        style={{
+          width: width,
+        }}
+      >
+        <SidebarResizeHandle width={width} setWidth={setWidth} />
         <div className="flex flex-1 flex-col gap-y-8">
           <div className="flex items-center justify-between gap-x-8">
             <div
