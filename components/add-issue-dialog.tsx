@@ -144,7 +144,7 @@ export default function AddIssueDialog({
             <IconPencilPlus />
           </Button>
         ) : type === "plus" ? (
-          <Button variant="ghost" className="size-4 rounded-lg p-0">
+          <Button variant="ghost" className="size-4 p-0">
             <IconPlus />
           </Button>
         ) : (
