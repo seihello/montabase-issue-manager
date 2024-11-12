@@ -32,7 +32,7 @@ export default function ProjectMenu({
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            className="absolute right-0 top-1/2 h-6 w-[32px] -translate-y-1/2 px-2 py-1 hover:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0"
+            className={`h-6 bg-transparent !px-1 py-1 hover:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0`}
           >
             <IconDots size={16} />
           </Button>

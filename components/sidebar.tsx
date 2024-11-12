@@ -44,18 +44,15 @@ export default function Sidebar() {
       >
         <SidebarResizeHandle width={width} setWidth={setWidth} />
         <div className="flex flex-1 flex-col gap-y-8">
-          <div className="flex items-center justify-between gap-x-8">
-            <div
-              className="relative flex h-full flex-1 cursor-pointer items-center"
-              onClick={() => router.push("/project/all")}
-            >
+          <div className="flex items-center justify-between">
+            {width > 180 && (
               <Image
                 src="/img/montabase.svg"
-                alt="profile_avatar"
+                alt="logo"
                 fill
-                className="object-contain"
+                className="!relative !h-5 !w-auto object-contain"
               />
-            </div>
+            )}
             {projects.length > 0 && (
               <AddIssueDialog
                 type="icon"
@@ -87,7 +84,7 @@ export default function Sidebar() {
               ) : (
                 <div></div>
               )}
-              <span className="truncate">{user.name}</span>
+              <span className="w-full truncate text-center">{user.name}</span>
             </>
           )}
           {isLoadingUser ? null : user ? (
