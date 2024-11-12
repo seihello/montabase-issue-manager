@@ -14,6 +14,10 @@ import { useParams, usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { useRecoilValue } from "recoil";
 
+const INITIAL_WIDTH = 216;
+export const MIN_WIDTH = 128;
+export const MAX_WIDTH = 400;
+
 export default function Sidebar() {
   const router = useRouter();
 
@@ -26,7 +30,7 @@ export default function Sidebar() {
 
   const selectedProjectId = params.projectId ? params.projectId : undefined;
 
-  const [width, setWidth] = useState(208);
+  const [width, setWidth] = useState(INITIAL_WIDTH);
 
   return (
     <aside className="z-50 !select-none">

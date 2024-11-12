@@ -1,3 +1,5 @@
+import { MAX_WIDTH, MIN_WIDTH } from "@/components/sidebar";
+
 type Props = {
   width: number;
   setWidth: React.Dispatch<React.SetStateAction<number>>;
@@ -13,7 +15,14 @@ export default function SidebarResizeHandle({ width, setWidth }: Props) {
 
     const handleMouseMove = (e: MouseEvent) => {
       e.preventDefault();
-      setWidth(startWidth + e.clientX - startX);
+      const newWidth = startWidth + e.clientX - startX;
+      if (newWidth < MIN_WIDTH) {
+        setWidth(MIN_WIDTH);
+      } else if (newWidth <= MAX_WIDTH) {
+        setWidth(newWidth);
+      } else {
+        setWidth(MAX_WIDTH);
+      }
     };
 
     const handleMouseUp = () => {
