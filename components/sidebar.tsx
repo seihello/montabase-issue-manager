@@ -29,7 +29,7 @@ export default function Sidebar() {
   const [width, setWidth] = useState(208);
 
   return (
-    <aside className="z-50">
+    <aside className="z-50 !select-none">
       <div
         className="h-screen"
         style={{
