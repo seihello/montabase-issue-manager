@@ -40,7 +40,7 @@ export default function DemoMessage() {
         projects and issues. All your changes will be lost once you leave the
         page. To save your items,{" "}
         <span onClick={signInWithGoogle} className="cursor-pointer underline">
-          sign in with Google
+          sign in
         </span>
         .
       </p>

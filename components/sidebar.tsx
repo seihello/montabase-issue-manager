@@ -49,7 +49,7 @@ export default function Sidebar() {
         <SidebarResizeHandle width={width} setWidth={setWidth} />
         <div className="flex flex-1 flex-col gap-y-8">
           <div className="flex items-center justify-between">
-            {width > 180 && (
+            {width > 176 && (
               <Image
                 src="/img/montabase.svg"
                 alt="logo"
@@ -95,7 +95,7 @@ export default function Sidebar() {
             <SignOutButton />
           ) : (
             <div className="relative">
-              <GoogleSignInButton />
+              <GoogleSignInButton sidebarWidth={width} />
             </div>
           )}
         </div>
