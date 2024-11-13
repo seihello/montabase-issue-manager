@@ -13,7 +13,11 @@ import {
 } from "@/states/ui-state";
 
 import { isLoadingUserState, userState } from "@/states/user-state";
-import { IconChevronRight, IconList } from "@tabler/icons-react";
+import {
+  IconChevronLeft,
+  IconChevronRight,
+  IconList,
+} from "@tabler/icons-react";
 import Image from "next/image";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { useRecoilValue, useSetRecoilState } from "recoil";
@@ -43,14 +47,18 @@ export default function Sidebar() {
           width: width,
         }}
       />
-      {width === 0 && (
-        <div
-          className="absolute bottom-0 left-full flex h-8 w-6 -translate-y-1/2 cursor-pointer items-center rounded-e-md border-b border-r border-t border-gray-300"
-          onClick={() => setWidth(INITIAL_WIDTH)}
-        >
-          <IconChevronRight className="text-gray-500" />
-        </div>
-      )}
+
+      <div
+        className="absolute bottom-0 left-full flex h-8 w-6 -translate-y-1/2 cursor-pointer items-center rounded-e-md border-b border-r border-t border-gray-300"
+        onClick={() => setWidth(width === 0 ? INITIAL_WIDTH : 0)}
+      >
+        {width === 0 ? (
+          <IconChevronRight className="bg-white text-gray-500" />
+        ) : (
+          <IconChevronLeft className="bg-white text-gray-500" />
+        )}
+      </div>
+
       <nav
         className={`fixed left-0 top-0 h-screen overflow-hidden border-r bg-white ${isResizing ? "" : "transition-[width]"}`}
         style={{
