@@ -1,4 +1,4 @@
-import { MAX_WIDTH, MIN_WIDTH } from "@/components/sidebar";
+import { MAX_WIDTH, MIN_WIDTH } from "@/states/ui-state";
 
 type Props = {
   width: number;

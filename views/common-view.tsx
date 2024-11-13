@@ -15,7 +15,7 @@ export default function CommonView({ children }: Props) {
     <>
       <Sidebar />
       <main
-        className="flex h-screen flex-1 flex-col bg-white"
+        className="flex h-screen flex-1 flex-col bg-white transition-[width]"
         style={{
           overflowX: "scroll",
         }}

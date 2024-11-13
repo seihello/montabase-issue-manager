@@ -6,17 +6,13 @@ import SidebarProjects from "@/components/sidebar-projects";
 import SidebarResizeHandle from "@/components/sidebar-resize-handle";
 import SignOutButton from "@/components/sign-out-button";
 import { projectsState } from "@/states/projects-state";
+import { INITIAL_WIDTH, sidebarWidthState } from "@/states/ui-state";
 
 import { isLoadingUserState, userState } from "@/states/user-state";
 import { IconChevronRight, IconList } from "@tabler/icons-react";
 import Image from "next/image";
 import { useParams, usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
-import { useRecoilValue } from "recoil";
-
-const INITIAL_WIDTH = 216;
-export const MIN_WIDTH = 128;
-export const MAX_WIDTH = 400;
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 export default function Sidebar() {
   const router = useRouter();
@@ -30,12 +26,13 @@ export default function Sidebar() {
 
   const selectedProjectId = params.projectId ? params.projectId : undefined;
 
-  const [width, setWidth] = useState(INITIAL_WIDTH);
+  const width = useRecoilValue(sidebarWidthState);
+  const setWidth = useSetRecoilState(sidebarWidthState);
 
   return (
     <aside className="relative z-50 !select-none">
       <div
-        className="h-screen"
+        className="h-screen transition-[width]"
         style={{
           width: width,
         }}
@@ -49,7 +46,7 @@ export default function Sidebar() {
         </div>
       )}
       <nav
-        className="fixed left-0 top-0 h-screen overflow-hidden border-r bg-white"
+        className="fixed left-0 top-0 h-screen overflow-hidden border-r bg-white transition-[width]"
         style={{
           width: width,
         }}
