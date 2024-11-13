@@ -16,7 +16,9 @@ export default function SidebarResizeHandle({ width, setWidth }: Props) {
     const handleMouseMove = (e: MouseEvent) => {
       e.preventDefault();
       const newWidth = startWidth + e.clientX - startX;
-      if (newWidth < MIN_WIDTH) {
+      if (newWidth < MIN_WIDTH / 2) {
+        setWidth(0);
+      } else if (newWidth < MIN_WIDTH) {
         setWidth(MIN_WIDTH);
       } else if (newWidth <= MAX_WIDTH) {
         setWidth(newWidth);

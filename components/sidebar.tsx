@@ -41,63 +41,65 @@ export default function Sidebar() {
         }}
       />
       <nav
-        className="fixed left-0 top-0 flex h-screen flex-col items-stretch border-r bg-white p-2 pb-3"
+        className="fixed left-0 top-0 h-screen overflow-hidden border-r bg-white"
         style={{
           width: width,
         }}
       >
-        <SidebarResizeHandle width={width} setWidth={setWidth} />
-        <div className="flex flex-1 flex-col gap-y-8">
-          <div className="flex items-center justify-between">
-            {width > 176 && (
-              <Image
-                src="/img/montabase.svg"
-                alt="logo"
-                fill
-                className="!relative !h-5 !w-auto object-contain"
-              />
-            )}
-            {projects.length > 0 && (
-              <AddIssueDialog
-                type="icon"
-                initialProjectId={selectedProjectId}
-              />
-            )}
-          </div>
-          <div className="flex flex-col">
-            <SidebarItem
-              label="All issues"
-              icon={<IconList size={16} />}
-              link="/project/all"
-              pathname={pathname}
-            />
-            <SidebarProjects selectedProjectId={selectedProjectId} />
-          </div>
-        </div>
-        <div className="flex flex-col items-center gap-y-1">
-          {user && (
-            <>
-              {user.avatar_url ? (
+        <div className="flex h-full w-full flex-col p-2 pb-3">
+          <SidebarResizeHandle width={width} setWidth={setWidth} />
+          <div className="flex flex-1 flex-col gap-y-8">
+            <div className="flex items-center justify-between">
+              {width > 176 && (
                 <Image
-                  src={user.avatar_url}
-                  alt="profile_avatar"
-                  width={36}
-                  height={36}
-                  className="rounded-full"
+                  src="/img/montabase.svg"
+                  alt="logo"
+                  fill
+                  className="!relative !h-5 !w-auto object-contain"
                 />
-              ) : (
-                <div></div>
               )}
-              <span className="w-full truncate text-center">{user.name}</span>
-            </>
-          )}
-          {isLoadingUser ? null : user ? (
-            <SignOutButton />
-          ) : (
-            <div className="relative">
-              <GoogleSignInButton sidebarWidth={width} />
+              {projects.length > 0 && (
+                <AddIssueDialog
+                  type="icon"
+                  initialProjectId={selectedProjectId}
+                />
+              )}
             </div>
-          )}
+            <div className="flex flex-col">
+              <SidebarItem
+                label="All issues"
+                icon={<IconList size={16} />}
+                link="/project/all"
+                pathname={pathname}
+              />
+              <SidebarProjects selectedProjectId={selectedProjectId} />
+            </div>
+          </div>
+          <div className="flex flex-col items-center gap-y-1">
+            {user && (
+              <>
+                {user.avatar_url ? (
+                  <Image
+                    src={user.avatar_url}
+                    alt="profile_avatar"
+                    width={36}
+                    height={36}
+                    className="rounded-full"
+                  />
+                ) : (
+                  <div></div>
+                )}
+                <span className="w-full truncate text-center">{user.name}</span>
+              </>
+            )}
+            {isLoadingUser ? null : user ? (
+              <SignOutButton />
+            ) : (
+              <div className="relative">
+                <GoogleSignInButton sidebarWidth={width} />
+              </div>
+            )}
+          </div>
         </div>
       </nav>
     </aside>
