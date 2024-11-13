@@ -1,13 +1,20 @@
-import { MAX_WIDTH, MIN_WIDTH } from "@/states/ui-state";
+import {
+  MAX_WIDTH,
+  MIN_WIDTH,
+  isSidebarResizingState,
+} from "@/states/ui-state";
+import { useSetRecoilState } from "recoil";
 
 type Props = {
   width: number;
   setWidth: React.Dispatch<React.SetStateAction<number>>;
 };
 export default function SidebarResizeHandle({ width, setWidth }: Props) {
-  // const [isResizing, setIsResizing] = useState(false);
+  const setIsResizing = useSetRecoilState(isSidebarResizingState);
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    setIsResizing(true);
+
     document.body.style.cursor = "ew-resize";
 
     const startX = e.clientX;
@@ -31,6 +38,8 @@ export default function SidebarResizeHandle({ width, setWidth }: Props) {
       document.body.style.cursor = "";
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseup", handleMouseUp);
+
+      setIsResizing(false);
     };
 
     document.addEventListener("mousemove", handleMouseMove);

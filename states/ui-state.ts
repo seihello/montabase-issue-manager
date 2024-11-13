@@ -8,3 +8,7 @@ export const sidebarWidthState = atom<number>({
   key: "sidebarWidth",
   default: INITIAL_WIDTH,
 });
+export const isSidebarResizingState = atom<boolean>({
+  key: "isSidebarResizing",
+  default: false,
+});

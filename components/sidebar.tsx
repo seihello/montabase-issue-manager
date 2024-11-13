@@ -6,7 +6,11 @@ import SidebarProjects from "@/components/sidebar-projects";
 import SidebarResizeHandle from "@/components/sidebar-resize-handle";
 import SignOutButton from "@/components/sign-out-button";
 import { projectsState } from "@/states/projects-state";
-import { INITIAL_WIDTH, sidebarWidthState } from "@/states/ui-state";
+import {
+  INITIAL_WIDTH,
+  isSidebarResizingState,
+  sidebarWidthState,
+} from "@/states/ui-state";
 
 import { isLoadingUserState, userState } from "@/states/user-state";
 import { IconChevronRight, IconList } from "@tabler/icons-react";
@@ -29,10 +33,12 @@ export default function Sidebar() {
   const width = useRecoilValue(sidebarWidthState);
   const setWidth = useSetRecoilState(sidebarWidthState);
 
+  const isResizing = useRecoilValue(isSidebarResizingState);
+
   return (
     <aside className="relative z-50 !select-none">
       <div
-        className="h-screen transition-[width]"
+        className={`h-screen ${isResizing ? "" : "transition-[width]"}`}
         style={{
           width: width,
         }}
@@ -46,7 +52,7 @@ export default function Sidebar() {
         </div>
       )}
       <nav
-        className="fixed left-0 top-0 h-screen overflow-hidden border-r bg-white transition-[width]"
+        className={`fixed left-0 top-0 h-screen overflow-hidden border-r bg-white ${isResizing ? "" : "transition-[width]"}`}
         style={{
           width: width,
         }}
