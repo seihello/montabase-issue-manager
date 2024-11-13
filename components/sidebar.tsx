@@ -8,7 +8,7 @@ import SignOutButton from "@/components/sign-out-button";
 import { projectsState } from "@/states/projects-state";
 
 import { isLoadingUserState, userState } from "@/states/user-state";
-import { IconList } from "@tabler/icons-react";
+import { IconChevronRight, IconList } from "@tabler/icons-react";
 import Image from "next/image";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
@@ -33,13 +33,21 @@ export default function Sidebar() {
   const [width, setWidth] = useState(INITIAL_WIDTH);
 
   return (
-    <aside className="z-50 !select-none">
+    <aside className="relative z-50 !select-none">
       <div
         className="h-screen"
         style={{
           width: width,
         }}
       />
+      {width === 0 && (
+        <div
+          className="absolute bottom-0 left-full flex h-8 w-6 -translate-y-1/2 cursor-pointer items-center rounded-e-md border-b border-r border-t border-gray-300"
+          onClick={() => setWidth(INITIAL_WIDTH)}
+        >
+          <IconChevronRight className="text-gray-500" />
+        </div>
+      )}
       <nav
         className="fixed left-0 top-0 h-screen overflow-hidden border-r bg-white"
         style={{
