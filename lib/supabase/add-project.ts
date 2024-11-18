@@ -12,6 +12,7 @@ export default async function addProject(
       .from("projects")
       .insert({
         title,
+        author: userId,
       })
       .select("*")
       .single();
