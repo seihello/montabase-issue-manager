@@ -67,7 +67,7 @@ export default function AddProjectDialog() {
     } catch (error) {
       console.error(error);
       toast.error("Error", {
-        description: "Failed to add the issue. Please try again.",
+        description: "Failed to add the project. Please try again.",
       });
     } finally {
       setIsSubmitting(false);
