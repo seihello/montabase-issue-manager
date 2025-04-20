@@ -56,6 +56,7 @@ export default function ProjectMenu({
               setIsDeleteProjectDialogOpen(true);
             }}
             onClick={(e) => e.stopPropagation()}
+            className="text-destructive-foreground focus:text-destructive-foreground"
           >
             <IconTrash size={16} />
             <span>Delete</span>
