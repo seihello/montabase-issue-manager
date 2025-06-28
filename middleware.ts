@@ -2,12 +2,6 @@ import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
-  if (request.nextUrl.hostname !== "montabase.seisuke.info" && request.nextUrl.hostname !== "localhost") {
-    return NextResponse.redirect(
-      new URL("https://montabase.seisuke.info/project/all"),
-    );
-  }
-
   let response = NextResponse.next({
     request: {
       headers: request.headers,
