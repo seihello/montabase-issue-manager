@@ -69,12 +69,12 @@ export default function Sidebar() {
           <SidebarResizeHandle width={width} setWidth={setWidth} />
           <div className="flex flex-1 flex-col gap-y-8">
             <div className="flex items-center justify-between">
-              {width > 176 && (
+              {width >= INITIAL_WIDTH && (
                 <Image
-                  src="/img/montabase.svg"
+                  src="/img/montabase.png"
                   alt="logo"
                   fill
-                  className="!relative !h-5 !w-auto object-contain"
+                  className="!relative !h-6 !w-auto object-contain"
                 />
               )}
               {projects.length > 0 && (
